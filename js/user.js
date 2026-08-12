@@ -55,7 +55,7 @@
       return `<div class="card feature" style="margin-top:12px">
         <h3>🎟️ <span class="gold">${c.code.replace(/-/g, " - ")}</span></h3>
         ${pill}
-        <p class="muted" style="font-size:12px;margin-top:6px">Saved ${d.toLocaleDateString()} · codes reset every Sunday 12 PM</p>
+        <p class="muted" style="font-size:14px;margin-top:6px">Saved ${d.toLocaleDateString()} · codes reset every Sunday 12 PM</p>
       </div>`;
     }).join("");
   }
