@@ -1288,3 +1288,14 @@ td .num-chip { vertical-align: middle; }
 /* section icons: fixed slot, centered */
 .feature h3 { align-items: center; }
 .feature h3 .ico { display: inline-block; width: 1.3em; text-align: center; }
+
+/* ============================================================
+   Unified hero shell — every page wears the Home banner pattern
+   ============================================================ */
+.hero-page {
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  padding: 26px 26px 22px;
+  margin-top: 20px;
+}
+.hero-page .sub { margin-bottom: 4px; }
