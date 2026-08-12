@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — MineBig.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="demo-tag">Demo Prototype — Not Live</div>
+<canvas id="sparkles"></canvas>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="ball-logo">M</span>
+      <span>MineBig.com <span class="v2">V2.0</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="upcoming.html" data-page="upcoming.html">Upcoming Events</a>
+      <a href="about.html" data-page="about.html">About Us</a>
+      <a href="testimonials.html" data-page="testimonials.html">Testimonials</a>
+      <a href="winning.html" data-page="winning.html">Winning Numbers</a>
+      <a href="check.html" data-page="check.html">Check Status</a>
+      <a href="connect.html" data-page="connect.html">Connect to Agent</a>
+      <a href="faq.html" data-page="faq.html" class="active">FAQ</a>
+      <a href="user-login.html" class="login-link" data-page="user-login.html">Player Login</a>
+      <a href="agent-login.html" class="portal-link" data-page="agent-login.html">Agent Portal</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <span class="kicker">Help</span>
+    <h1>Frequently asked questions</h1>
+    <p class="sub">Everything you need to know about the draw, tickets, <em>and how your agent takes care of the rest.</em></p>
+  </section>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>When is the draw?</summary>
+      <p>Every <strong class="gold">Sunday at 12:00 PM</strong> (your local time). The live event runs for 15 minutes — watch it on the Upcoming Events page. When it ends, the countdown to next Sunday starts automatically.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I buy a ticket?</summary>
+      <p>Through a <strong class="gold">verified agent</strong>. Use the <a class="teal" href="connect.html">Connect to Agent</a> form — an agent will call you, take your 6 numbers, and sell you the ticket face to face. <strong>There are no online payments</strong> on this site; everything is handled by your agent in person.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What numbers can I pick?</summary>
+      <p>Any 6 natural numbers (1, 2, 3…) — as long as each one is still <strong class="teal">available</strong> that week. You can check availability live on the <a class="teal" href="check.html">Check Status</a> page, and the site suggests alternatives for numbers that are taken.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can two people have the same code?</summary>
+      <p>No. The moment a code is bought it is <strong class="gold">locked</strong> — no other agent can sell that combination until the week ends. Every Sunday at 12 PM all codes reset and the pool opens fresh.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What prizes are on offer?</summary>
+      <p>Seven tiers every draw: <strong class="gold">1st, 2nd, 3rd, Special Prize, and Consolation 1, 2 &amp; 3</strong>. Prize amounts are announced with each draw.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I know if I won?</summary>
+      <p>Three ways: watch the live draw, check your code on the <a class="teal" href="check.html">Check Status</a> page, or see the <a class="teal" href="winning.html">Winning Numbers</a> page. Winners are also announced on the agent portal, and your agent will contact you personally.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I collect a prize?</summary>
+      <p>Face to face, from your agent — the same person who sold you the ticket. Your agent confirms your code, hands over the prize, and that's it. No apps, no hidden steps.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do I need an account to play?</summary>
+      <p>No. Checking status, availability and results works without an account. A free <a class="teal" href="user-login.html">Player Login</a> lets you save and track your codes in one place.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is there an app?</summary>
+      <p>Not yet — the website works on any phone or computer. No downloads needed.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is MineBig safe and legitimate?</summary>
+      <p>MineBig is a 25-year-old name, reborn as Version 2.0. The draw is live and open for everyone to watch, results are published transparently, and every sale and prize goes through verified agents with a permanent record. Please also read our <a class="teal" href="play-responsibly.html">Play Responsibly</a> page.</p>
+    </details>
+  </div>
+
+  <div class="center mt">
+    <p class="muted">Still have a question? <a class="teal" href="connect.html">Connect to an agent</a> or email <a class="teal" href="mailto:hello@minebig.com">hello@minebig.com</a></p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="fbrand">MineBig.com <span style="color:var(--gold)">V2.0</span></div>
+  Same trust. Same dreams. Improved experience, better care.<br>
+  Every Sunday 12 PM · Live draw · 7 prize tiers<br>
+  <a href="connect.html">Connect to an agent</a> · <a href="faq.html">FAQ</a> · <a href="play-responsibly.html">Play Responsibly</a> · <a href="play-responsibly.html#privacy">Privacy</a> · <a href="play-responsibly.html#terms">Terms</a><br>
+  <span style="opacity:.7">Contact: <a href="mailto:hello@minebig.com">hello@minebig.com</a></span> · <span style="opacity:.7">© 2026 MineBig.com</span>
+  <div class="newsletter">
+    <input type="email" id="nl-email" placeholder="Email for draw alerts">
+    <button id="nl-submit" type="button">Subscribe</button>
+    <span class="nl-msg" id="nl-msg"></span>
+  </div>
+  <span class="gold" style="font-weight:700;letter-spacing:1px">18+ · Play responsibly.</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

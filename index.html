@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MineBig.com — Back, Better Than Ever | V2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="demo-tag">Demo Prototype — Not Live</div>
+<canvas id="sparkles"></canvas>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="ball-logo">M</span>
+      <span>MineBig.com <span class="v2">V2.0</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="upcoming.html" data-page="upcoming.html">Upcoming Events</a>
+      <a href="about.html" data-page="about.html">About Us</a>
+      <a href="testimonials.html" data-page="testimonials.html">Testimonials</a>
+      <a href="winning.html" data-page="winning.html">Winning Numbers</a>
+      <a href="check.html" data-page="check.html">Check Status</a>
+      <a href="connect.html" data-page="connect.html">Connect to Agent</a>
+      <a href="faq.html" data-page="faq.html">FAQ</a>
+      <a href="user-login.html" class="login-link" data-page="user-login.html">Player Login</a>
+      <a href="agent-login.html" class="portal-link" data-page="agent-login.html">Agent Portal</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <span class="kicker">Reborn · Version 2.0</span>
+    <h1>MineBig.com is back,<br>better than ever.</h1>
+    <p class="sub">Same trust. Same dreams. <em>Improved experience, better care.</em></p>
+
+    <div class="balls">
+      <span class="ball">7</span>
+      <span class="ball mag">12</span>
+      <span class="ball teal">23</span>
+      <span class="ball violet">34</span>
+      <span class="ball">41</span>
+      <span class="ball mag">49</span>
+    </div>
+
+    <div class="blurb">
+      <strong>For 25 years, MineBig has been a name people trusted</strong> — passed along by word of mouth, community to community. Now it has been reborn, more refined, in a fresh new attire. Every Sunday at 12 PM we run a live draw — simple, transparent, and open for everyone to watch.
+      <a class="more" href="about.html">More →</a>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn-gold" href="upcoming.html">🎟️ Next Draw — This Sunday</a>
+      <a class="btn btn-mag" href="connect.html">Connect to Agent</a>
+      <a class="btn btn-teal" href="check.html">Check a Ticket</a>
+    </div>
+
+    <div class="badges">
+      <span class="badge">🎁 7 Prize Tiers Every Draw</span>
+      <span class="badge">🤝 Verified Local Agents</span>
+      <span class="badge">📺 Live Every Sunday 12 PM</span>
+      <span class="badge">🇲🇾 Proudly Malaysian</span>
+    </div>
+  </section>
+
+  <!-- Latest draw (results-first, Magnum-style) -->
+  <div class="card draw-strip" id="latest-draw"></div>
+
+  <!-- Lucky number generator -->
+  <div class="card lucky" id="lucky-gen">
+    <h3 style="font-size:19px">🍀 Your lucky numbers</h3>
+    <p class="muted" style="font-size:13px;margin-top:6px">Six available numbers, picked for you — refresh until one feels right.</p>
+    <div class="gen-balls" id="lucky-balls"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn btn-teal" id="lucky-refresh" type="button">🎲 Refresh</button>
+      <button class="btn btn-ghost" id="lucky-copy" type="button">Copy</button>
+    </div>
+    <div class="copy-ok" id="lucky-copy-ok"></div>
+  </div>
+
+  <h2 class="section-title">What is MineBig.com?</h2>
+  <div class="grid3">
+    <div class="card feature">
+      <h3><span class="ico">📺</span> Watch the draw live</h3>
+      <p>Every Sunday at 12 PM, a live 15-minute draw. Simple, open, and everyone can watch. Outside the live window, a countdown ticks down to the next draw.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🔢</span> Pick your 6 numbers</h3>
+      <p>Choose any 6 natural numbers. Check live whether each number is still available — and get smart suggestions when one is taken. Your code is locked the moment you buy it.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🤝</span> Everything through your agent</h3>
+      <p>Buy your ticket, receive your receipt, and collect your prize — all face to face with a verified local agent. No apps, no hidden steps. Just people, numbers, and a real chance.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🏆</span> 7 prize tiers weekly</h3>
+      <p>1st, 2nd, 3rd, a Special Prize, and three Consolation prizes — every single Sunday, all in RM.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">📜</span> Transparent winners archive</h3>
+      <p>Every winning number published — the last 3 months in full, plus a lifetime record of which numbers have won over the years.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🔎</span> Check any code</h3>
+      <p>Enter your 6-number code and see if it won — or check whether a number is still available before you buy. No login needed.</p>
+    </div>
+  </div>
+
+  <div class="center mt">
+    <a class="btn btn-gold" href="upcoming.html">See the next draw →</a>
+  </div>
+
+  <h2 class="section-title">How the draw works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <h3>Pick your 6 numbers</h3>
+        <p>Any natural numbers that are still available this week. Check availability live — if a number is taken, the site suggests available alternatives.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num mag">2</div>
+      <div>
+        <h3>Your agent locks your code</h3>
+        <p>Buy through a verified agent. The moment you buy, that combination is created and blocked — no one else can sell it until Sunday.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num teal">3</div>
+      <div>
+        <h3>Watch the live draw — Sunday 12 PM</h3>
+        <p>Every draw is live and open for everyone to watch. Simple, transparent, and announced right here on the website.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div>
+        <h3>Winners are published &amp; contacted</h3>
+        <p>Results go up on the site and the agent portal. Your agent reaches out and hands over your prize, face to face.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Where to claim</h2>
+  <div class="grid3" style="max-width:900px;margin:26px auto 0">
+    <div class="card feature">
+      <h3><span class="ico">🎟️</span> Ticket &amp; receipt</h3>
+      <p>Your agent sells the ticket and hands you the receipt in person. Nothing is delivered digitally — it's all human, all trusted.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🏆</span> Prize handover</h3>
+      <p>Win? Your agent confirms your code and hands over your prize face to face. Every tier — from 1st to Consolation 3 — is delivered with care.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🚫</span> No online payments, ever</h3>
+      <p>This website never takes payments. It informs, connects, and publishes results — the agent handles the rest, offline.</p>
+    </div>
+  </div>
+
+  <div class="demo-note">
+    <strong>Demo prototype.</strong> This is a functional preview of MineBig.com V2.0. All data is sample data stored in your browser — nothing is real or final. Prize amounts, logo, photos and launch details are still open items.
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="fbrand">MineBig.com <span style="color:var(--gold)">V2.0</span></div>
+  Same trust. Same dreams. Improved experience, better care.<br>
+  Every Sunday 12 PM · Live draw · 7 prize tiers<br>
+  <a href="connect.html">Connect to an agent</a> · <a href="faq.html">FAQ</a> · <a href="play-responsibly.html">Play Responsibly</a> · <a href="play-responsibly.html#privacy">Privacy</a> · <a href="play-responsibly.html#terms">Terms</a><br>
+  <span style="opacity:.7">Contact: <a href="mailto:hello@minebig.com">hello@minebig.com</a></span> · <span style="opacity:.7">© 2026 MineBig.com</span>
+  <div class="newsletter">
+    <input type="email" id="nl-email" placeholder="Email for draw alerts">
+    <button id="nl-submit" type="button">Subscribe</button>
+    <span class="nl-msg" id="nl-msg"></span>
+  </div>
+  <span class="gold" style="font-weight:700;letter-spacing:1px">18+ · Play responsibly.</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/home.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

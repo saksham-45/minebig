@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Testimonials — MineBig.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="demo-tag">Demo Prototype — Not Live</div>
+<canvas id="sparkles"></canvas>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="ball-logo">M</span>
+      <span>MineBig.com <span class="v2">V2.0</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="upcoming.html" data-page="upcoming.html">Upcoming Events</a>
+      <a href="about.html" data-page="about.html">About Us</a>
+      <a href="testimonials.html" data-page="testimonials.html" class="active">Testimonials</a>
+      <a href="winning.html" data-page="winning.html">Winning Numbers</a>
+      <a href="check.html" data-page="check.html">Check Status</a>
+      <a href="connect.html" data-page="connect.html">Connect to Agent</a>
+      <a href="faq.html" data-page="faq.html">FAQ</a>
+      <a href="user-login.html" class="login-link" data-page="user-login.html">Player Login</a>
+      <a href="agent-login.html" class="portal-link" data-page="agent-login.html">Agent Portal</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <span class="kicker">Testimonials</span>
+    <h1>Real people. Real wins.</h1>
+    <p class="sub">Seven prize tiers every Sunday — <em>meet the winners of the latest draw.</em></p>
+  </section>
+
+  <div id="winners-by-tier"></div>
+
+  <h2 class="section-title">Voices from the community</h2>
+  <div class="grid3">
+    <div class="card feature">
+      <h3><span class="ico">🗣️</span> “Trusted for a reason”</h3>
+      <p>“I've been playing through the same agent for years. When my number came up, he came to my house the same day with the prize. That's MineBig.”</p>
+      <p class="muted mt" style="margin-top:10px">— Regular player, Penang</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🗣️</span> “Simple and honest”</h3>
+      <p>“No apps, no confusing steps. I pick my numbers, my agent locks the code, and I watch the draw live on Sunday. Couldn't be simpler.”</p>
+      <p class="muted mt" style="margin-top:10px">— Player, Kuala Lumpur</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🗣️</span> “The website changed everything”</h3>
+      <p>“Now I can check my numbers anytime and see the winners published. It feels more transparent than ever — Version 2.0 delivered.”</p>
+      <p class="muted mt" style="margin-top:10px">— Player, Johor Bahru</p>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <a class="btn btn-gold" href="winning.html">See all winning numbers</a>
+    <a class="btn btn-mag" href="connect.html">Become this Sunday's winner</a>
+  </div>
+
+  <div class="demo-note">
+    <strong>Demo note.</strong> Winner names, photos and quotes are sample placeholders — real testimonial photos and details will be added before launch.
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="fbrand">MineBig.com <span style="color:var(--gold)">V2.0</span></div>
+  Same trust. Same dreams. Improved experience, better care.<br>
+  Every Sunday 12 PM · Live draw · 7 prize tiers<br>
+  <a href="connect.html">Connect to an agent</a> · <a href="faq.html">FAQ</a> · <a href="play-responsibly.html">Play Responsibly</a> · <a href="play-responsibly.html#privacy">Privacy</a> · <a href="play-responsibly.html#terms">Terms</a><br>
+  <span style="opacity:.7">Contact: <a href="mailto:hello@minebig.com">hello@minebig.com</a></span> · <span style="opacity:.7">© 2026 MineBig.com</span>
+  <div class="newsletter">
+    <input type="email" id="nl-email" placeholder="Email for draw alerts">
+    <button id="nl-submit" type="button">Subscribe</button>
+    <span class="nl-msg" id="nl-msg"></span>
+  </div>
+  <span class="gold" style="font-weight:700;letter-spacing:1px">18+ · Play responsibly.</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/testimonials.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

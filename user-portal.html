@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — MineBig.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="demo-tag">Demo Prototype — Not Live</div>
+<canvas id="sparkles"></canvas>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="ball-logo">M</span>
+      <span>MineBig.com <span class="v2">V2.0</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="upcoming.html" data-page="upcoming.html">Upcoming Events</a>
+      <a href="about.html" data-page="about.html">About Us</a>
+      <a href="testimonials.html" data-page="testimonials.html">Testimonials</a>
+      <a href="winning.html" data-page="winning.html">Winning Numbers</a>
+      <a href="check.html" data-page="check.html">Check Status</a>
+      <a href="connect.html" data-page="connect.html">Connect to Agent</a>
+      <a href="faq.html" data-page="faq.html">FAQ</a>
+      <a href="user-login.html" class="login-link" data-page="user-login.html">Player Login</a>
+      <a href="agent-login.html" class="portal-link" data-page="agent-login.html">Agent Portal</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <span class="kicker">My Account</span>
+    <h1>Welcome, <span class="gold" id="user-name">player</span> 👋</h1>
+    <p class="sub">Track your codes and know your status — <em>instantly, every week.</em></p>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn btn-ghost" id="user-logout" type="button">Log out</button>
+    </div>
+  </section>
+
+  <!-- ============ MY CODES ============ -->
+  <h2 class="section-title">My codes</h2>
+  <div class="card" style="max-width:760px;margin:0 auto">
+    <p class="muted center" style="font-size:13.5px">Add the 6-number code from your ticket — the site tells you if it won, was sold, or has no record this week.</p>
+    <div class="logbook-actions" style="justify-content:center">
+      <input type="text" id="new-code" placeholder="e.g. 4 19 27 33 41 49" style="width:260px">
+      <button class="btn btn-teal" id="add-code" type="button" style="padding:11px 22px">Add code</button>
+    </div>
+    <p id="add-code-msg" style="text-align:center;color:var(--muted);font-size:12.5px;margin-top:10px;min-height:16px"></p>
+    <div id="my-codes"></div>
+  </div>
+
+  <!-- ============ LATEST DRAW ============ -->
+  <h2 class="section-title">Latest draw</h2>
+  <div class="card" style="max-width:760px;margin:0 auto;text-align:center">
+    <span class="pill warn">Draw of <span id="user-latest-date"></span></span>
+    <div class="balls" id="user-latest-nums"></div>
+    <p class="note"><a href="winning.html">See all results →</a> · <a href="check.html">Check any code →</a></p>
+  </div>
+
+  <!-- ============ HOW IT WORKS REMINDER ============ -->
+  <h2 class="section-title">Good to know</h2>
+  <div class="grid3" style="max-width:900px;margin:26px auto 0">
+    <div class="card feature">
+      <h3><span class="ico">🎟️</span> Tickets are bought through agents</h3>
+      <p>There are no online payments on this site. Your agent sells the ticket, gives you the receipt, and hands over your prize face to face.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🔁</span> Codes reset every Sunday</h3>
+      <p>After each 12 PM draw, the number pool opens fresh for the next week. Your saved codes roll over — their status updates automatically.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">🏆</span> Winners are contacted</h3>
+      <p>Winning announcements go live on this site and the agent portal. Your agent will contact you to arrange your prize.</p>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <a class="btn btn-mag" href="connect.html">Talk to an agent</a>
+  </div>
+
+  <div class="demo-note">
+    <strong>Demo.</strong> Your codes are stored only in this browser. Real accounts will be connected at launch.
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="fbrand">MineBig.com <span style="color:var(--gold)">V2.0</span></div>
+  Same trust. Same dreams. Improved experience, better care.<br>
+  Every Sunday 12 PM · Live draw · 7 prize tiers<br>
+  <a href="connect.html">Connect to an agent</a> · <a href="faq.html">FAQ</a> · <a href="play-responsibly.html">Play Responsibly</a> · <a href="play-responsibly.html#privacy">Privacy</a> · <a href="play-responsibly.html#terms">Terms</a><br>
+  <span style="opacity:.7">Contact: <a href="mailto:hello@minebig.com">hello@minebig.com</a></span> · <span style="opacity:.7">© 2026 MineBig.com</span>
+  <div class="newsletter">
+    <input type="email" id="nl-email" placeholder="Email for draw alerts">
+    <button id="nl-submit" type="button">Subscribe</button>
+    <span class="nl-msg" id="nl-msg"></span>
+  </div>
+  <span class="gold" style="font-weight:700;letter-spacing:1px">18+ · Play responsibly.</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/user.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

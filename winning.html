@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Winning Numbers — MineBig.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="demo-tag">Demo Prototype — Not Live</div>
+<canvas id="sparkles"></canvas>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="ball-logo">M</span>
+      <span>MineBig.com <span class="v2">V2.0</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="upcoming.html" data-page="upcoming.html">Upcoming Events</a>
+      <a href="about.html" data-page="about.html">About Us</a>
+      <a href="testimonials.html" data-page="testimonials.html">Testimonials</a>
+      <a href="winning.html" data-page="winning.html" class="active">Winning Numbers</a>
+      <a href="check.html" data-page="check.html">Check Status</a>
+      <a href="connect.html" data-page="connect.html">Connect to Agent</a>
+      <a href="faq.html" data-page="faq.html">FAQ</a>
+      <a href="user-login.html" class="login-link" data-page="user-login.html">Player Login</a>
+      <a href="agent-login.html" class="portal-link" data-page="agent-login.html">Agent Portal</a>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <span class="kicker">Winning Numbers</span>
+    <h1>Every draw. Every winner. Published.</h1>
+    <p class="sub">Live announcements, the last 3 months, and a <em>lifetime archive</em> of winning numbers.</p>
+  </section>
+
+  <h2 class="section-title">Latest draw</h2>
+  <div class="center mb">
+    <span class="pill warn">Draw of <span id="latest-date"></span></span>
+    <div class="balls" id="latest-nums"></div>
+  </div>
+
+  <h2 class="section-title">Last 3 months</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Draw date</th>
+          <th>Winning numbers</th>
+          <th>Winners (1st · 2nd · 3rd · Special · C1 · C2 · C3)</th>
+        </tr>
+      </thead>
+      <tbody id="draws-body"></tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title">Lifetime — which numbers have won most</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Times won</th>
+          <th style="width:40%">Frequency</th>
+        </tr>
+      </thead>
+      <tbody id="lifetime-body"></tbody>
+    </table>
+  </div>
+
+  <div class="btn-row">
+    <a class="btn btn-teal" href="check.html">Check a code against these draws</a>
+    <a class="btn btn-mag" href="connect.html">Get your numbers before Sunday</a>
+  </div>
+
+  <div class="demo-note">
+    <strong>Demo note.</strong> Draw data is sample data for preview. Real draw results will be published here after every live event, along with the lifetime archive.
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="fbrand">MineBig.com <span style="color:var(--gold)">V2.0</span></div>
+  Same trust. Same dreams. Improved experience, better care.<br>
+  Every Sunday 12 PM · Live draw · 7 prize tiers<br>
+  <a href="connect.html">Connect to an agent</a> · <a href="faq.html">FAQ</a> · <a href="play-responsibly.html">Play Responsibly</a> · <a href="play-responsibly.html#privacy">Privacy</a> · <a href="play-responsibly.html#terms">Terms</a><br>
+  <span style="opacity:.7">Contact: <a href="mailto:hello@minebig.com">hello@minebig.com</a></span> · <span style="opacity:.7">© 2026 MineBig.com</span>
+  <div class="newsletter">
+    <input type="email" id="nl-email" placeholder="Email for draw alerts">
+    <button id="nl-submit" type="button">Subscribe</button>
+    <span class="nl-msg" id="nl-msg"></span>
+  </div>
+  <span class="gold" style="font-weight:700;letter-spacing:1px">18+ · Play responsibly.</span>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/winning.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
