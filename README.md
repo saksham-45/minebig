@@ -1,8 +1,12 @@
 # MineBig.com V2.0 — Website + Agent Portal (Demo Prototype)
 
+**Live demo:** https://minebig.vercel.app
+**Source:** https://github.com/saksham-45/minebig (public)
+
 Functional preview of the MineBig.com relaunch: a public lottery/draw website
 and separate login areas for players and agents. Pure static HTML/CSS/JS — no
-build step, no backend.
+build step, no backend. Deploys automatically on every push to `main` (Vercel +
+GitHub integration).
 
 **This is a demo prototype, not the live product.** All data is sample data
 stored in the visitor's browser (localStorage). Prize amounts, logo, photos,
