@@ -1228,3 +1228,63 @@ main a, .footer a, .demo-note strong, .demo-note a { display: inline-block; }
   .tx-pages a .pn { display: none; }
   .tx-pages a { padding: 5px 8px; }
 }
+
+/* ============================================================
+   Gemini 3.1 Pro QA batch — footer ctrl, newsletter, contrast,
+   scanlines, buttons, flat bars, nav chips
+   ============================================================ */
+
+/* footer ctrl: nowrap pairs, uniform gaps, centered rows */
+.footer .ctrl {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  margin: 10px 0 4px;
+}
+.footer .ctrl span { white-space: nowrap; }
+
+/* newsletter: equal heights, centered; stack full-width on phones */
+.newsletter { align-items: center; }
+.newsletter input, .newsletter button { height: 44px; }
+@media (max-width: 760px) {
+  .newsletter input { width: 100%; flex: 1 1 100%; }
+  .newsletter button { width: 100%; }
+}
+
+/* placeholders readable (AA-ish) */
+input::placeholder, textarea::placeholder { color: #a8a8a8; }
+
+/* scanlines: quieter */
+body {
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.013) 0 1px, transparent 1px 3px),
+    var(--bg);
+}
+.crt::after {
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.055) 0 1px, transparent 1px 3px);
+}
+
+/* button rows: equal-width, centered text */
+.btn-row .btn { flex: 1 1 0; text-align: center; }
+.btn-row .btn:only-child { flex: 0 1 auto; }
+
+/* 18+ block: balanced */
+.legal-18 { padding: 6px 16px; line-height: 1; display: inline-block; }
+
+/* lifetime bars: flat teletext yellow (no gradient) */
+#lifetime-body td div > div {
+  background: var(--yellow) !important;
+}
+
+/* table cells: breathe, chips centered */
+.table-wrap td { line-height: 1.6; }
+td .num-chip { vertical-align: middle; }
+
+/* nav chips: even geometry */
+.tx-pages a { display: inline-block; line-height: 1.1; }
+/* check-page actions: full card width */
+.grid2 .card .center .btn { width: 100%; }
+/* section icons: fixed slot, centered */
+.feature h3 { align-items: center; }
+.feature h3 .ico { display: inline-block; width: 1.3em; text-align: center; }
