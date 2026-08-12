@@ -9,30 +9,12 @@
   function guard() {
     const name = localStorage.getItem("minebig_user");
     const page = location.pathname.split("/").pop();
-    if (page === "user-login.html") {
-      if (name) location.href = "user-portal.html";
-      return;
-    }
     if (page === "user-portal.html" && !name) {
-      location.href = "user-login.html";
+      location.href = "login.html?role=player";
       return;
     }
     const who = byId("user-name");
     if (who && name) who.textContent = name;
-  }
-
-  function bindLogin() {
-    const btn = byId("user-login-btn");
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const name = (byId("user-login-name").value || "").trim();
-      const pass = byId("user-login-pass").value;
-      const err = byId("user-login-err");
-      if (!name) { err.textContent = "Enter your name to continue."; return; }
-      if (!pass) { err.textContent = "Enter a password. (Demo: any password works.)"; return; }
-      localStorage.setItem("minebig_user", name);
-      location.href = "user-portal.html";
-    });
   }
 
   function bindLogout() {
@@ -40,7 +22,7 @@
     if (!btn) return;
     btn.addEventListener("click", () => {
       localStorage.removeItem("minebig_user");
-      location.href = "user-login.html";
+      location.href = "login.html";
     });
   }
 
@@ -114,7 +96,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     guard();
-    bindLogin();
     bindLogout();
     bindAddCode();
     renderLatest();

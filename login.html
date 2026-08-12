@@ -3,20 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connect to Agent — MineBig.com</title>
+<meta name="theme-color" content="#000000">
+<title>Login — MineBig.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="crt">
-<div class="demo-tag">Demo Prototype — Not Live</div>
+<div class="demo-tag">*** Demo Prototype — Not Live ***</div>
+
 <nav class="nav tx-bar">
   <div class="bar-row">
     <a class="brand" href="index.html">
       <span class="ball-logo">M</span>
       <span>MineBig.com <span class="v2">V2.0</span></span>
     </a>
-    <span class="pg">P160</span>
+    <span class="pg">P500</span>
     <span class="clk" id="tx-clock"></span>
     <div class="search-wrap">
       <button class="search-btn" id="search-btn" type="button">⌕ Search</button>
@@ -43,57 +45,50 @@
       <a href="testimonials.html" data-page="testimonials.html"><span class="pn">P130</span> Testimonials</a>
       <a href="winning.html" data-page="winning.html"><span class="pn">P140</span> Results</a>
       <a href="check.html" data-page="check.html"><span class="pn">P150</span> Check</a>
-      <a href="connect.html" data-page="connect.html" class="active"><span class="pn">P160</span> Agent</a>
+      <a href="connect.html" data-page="connect.html"><span class="pn">P160</span> Agent</a>
       <a href="faq.html" data-page="faq.html"><span class="pn">P170</span> FAQ</a>
       <a href="play-responsibly.html" data-page="play-responsibly.html"><span class="pn">P200</span> 18+</a>
-      <a href="login.html" class="portal" data-page="login.html"><span class="pn">P500</span> Login</a>
+      <a href="login.html" class="portal" data-page="login.html" class="active"><span class="pn">P500</span> Login</a>
     </div>
   </div>
 </nav>
 
 <main class="page">
   <section class="hero">
-    <h1>Your agent is one step away.</h1>
-    <p class="sub">Tell us a little about you — a verified agent will reach out to <em>sell your ticket, hand your receipt, and deliver your prize.</em></p>
+    <h1>Welcome to <span class="yl">MineBig</span></h1>
+    <p class="sub">Select your channel: <em>player or agent.</em></p>
   </section>
 
   <div class="card form-card">
-    <form id="lead-form" onsubmit="return false">
-      <label for="lead-name">Your name</label>
-      <input type="text" id="lead-name" placeholder="Full name">
+    <div class="card-h"><span>Login — Select Role</span><span class="teal">P500</span></div>
 
-      <label for="lead-phone">Phone number</label>
-      <input type="tel" id="lead-phone" placeholder="e.g. 012-345 6789">
-
-      <label for="lead-area">Area / city</label>
-      <input type="text" id="lead-area" placeholder="e.g. Kuala Lumpur">
-
-      <label for="lead-time">Preferred contact time</label>
-      <select id="lead-time">
-        <option value="anytime">Anytime</option>
-        <option value="morning">Morning (9am – 12pm)</option>
-        <option value="afternoon">Afternoon (12pm – 6pm)</option>
-        <option value="evening">Evening (6pm – 10pm)</option>
-      </select>
-
-      <label for="lead-note">Anything else? (optional)</label>
-      <textarea id="lead-note" rows="3" placeholder="e.g. I want to pick my numbers for this Sunday"></textarea>
-
-      <p id="lead-err" style="color:var(--red);font-size:13px;margin-top:10px"></p>
-      <button class="btn btn-gold" id="lead-submit" type="submit">Request a callback</button>
-    </form>
-    <div class="result ok" id="lead-ok">
-      <h3>✅ Request received!</h3>
-      <p>A verified MineBig agent will contact you shortly. Keep an eye on your phone — and good luck on Sunday!</p>
+    <div class="role-select" id="role-select">
+      <div class="role-card" data-role="player" id="role-player" tabindex="0">
+        <span class="role-key">KEY 1</span>
+        <h3>Player</h3>
+        <p>Track my codes &amp; check wins</p>
+      </div>
+      <div class="role-card" data-role="agent" id="role-agent" tabindex="0">
+        <span class="role-key">KEY 2</span>
+        <h3>Agent</h3>
+        <p>Sell, lock codes &amp; log sales</p>
+      </div>
     </div>
-  </div>
 
-  <div class="center mt muted" style="font-size:13px">
-    Prefer email? Write to us at <a class="teal" href="mailto:hello@minebig.com">hello@minebig.com</a>
-  </div>
+    <div id="login-form" style="display:none">
+      <p class="muted" style="text-transform:uppercase" id="role-label">Signed in as Player</p>
+      <label for="login-name">Your name</label>
+      <input type="text" id="login-name" placeholder="e.g. Siti" autocomplete="name">
+      <label for="login-pass">Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+      <p id="login-err" style="color:var(--red);font-size:15px;margin-top:10px"></p>
+      <button class="btn btn-gold" id="login-btn" type="button">Sign in</button>
+      <p class="note" style="margin-top:12px"><a href="#" id="switch-role">← Switch to the other role</a></p>
+    </div>
 
-  <div class="demo-note">
-    <strong>Demo note.</strong> This form is a preview — submissions are stored only in your browser. Real lead routing (email/CRM) will be connected at launch.
+    <div class="demo-note" style="margin-top:18px">
+      <strong>Demo.</strong> Any name and password work — no real authentication in this preview. Players track codes; agents sell tickets. One login, two channels.
+    </div>
   </div>
 </main>
 
@@ -115,7 +110,7 @@
 </footer>
 
 <script src="js/data.js"></script>
-<script src="js/connect.js"></script>
+<script src="js/login.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

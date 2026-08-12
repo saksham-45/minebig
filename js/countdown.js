@@ -1,5 +1,5 @@
 /* ============================================================
-   Upcoming Events — weekly countdown + live window logic
+   Events (P110) — weekly countdown + live window + HOLD
    Every Sunday 12:00 PM local time: 15-minute live event,
    then back to countdown for the next Sunday.
    ============================================================ */
@@ -11,6 +11,9 @@
   const playLeft = document.getElementById("play-left");
   let forcedLive = false;
   let forcedUntil = 0;
+  let held = false;
+  let heldAt = null;
+  let lastTarget = null;
 
   function fmt(n) { return String(n).padStart(2, "0"); }
 
@@ -24,7 +27,7 @@
       `<div class="unit"><div class="num">${fmt(d)}</div><div class="lbl">Days</div></div>` +
       `<div class="unit"><div class="num">${fmt(h)}</div><div class="lbl">Hours</div></div>` +
       `<div class="unit"><div class="num">${fmt(m)}</div><div class="lbl">Minutes</div></div>` +
-      `<div class="unit"><div class="num">${fmt(s)}</div><div class="lbl">Seconds</div></div>`;
+      `<div class="unit"><div class="num sec">${fmt(s)}</div><div class="lbl">Seconds</div></div>`;
   }
 
   function showCountdown(target) {
@@ -44,6 +47,7 @@
 
   function tick() {
     const now = new Date();
+    if (held) return;
     if (forcedLive) {
       if (now.getTime() >= forcedUntil) {
         forcedLive = false;
@@ -56,7 +60,9 @@
     if (liveUntil) {
       showLive(liveUntil);
     } else {
-      showCountdown(MINEBIG.nextSundayNoon(now));
+      const target = MINEBIG.nextSundayNoon(now);
+      lastTarget = target;
+      showCountdown(target);
     }
   }
 
@@ -68,6 +74,19 @@
         if (forcedLive) forcedUntil = Date.now() + 15 * 60 * 1000;
         btn.textContent = forcedLive ? "Exit live preview" : "Preview live event";
         tick();
+      });
+    }
+    const holdBtn = document.getElementById("demo-hold");
+    if (holdBtn) {
+      holdBtn.addEventListener("click", () => {
+        held = !held;
+        if (held) {
+          heldAt = lastTarget ? lastTarget.getTime() : Date.now();
+          holdBtn.textContent = "RELEASE countdown";
+        } else {
+          holdBtn.textContent = "HOLD countdown";
+          tick();
+        }
       });
     }
     tick();

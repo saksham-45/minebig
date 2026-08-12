@@ -12,12 +12,12 @@
   function guard() {
     const name = MINEBIG.agentName();
     const page = location.pathname.split("/").pop();
-    if (page === "agent-login.html") {
+    if (page === "login.html") {
       if (name) location.href = "agent-portal.html";
       return;
     }
     if (page === "agent-portal.html" && !name) {
-      location.href = "agent-login.html";
+      location.href = "login.html?role=agent";
       return;
     }
     if (name) {
@@ -44,7 +44,7 @@
     if (!btn) return;
     btn.addEventListener("click", () => {
       MINEBIG.clearAgent();
-      location.href = "agent-login.html";
+      location.href = "login.html";
     });
   }
 

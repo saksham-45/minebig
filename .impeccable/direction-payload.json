@@ -1,0 +1,48 @@
+{
+  "title": "Choose the visual world",
+  "question": "The roll assigned Ang Pow — Gold Foil Luck. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Ang Pow — Gold Foil Luck",
+      "kicker": "THE ROLL",
+      "lineage": "The red packet: Malaysia's universal small gift of hope, folded paper, gold foil",
+      "thesis": "A lottery as a lacquered gift box — quiet, precious, auspicious.",
+      "palette": ["#0e0a06", "#8f1d1d", "#c92a2a", "#e8b64c", "#f5e6c8"],
+      "materials": ["lacquered dark wood", "cinnabar red paper", "gold foil emboss", "soft candlelight"],
+      "viewport": "Deep near-black hero; the brand name embossed in gold foil; one cinnabar-red countdown card glowing like a packet left on a table; the six numbers as foil-stamped seals.",
+      "risk": "Red can read loud if the dark ground and foil restraint slip — the discipline is what makes it silent.",
+      "board": "",
+      "hero": ""
+    },
+    {
+      "id": "challenger-splitflap",
+      "label": "Split-Flap Draw Board",
+      "lineage": "Rail concourse split-flap departure boards",
+      "thesis": "The draw as a departure board: every Sunday, the numbers arrive.",
+      "case": "Strong fusion: the draw reveal becomes a cascading split-flap board — the single most legible way to show six numbers landing; audience identification is the traveler's shared gaze.",
+      "sketch": "",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-split-flap-concourse-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-split-flap-concourse.webp"
+    },
+    {
+      "id": "challenger-teletext",
+      "label": "Teletext Results Service",
+      "lineage": "Broadcast teletext magazines — numbered pages on black",
+      "thesis": "The catalog as a broadcast index: results are pages, not sections.",
+      "case": "Fuses plausibly: winning numbers as a 40-by-24 broadcast page with a REVEAL state for ticket checks; risks feeling dated-cool rather than trustworthy-luxury.",
+      "sketch": "",
+      "hero": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/broadcast-programming-teletext-service.webp"
+    }
+  ],
+  "reroll": true,
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "What a lottery site ships: neon jackpot glow, confetti, flashing balls — executed impeccably.",
+    "viewport": "The arrangement a visitor expects from a lottery site, at full craft.",
+    "sketch": ""
+  },
+  "steer": true
+}

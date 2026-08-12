@@ -4,7 +4,7 @@
 **Source:** https://github.com/saksham-45/minebig (public)
 
 Functional preview of the MineBig.com relaunch: a public lottery/draw website
-and separate login areas for players and agents. Pure static HTML/CSS/JS — no
+and separate player/agent areas behind one login. Pure static HTML/CSS/JS — no
 build step, no backend. Deploys automatically on every push to `main` (Vercel +
 GitHub integration).
 
@@ -17,49 +17,48 @@ online, or collects prizes online. The website informs and connects; tickets,
 receipts and prizes are handled face to face by verified agents. There is no
 cart, no checkout, no wallet, and no payment page.
 
+## Visual world — "Teletext Results Service"
+
+The site is designed as a broadcast teletext magazine (the chosen direction
+from the impeccable design-roll flow):
+
+- Flat black CRT ground with subtle scanlines; the broadcast eight — white
+  body, yellow double-height headers, cyan live figures, green available,
+  red alerts; no gradients, no blur, no rounded corners
+- VT323 bitmap typeface; block-mosaic number tiles; hard 2px rules
+- Page-number navigation: P100 Home · P110 Events · P120 About · P130
+  Testimonials · P140 Results · P150 Check · P160 Agent · P170 FAQ · P200
+  18+ · P500 Login · P510 My Account · P520 Agent Portal
+- Broadcast idioms: live clock in the header bar, blinking seconds, HOLD
+  (freezes the countdown), REVEAL (ticket results), keyed-digit input
+  (on-screen keypad on the Check page), subpage index navigation on mobile
+- Structural research from Magnum 4D still applies to content: results-first
+  homepage, how-the-draw-works transparency, where-to-claim, lucky number
+  generator, FAQ, responsible play, newsletter footer
+
 ## Pages
 
 Public website:
 
 | Page | Path | What it does |
 |---|---|---|
-| Home | `index.html` | Hero tagline, short About blurb with “More →”, latest draw results, lucky number generator, how-the-draw-works steps, where-to-claim, feature cards |
-| Upcoming Events | `upcoming.html` | Live countdown to Sunday 12:00 PM; 15-min live window with playback timer; “Preview live event” demo toggle |
-| About Us | `about.html` | 25-year relaunch story + “about this website and how it works” |
-| Testimonials | `testimonials.html` | Latest-draw winners grouped by the 7 prize tiers |
-| Winning Numbers | `winning.html` | Latest draw, last 3 months of draws, lifetime number frequency |
-| Check Status | `check.html` | Ticket status lookup + live number availability with suggested alternatives |
-| Connect to Agent | `connect.html` | Lead form (name, phone, area, preferred time) + fallback email |
-| FAQ | `faq.html` | Help accordion: draw times, buying, codes, prizes, claiming |
-| Play Responsibly | `play-responsibly.html` | Responsible-play commitments, privacy, terms & disclaimer (anchored sections) |
+| Home | `index.html` (P100) | Hero, latest draw feed, lucky number generator, how-the-draw-works, where-to-claim |
+| Upcoming Events | `upcoming.html` (P110) | Live countdown to Sunday 12 PM; 15-min live window; preview + HOLD demo controls |
+| About Us | `about.html` (P120) | 25-year relaunch story + how the site works |
+| Testimonials | `testimonials.html` (P130) | Latest-draw winners grouped by the 7 prize tiers |
+| Winning Numbers | `winning.html` (P140) | Latest draw, last 3 months, lifetime number frequency |
+| Check Status | `check.html` (P150) | Ticket status lookup (keypad entry) + availability with suggestions |
+| Connect to Agent | `connect.html` (P160) | Lead form (name, phone, area, preferred time) + email |
+| FAQ | `faq.html` (P170) | Help accordion |
+| Play Responsibly | `play-responsibly.html` (P200) | Responsible play, privacy, terms (anchored) |
 
-Player area (separate from agents):
-
-| Page | Path | What it does |
-|---|---|---|
-| Player Login | `user-login.html` | Demo sign-in (any name + password) |
-| My Account | `user-portal.html` | Save ticket codes, see win/sold/not-found status, latest draw, reminders |
-
-Agent Portal (separate login, agents only):
+One login, two channels:
 
 | Page | Path | What it does |
 |---|---|---|
-| Agent Login | `agent-login.html` | Demo sign-in (any name + password) |
-| Agent Portal | `agent-portal.html` | Pick 6 numbers with live availability → buy & lock the code → record the sale → permanent log book → winner announcements |
-
-## Design research — Magnum 4D
-
-Structure and elements follow research on magnum4d.my (the closest comparable
-Malaysian lottery site), adapted to MineBig's agent-mediated, no-payments model:
-
-- Results-first homepage (latest draw + winners on the home page)
-- “How the draw works” transparency steps (Magnum's “random and fair” trust block)
-- “Where to claim” guidance (Magnum's claim table → agent face-to-face model)
-- Lucky number generator with copy (Magnum's “your lucky number” widget)
-- 7-tier prize presentation (1st / 2nd / 3rd / Special / C1–C3), like Magnum's
-  top-prize / special / consolation structure
-- FAQ / Help, Play Responsibly, Privacy & Terms pages
-- Newsletter signup + contact + legal links in the footer, “18+ play responsibly”
+| Login | `login.html` (P500) | Single login — the user selects **Player** or **Agent** (keys 1/2), then signs in |
+| My Account | `user-portal.html` (P510) | Player channel: save ticket codes, see win/sold/not-found status, latest draw |
+| Agent Portal | `agent-portal.html` (P520) | Agent channel: pick 6 numbers with live availability → buy & lock the code → record the sale → permanent log book → winner announcements |
 
 ## Weekly logic (implemented)
 
@@ -76,10 +75,11 @@ Malaysian lottery site), adapted to MineBig's agent-mediated, no-payments model:
 
 - Winning demo code: `4 19 27 33 41 49` → shows the WINNER result.
 - Taken demo numbers: `7`, `12`, `19`, `23`, `27`, `33`, `41`, `49`, `56`, `61`, `78`
-  (any of these triggers the “taken” state and suggested alternatives).
-- `Upcoming Events` → “Preview live event” shows the 15-minute live state anytime.
-- Player Login and Agent Login are separate — try both (any credentials work).
-- Agent Portal → “Demo: reset this week's taken numbers” clears the pool.
+  (any of these triggers the "taken" state and suggested alternatives).
+- `Events` → "Preview live event" shows the 15-minute live state; "HOLD
+  countdown" freezes the tick.
+- `Login` → pick Player or Agent (any credentials work), or press 1 / 2.
+- Agent Portal → "Demo: reset this week's taken numbers" clears the pool.
 
 ## Run locally
 
@@ -89,15 +89,15 @@ python3 -m http.server 8099
 # open http://127.0.0.1:8099
 ```
 
-Any static file server works (`npx serve .`, VS Code Live Server, etc.).
-The site uses Google Fonts (Poppins/Orbitron) over CDN with system-font fallbacks.
+Any static file server works. The site uses the VT323 Google Font with
+monospace fallbacks.
 
 ## Deploy (free)
 
 The site is fully static — drop the folder onto any static host:
 
+- **Vercel (connected)** — push to `main`, auto-deploys to production
 - **Netlify Drop** — drag the folder into https://app.netlify.com/drop
-- **Vercel** — `npx vercel` in this folder
 - **GitHub Pages** — push to a repo and enable Pages (root branch)
 
 ## Open items before launch

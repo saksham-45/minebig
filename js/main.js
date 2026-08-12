@@ -1,68 +1,39 @@
 /* ============================================================
-   MineBig.com V2.0 — shared site JS: sparkles + nav state
+   MineBig V2.0 — shared JS: broadcast clock, pages index, misc
    ============================================================ */
 
 (function () {
-  // ---- floating sparkle particles (gold / magenta / teal) ----
-  function sparkles() {
-    const canvas = document.getElementById("sparkles");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const DPR = window.devicePixelRatio || 1;
-    let W, H;
-    const COLORS = ["255,209,102", "255,45,149", "34,211,238", "168,85,247"];
-    const parts = [];
-
-    function resize() {
-      W = canvas.width = window.innerWidth * DPR;
-      H = canvas.height = window.innerHeight * DPR;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      parts.length = 0;
-      const count = Math.min(70, Math.floor(window.innerWidth / 18));
-      for (let i = 0; i < count; i++) parts.push(make(0, 0));
-    }
-    function make(_w, _h) {
-      return {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        r: 0.6 + Math.random() * 2.2,
-        vy: -0.12 - Math.random() * 0.45,
-        vx: (Math.random() - 0.5) * 0.2,
-        c: COLORS[Math.floor(Math.random() * COLORS.length)],
-        a: 0.2 + Math.random() * 0.55,
-        tw: Math.random() * Math.PI * 2,
-      };
-    }
+  // ---- broadcast clock (top bar, cyan, blinking seconds) ----
+  function clock() {
+    const el = document.getElementById("tx-clock");
+    if (!el) return;
     function tick() {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      for (const p of parts) {
-        p.x += p.vx; p.y += p.vy; p.tw += 0.03;
-        if (p.y < -8 || p.x < -8 || p.x > window.innerWidth + 8) {
-          Object.assign(p, make());
-          p.y = window.innerHeight + 6;
-        }
-        const alpha = p.a * (0.6 + 0.4 * Math.sin(p.tw));
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.c},${alpha.toFixed(3)})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = `rgba(${p.c},0.9)`;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-      requestAnimationFrame(tick);
+      const d = new Date();
+      const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      const hh = String(d.getHours()).padStart(2, "0");
+      const mm = String(d.getMinutes()).padStart(2, "0");
+      const ss = String(d.getSeconds()).padStart(2, "0");
+      el.innerHTML = `${days[d.getDay()]} ${hh}:${mm}<span class="sec">:${ss}</span>`;
     }
-    window.addEventListener("resize", resize);
-    resize();
     tick();
+    setInterval(tick, 1000);
+  }
+
+  // ---- pages index toggle (mobile) ----
+  function pagesToggle() {
+    const btn = document.getElementById("pages-toggle");
+    const box = document.getElementById("tx-pages");
+    if (!btn || !box) return;
+    btn.addEventListener("click", () => {
+      box.classList.toggle("open");
+      btn.textContent = box.classList.contains("open") ? "✕ Close Index" : "☰ Pages / Index";
+    });
   }
 
   // ---- nav active state ----
   function navState() {
     const here = location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll(".nav-links a[data-page]").forEach((a) => {
+    document.querySelectorAll(".tx-pages a[data-page]").forEach((a) => {
       a.classList.toggle("active", a.dataset.page === here);
     });
   }
@@ -75,21 +46,47 @@
     if (!btn || !input || !msg) return;
     btn.addEventListener("click", () => {
       const email = input.value.trim();
-      if (!email.includes("@")) { msg.textContent = "Enter a valid email."; msg.style.color = "var(--red)"; return; }
+      if (!email.includes("@")) { msg.textContent = "INVALID EMAIL"; msg.style.color = "var(--red)"; return; }
       try {
         const subs = JSON.parse(localStorage.getItem("minebig_newsletter")) || [];
         subs.push({ email, at: Date.now() });
         localStorage.setItem("minebig_newsletter", JSON.stringify(subs));
       } catch (e) { /* preview */ }
-      msg.textContent = "Subscribed — draw alerts coming your way!";
+      msg.textContent = "SUBSCRIBED — DRAW ALERTS ON THE WAY";
       msg.style.color = "var(--green)";
       input.value = "";
     });
   }
 
+  // ---- keyword search panel ----
+  function searchPanel() {
+    const btn = document.getElementById("search-btn");
+    const panel = document.getElementById("search-panel");
+    if (!btn || !panel) return;
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = panel.classList.toggle("open");
+      btn.classList.toggle("open", open);
+    });
+    document.addEventListener("click", (e) => {
+      if (!panel.contains(e.target) && e.target !== btn) {
+        panel.classList.remove("open");
+        btn.classList.remove("open");
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        panel.classList.remove("open");
+        btn.classList.remove("open");
+      }
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
-    sparkles();
+    clock();
+    pagesToggle();
     navState();
     newsletter();
+    searchPanel();
   });
 })();

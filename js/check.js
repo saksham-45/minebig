@@ -3,6 +3,26 @@
    ============================================================ */
 
 (function () {
+  // ---- teletext keypad: keyed digits are the whole input ----
+  const keypad = document.getElementById("keypad");
+  const ticketInput = document.getElementById("ticket-code");
+  if (keypad && ticketInput) {
+    keypad.addEventListener("click", (e) => {
+      const k = e.target.dataset.k;
+      if (!k) return;
+      if (k === "CLR") { ticketInput.value = ""; ticketInput.focus(); return; }
+      if (k === "ENT") { document.getElementById("check-ticket").click(); return; }
+      ticketInput.value += k;
+      ticketInput.focus();
+    });
+    // physical digit keys work too when not typing in an input
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+      if (/^[0-9]$/.test(e.key)) ticketInput.value += e.key;
+      if (e.key === "Enter") document.getElementById("check-ticket").click();
+    });
+  }
+
   // ---- ticket status ----
   const ticketBtn = document.getElementById("check-ticket");
   if (ticketBtn) {
@@ -15,7 +35,7 @@
       if (r.status === "win") {
         res.classList.add("win");
         res.innerHTML =
-          `<h3>🎉 WINNER — This code won!</h3>` +
+          `<h3>★ WINNER — This code won!</h3>` +
           `<div class="big-nums">${nums}</div>` +
           `<p>This code won in the latest Sunday draw. Collect your prize through your agent — <a class="teal" href="connect.html">connect with an agent</a> to arrange the handover.</p>`;
       } else if (r.status === "taken") {
