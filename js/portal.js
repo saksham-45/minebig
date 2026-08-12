@@ -201,11 +201,11 @@
       const d = new Date(e.at);
       const stamp = d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
       return `<tr>
-        <td>${stamp}</td>
-        <td>${e.code.replace(/-/g, " - ")}</td>
-        <td>${escapeHtml(e.buyer)}</td>
-        <td>${escapeHtml(e.phone)}</td>
-        <td><span class="won-tag" style="background:linear-gradient(90deg,#4ade80,#22d3ee);color:#04222b">PERMANENT</span></td>
+        <td data-label="Time">${stamp}</td>
+        <td data-label="Code sold">${e.code.replace(/-/g, " - ")}</td>
+        <td data-label="Buyer">${escapeHtml(e.buyer)}</td>
+        <td data-label="Phone">${escapeHtml(e.phone)}</td>
+        <td data-label="Status"><span class="won-tag" style="background:linear-gradient(90deg,#4ade80,#22d3ee);color:#04222b">PERMANENT</span></td>
       </tr>`;
     }).join("");
   }
@@ -217,7 +217,7 @@
     const rows = MINEBIG.WINNERS.map((w) => {
       const nums = w.nums.map((n) => `<span class="num-chip">${n}</span>`).join("");
       const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "—").join(" · ");
-      return `<tr><td>${w.date}</td><td>${nums}</td><td>${escapeHtml(tiers)}</td></tr>`;
+      return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning numbers">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
     }).join("");
     tbody.innerHTML = rows;
     const latestNums = latest.nums.map((n) => `<span class="ball sm mag">${n}</span>`).join("");

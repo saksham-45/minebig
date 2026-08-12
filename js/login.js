@@ -10,7 +10,9 @@
   function selectRole(r) {
     role = r;
     document.querySelectorAll(".role-card").forEach((c) => {
-      c.classList.toggle("selected", c.dataset.role === r);
+      const on = c.dataset.role === r;
+      c.classList.toggle("selected", on);
+      c.setAttribute("aria-pressed", String(on));
     });
     const form = byId("login-form");
     form.style.display = "block";

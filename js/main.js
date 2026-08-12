@@ -25,8 +25,9 @@
     const box = document.getElementById("tx-pages");
     if (!btn || !box) return;
     btn.addEventListener("click", () => {
-      box.classList.toggle("open");
-      btn.textContent = box.classList.contains("open") ? "✕ Close Index" : "☰ Pages / Index";
+      const open = box.classList.toggle("open");
+      btn.textContent = open ? "✕ Close" : "☰ Menu";
+      btn.setAttribute("aria-expanded", String(open));
     });
   }
 
@@ -63,22 +64,20 @@
     const btn = document.getElementById("search-btn");
     const panel = document.getElementById("search-panel");
     if (!btn || !panel) return;
+    function setOpen(open) {
+      panel.classList.toggle("open", open);
+      btn.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", String(open));
+    }
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const open = panel.classList.toggle("open");
-      btn.classList.toggle("open", open);
+      setOpen(!panel.classList.contains("open"));
     });
     document.addEventListener("click", (e) => {
-      if (!panel.contains(e.target) && e.target !== btn) {
-        panel.classList.remove("open");
-        btn.classList.remove("open");
-      }
+      if (!panel.contains(e.target) && e.target !== btn) setOpen(false);
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        panel.classList.remove("open");
-        btn.classList.remove("open");
-      }
+      if (e.key === "Escape") setOpen(false);
     });
   }
 
