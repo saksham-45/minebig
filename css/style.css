@@ -1222,3 +1222,9 @@ a.btn, button.btn { min-height: 48px; }
 /* prose links wrap as whole units — never split mid-word, never
    produce overlapping hit-boxes across wrapped lines */
 main a, .footer a, .demo-note strong, .demo-note a { display: inline-block; }
+
+/* tablet: drop page numbers so the tab strip holds one row */
+@media (min-width: 761px) and (max-width: 1120px) {
+  .tx-pages a .pn { display: none; }
+  .tx-pages a { padding: 5px 8px; }
+}
