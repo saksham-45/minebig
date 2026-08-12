@@ -1193,3 +1193,32 @@ a.btn, button.btn { min-height: 48px; }
   .pill, .tier-chip { padding: 7px 12px; }
   .keypad button { min-height: 56px; }
 }
+
+/* footer link rows: flex, never split mid-word, never overlap */
+.f-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  margin: 10px 0 4px;
+}
+.f-links a { white-space: nowrap; }
+.f-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 10px;
+  margin-top: 6px;
+  opacity: 0.75;
+}
+.f-contact a { white-space: nowrap; }
+
+/* carousel arrows live in the header row, never over the track */
+.car-arrow { position: static; }
+.carousel .car-head { position: relative; }
+.carousel .car-head > div { display: flex; gap: 8px; }
+.car-arrow.prev, .car-arrow.next { left: auto; right: auto; }
+
+/* prose links wrap as whole units — never split mid-word, never
+   produce overlapping hit-boxes across wrapped lines */
+main a, .footer a, .demo-note strong, .demo-note a { display: inline-block; }
