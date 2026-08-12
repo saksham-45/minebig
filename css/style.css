@@ -1132,7 +1132,7 @@ body {
 .newsletter input, .newsletter button { min-height: 44px; }
 .search-panel a { min-height: 44px; align-items: center; }
 .car-arrow { width: 44px; height: 44px; }
-.car-dots button { width: 16px; height: 16px; }
+.car-dots button { width: 16px; height: 16px; font-size: 0; }
 .blurb .more { padding: 4px 2px; }
 .footer a { padding: 3px 2px; }
 a.btn, button.btn { min-height: 48px; }
