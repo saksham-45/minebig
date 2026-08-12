@@ -28,7 +28,7 @@ Broadcast eight on black (teletext's fixed palette, not a picked scheme):
 - Cyan `#00ffff` — live figures, countdown, links, availability
 - Magenta `#ff00ff` — special tier, V2.0 chip, accents
 - Green `#00ff00` — available states
-- Red `#ff0000` — alerts, LIVE, demo band, 18+ (always as block fill with black glyphs)
+- Red `#ff0000` — alerts, LIVE, 18+ (always as block fill with black glyphs)
 
 Rule: colored elements are filled blocks with black glyphs — never colored text
 on dark at small sizes. Contrast floor: black-on-color blocks everywhere.

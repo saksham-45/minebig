@@ -168,7 +168,7 @@
              <div class="logbook-actions" style="justify-content:flex-start">
                <input type="text" id="buyer-${t.code}" placeholder="Buyer name" style="width:160px">
                <input type="tel" id="phone-${t.code}" placeholder="Phone" style="width:160px">
-               <button class="btn btn-teal" data-code="${t.code}" data-rec="1" style="padding:10px 18px">Record sale</button>
+               <button class="btn btn-teal" data-code="${t.code}" data-rec="1" style="padding:10px 18px">Record</button>
              </div>`}
       </div>`;
     }).join("");

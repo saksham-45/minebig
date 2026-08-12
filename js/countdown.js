@@ -72,7 +72,7 @@
       btn.addEventListener("click", () => {
         forcedLive = !forcedLive;
         if (forcedLive) forcedUntil = Date.now() + 15 * 60 * 1000;
-        btn.textContent = forcedLive ? "Exit live preview" : "Preview live event";
+        btn.textContent = forcedLive ? "Exit preview" : "Preview live";
         tick();
       });
     }
@@ -84,7 +84,7 @@
           heldAt = lastTarget ? lastTarget.getTime() : Date.now();
           holdBtn.textContent = "RELEASE countdown";
         } else {
-          holdBtn.textContent = "HOLD countdown";
+          holdBtn.textContent = "Hold timer";
           tick();
         }
       });

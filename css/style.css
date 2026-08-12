@@ -1025,3 +1025,87 @@ details.faq-item p { color: var(--ink); font-size: 17px; line-height: 1.55; padd
   .search-btn { padding: 6px 10px; font-size: 13px; }
   .tx-pages a.portal { margin-left: 0; }
 }
+
+/* ============================================================
+   Widget polish — unified metrics, cleaner small components
+   ============================================================ */
+
+/* buttons: consistent touch height */
+.btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
+.btn-big { min-height: 56px; }
+
+/* countdown cells: yellow datum edge, tight grid */
+.countdown .unit {
+  border-color: #666;
+  position: relative;
+  padding-top: 12px;
+}
+.countdown .unit::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  height: 4px;
+  background: var(--yellow);
+}
+.countdown .num { letter-spacing: 0.02em; }
+.countdown .lbl { letter-spacing: 2.5px; }
+.next-winner .countdown .unit::before { height: 3px; }
+
+/* mini balls: uniform, aligned */
+.mini-balls { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.mini-balls .ball { width: 42px; height: 42px; font-size: 21px; }
+
+/* chips + pills: one metric */
+.tier-chip, .pill, .badge {
+  line-height: 1;
+  letter-spacing: 1.2px;
+}
+.tier-chip { padding: 5px 12px; }
+.pill { padding: 5px 12px; }
+
+/* keypad: touch-first */
+.keypad { gap: 8px; }
+.keypad button { min-height: 56px; font-size: 24px; }
+
+/* search panel: jump affordance, tighter rows */
+.search-panel a { justify-content: space-between; }
+.search-panel a::after { content: "›"; color: var(--yellow); font-weight: 700; }
+.search-panel a:hover::after { color: #000; }
+
+/* carousel slides: room to breathe */
+.car-slide { display: flex; flex-direction: column; }
+.car-slide .muted, .car-slide .quote { margin-bottom: 10px; }
+.car-slide .tx-rule { margin: 10px 0; }
+.car-slide .btn { align-self: flex-start; }
+.car-slide .note { text-align: left; margin-top: 8px; }
+#car-results p { line-height: 2; }
+#car-results .tier-chip { margin-right: 6px; }
+
+/* role cards: bigger touch, cleaner key */
+.role-card { padding: 26px 16px; min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.role-card .role-key { margin-bottom: 0; }
+
+/* result boxes: tidy copy */
+.result { padding: 20px; }
+.result p { max-width: 46ch; margin: 0 auto; }
+
+/* ticker: calm on phones */
+@media (max-width: 760px) {
+  .ticker-track { font-size: 14px; }
+}
+
+/* card headers: calmer */
+.card-h { letter-spacing: 1px; }
+.card-h .teal { white-space: nowrap; }
+
+/* hero CTA row: equal presence */
+.hero-banner .cta-row .btn { min-width: 190px; }
+
+/* status pills inside cards: inline rhythm */
+.feature .pill { margin-top: 8px; }
+
+/* logbook actions: aligned fields */
+.logbook-actions input { flex: 1 1 150px; max-width: 220px; }
+.logbook-actions .btn { flex: none; }
