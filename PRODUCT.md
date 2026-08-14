@@ -25,16 +25,16 @@ MineBig.com V2.0 is the relaunch of a 25-year-old word-of-mouth brand: the websi
 
 ## Operating Context
 
-- Draw cadence: every Sunday 12:00 PM (visitor's local time), 15-minute live playback, then countdown to next Sunday.
-- Codes: any 6 natural numbers, subject to weekly availability; availability checked live with suggested alternatives; pool resets weekly.
-- Prizes: 7 tiers (1st, 2nd, 3rd, Special, Consolation 1–3), currency RM; amounts still TBD.
+- Draw cadence: every Sunday 12:00 PM (visitor's local time), 15-minute live playback, then countdown to next Sunday. One countdown per game.
+- Games: MineBig 4D (4-digit number) and MineBig 6D (6-digit number), per the MineBig content document. Availability is checked live per game; taken numbers are seeded sample data reset weekly. The agent portal retains the legacy 6-natural-number code model for the demo.
+- Prizes: 5 tiers per game (1st, 2nd, 3rd, Special, Consolation), currency RM; amounts still TBD/pending client confirmation.
 - Region: Malaysia. Licensing for the operating entity is an open item.
 - One login page where the user selects their own role (player or agent); player area saves codes and shows status; agent area sells/locks codes and keeps a permanent log book.
 - Demo data (winners, taken numbers, log book) lives in browser localStorage, keyed by week.
 
 ## Capabilities and Constraints
 
-- Public pages: Home (hero, latest draw, lucky number generator, how-the-draw-works, where-to-claim), Upcoming Events (countdown + live preview), About Us (25-year reborn story), Testimonials (7-tier winners), Winning Numbers (3-month + lifetime archive), Check Status (ticket lookup + availability), Connect to Agent (lead form), FAQ, Play Responsibly/Privacy/Terms.
+- Public pages: Home (3-banner slider, countdown, carousel), Next Draw (4D/6D countdowns, game banners, how-draws-work accordion, prize accordions, demo walkthrough), Results & Winners (latest 4D/6D + timeline with winner city/country), MineBig Star Numbers (symbolic dictionary + statistics), Try Your Luck (pick 4D/6D, availability, selection clipboard, agent hand-off), Play Responsibly (21+, limits, support, privacy, terms), Biggest Sensation (content pending), Help (Contact Us + FAQ), About Us (25-year reborn story), Testimonials (prize-tier winners), Check Status (ticket lookup + availability), Careers (content pending).
 - Portals: player login → My Codes; agent login → pick/lock codes, record sales, log book, winner announcements.
 - No payments, no checkout, no wallet, no online transactions of any kind.
 - Static site constraint: no real backend, no real auth, no persistence beyond the browser.
@@ -44,7 +44,7 @@ MineBig.com V2.0 is the relaunch of a 25-year-old word-of-mouth brand: the websi
 
 - Name: MineBig.com; Version 2.0 ("reborn" positioning); tagline "MineBig.com is back, better than ever."; sub-line "Same trust. Same dreams. Improved experience, better care."
 - About Us narrative (locked wording from captain): 25 years of trust passed along word of mouth, long before it was ever about the tech; now reborn under transformed guidance, more refined, in a fresh new attire.
-- 18+ responsible-play stance; Play Responsibly, Privacy, Terms pages exist.
+- 21+ responsible-play stance per the content document (21 used as reference — confirm MineBig's actual age policy); Play Responsibly, Privacy, Disclaimer & Terms pages exist.
 - Captain's design brief for this pass: more beautiful and stylish, "silent yet catchy", fully mobile-device friendly, change every element that needs changing. No payments surface.
 
 ## Evidence on Hand

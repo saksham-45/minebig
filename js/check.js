@@ -31,7 +31,7 @@
       const res = document.getElementById("ticket-result");
       const r = MINEBIG.lookupTicket(input);
       res.className = "result show";
-      const nums = r.code ? r.code.replace(/-/g, " - ") : "";
+      const nums = r.code ? escapeHtml(r.code.replace(/-/g, " - ")) : "";
       if (r.status === "win") {
         res.classList.add("win");
         res.innerHTML =
@@ -50,11 +50,20 @@
           `<h3>Code not found</h3>` +
           `<div class="big-nums">${nums}</div>` +
           `<p>No record of this code this week. Codes reset every Sunday 12 PM — or check the number format (6 numbers, e.g. 4-19-27-33-41-49).</p>`;
+      } else if (r.status === "invalid") {
+        res.classList.add("missing");
+        res.innerHTML =
+          `<h3>Invalid code</h3>` +
+          `<p>Codes are made of 6 natural numbers, separated by spaces, dashes or commas — e.g. <strong>4-19-27-33-41-49</strong>.</p>`;
       } else {
         res.classList.add("missing");
         res.innerHTML = `<h3>Enter a code first</h3><p>Type your 6 numbers, separated by spaces, dashes or commas.</p>`;
       }
     });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
   // ---- number availability ----
@@ -64,7 +73,7 @@
     const suggestEl = document.getElementById("avail-suggest");
     function renderAvail(n) {
       const num = Number(n);
-      if (!Number.isInteger(num) || num <= 0) {
+      if (!/^[0-9]+$/.test(String(n).trim()) || !Number.isInteger(num) || num <= 0) {
         availOut.className = "result show missing";
         availOut.innerHTML = `<h3>Enter a number</h3><p>Type any natural number to check if it is available this week.</p>`;
         suggestEl.classList.remove("show");

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Testimonials — MineBig.com</title>
+<title>Try Your Luck — MineBig.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
           <a href="star-numbers.html#statistics">Statistics<small>The numbers behind the numbers</small></a>
         </div>
       </div>
-      <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
+      <a href="try-your-luck.html" data-page="try-your-luck.html" class="active">Try Your Luck</a>
       <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
       <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
       <div class="drop">
@@ -117,39 +117,50 @@
 
 <main class="page">
   <section class="hero hero-page">
-    <h1>Real people. <span class="gold">Real wins.</span></h1>
-    <p class="sub">Five prize tiers every Sunday — <em>meet the winners of the latest draws.</em></p>
+    <h1>Pick your numbers. <span class="gold">Try your luck.</span></h1>
+    <p class="sub">Choose a game, check availability, and hold your selections — <em>then connect with an agent to complete your purchase.</em></p>
   </section>
 
-  <div id="winners-by-tier"></div>
-
-  <h2 class="section-title">Voices from the community</h2>
+  <!-- 1. NUMBER ENTRY -->
+  <h2 class="section-title">Pick your numbers</h2>
   <div class="tx-rule"></div>
-  <div class="grid3">
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "Trusted for a reason"</h3>
-      <p>"I've been playing through the same agent for years. When my number came up, he came to my house the same day with the prize. That's MineBig."</p>
-      <p class="muted mt" style="margin-top:10px">— Regular player, Penang</p>
+  <div class="card form-card">
+    <h3 class="card-h">Choose your game</h3>
+    <div class="game-selector" id="game-selector">
+      <button type="button" data-game="d4" class="on">
+        <h4>MineBig 4D</h4>
+        <small>Pick your lucky 4 digits, win big.</small>
+      </button>
+      <button type="button" data-game="d6">
+        <h4>MineBig 6D</h4>
+        <small>Six digits, bigger shot at the jackpot.</small>
+      </button>
     </div>
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "Simple and honest"</h3>
-      <p>"No apps, no confusing steps. I pick my numbers, my agent completes the purchase, and I watch the draw live on Sunday. Couldn't be simpler."</p>
-      <p class="muted mt" style="margin-top:10px">— Player, Kuala Lumpur</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "The website changed everything"</h3>
-      <p>"Now I can check my numbers anytime and see the winners published. It feels more transparent than ever — Version 2.0 delivered."</p>
-      <p class="muted mt" style="margin-top:10px">— Player, Johor Bahru</p>
-    </div>
+
+    <label for="pick-number">Your number</label>
+    <input type="text" id="pick-number" inputmode="numeric" placeholder="e.g. 1234" autocomplete="off">
+    <p class="note" id="pick-hint" style="text-align:left">Enter exactly 4 digits for MineBig 4D.</p>
+
+    <button class="btn btn-teal" id="check-avail" type="button" style="width:100%">Check Availability</button>
+    <div class="result" id="avail-result"></div>
   </div>
 
-  <div class="btn-row">
-    <a class="btn btn-gold" href="winning.html">Winning numbers</a>
-    <a class="btn btn-mag" href="connect.html">Join this Sunday</a>
+  <!-- 3. SELECTION CLIPBOARD -->
+  <div class="clipboard" id="clipboard">
+    <div class="cb-head">
+      <h3>Your selection</h3>
+      <span class="cb-count" id="cb-count">0 numbers</span>
+    </div>
+    <div class="cb-items" id="cb-items"></div>
+    <p class="cb-empty" id="cb-empty">Nothing here yet — check a number and add it to your selection.</p>
+    <div class="cb-actions">
+      <a class="btn btn-gold" id="cb-connect" href="connect.html">Connect to an Agent →</a>
+      <button class="btn btn-ghost dark" id="cb-clear" type="button">Clear selection</button>
+    </div>
   </div>
 
   <div class="demo-note">
-    <strong>Demo note.</strong> Winner names, photos and quotes are sample placeholders — real testimonial photos and details will be added before launch. Published results show winner city and country only.
+    <strong>Demo note.</strong> No payment happens on this website — the agent completes the purchase directly with you. Availability is sample data stored in your browser. [Hand-off mechanism — e.g. WhatsApp, live chat, call — pending client confirmation.]
   </div>
 </main>
 
@@ -209,7 +220,7 @@
 <button class="to-top" id="to-top" type="button" aria-label="Back to top">↑</button>
 
 <script src="js/data.js"></script>
-<script src="js/testimonials.js"></script>
+<script src="js/try-luck.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

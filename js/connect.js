@@ -3,7 +3,34 @@
    ============================================================ */
 
 (function () {
+  function byId(id) { return document.getElementById(id); }
+
+  function gameName(id) {
+    const g = MINEBIG.GAMES.find((x) => x.id === id);
+    return g ? g.name : id.toUpperCase();
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
+  // ---- render the Try Your Luck selection handed off to the agent ----
+  function renderHandoff() {
+    const items = byId("cb-items");
+    const count = byId("cb-count");
+    const empty = byId("cb-empty");
+    if (!items) return;
+    const list = MINEBIG.getClipboard();
+    if (count) count.textContent = `${list.length} number${list.length === 1 ? "" : "s"}`;
+    if (empty) empty.style.display = list.length ? "none" : "block";
+    items.innerHTML = list.map((x) =>
+      `<span class="cb-item">${escapeHtml(x.num)} <small>${gameName(x.game)}</small></span>`
+    ).join("");
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    renderHandoff();
+
     const btn = document.getElementById("lead-submit");
     if (!btn) return;
     btn.addEventListener("click", () => {

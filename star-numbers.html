@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Testimonials — MineBig.com</title>
+<title>MineBig Star Numbers — MineBig.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
@@ -117,39 +117,56 @@
 
 <main class="page">
   <section class="hero hero-page">
-    <h1>Real people. <span class="gold">Real wins.</span></h1>
-    <p class="sub">Five prize tiers every Sunday — <em>meet the winners of the latest draws.</em></p>
+    <h1>MineBig <span class="gold">Star Numbers</span></h1>
+    <p class="sub">A symbolic dictionary for your dreams and the statistics behind every draw — <em>two tools for your next pick.</em></p>
   </section>
 
-  <div id="winners-by-tier"></div>
-
-  <h2 class="section-title">Voices from the community</h2>
+  <!-- SUB-PAGE 1: SYMBOLIC DICTIONARY -->
+  <h2 class="section-title" id="dictionary">What does your dream mean?</h2>
   <div class="tx-rule"></div>
-  <div class="grid3">
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "Trusted for a reason"</h3>
-      <p>"I've been playing through the same agent for years. When my number came up, he came to my house the same day with the prize. That's MineBig."</p>
-      <p class="muted mt" style="margin-top:10px">— Regular player, Penang</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "Simple and honest"</h3>
-      <p>"No apps, no confusing steps. I pick my numbers, my agent completes the purchase, and I watch the draw live on Sunday. Couldn't be simpler."</p>
-      <p class="muted mt" style="margin-top:10px">— Player, Kuala Lumpur</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "The website changed everything"</h3>
-      <p>"Now I can check my numbers anytime and see the winners published. It feels more transparent than ever — Version 2.0 delivered."</p>
-      <p class="muted mt" style="margin-top:10px">— Player, Johor Bahru</p>
-    </div>
+  <p class="blurb" style="margin-top:0">Every symbol carries a number. Look up what you saw, and see what it could mean for your next pick.</p>
+  <div class="search-box mt">
+    <input type="text" id="dict-search" placeholder="Search a word or symbol… e.g. Rose, Raven, Flower">
+  </div>
+  <div class="dict-grid" id="dict-grid"></div>
+  <p class="note" id="dict-empty" style="display:none">No symbols match — try a different word.</p>
+  <div class="center mt">
+    <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
   </div>
 
-  <div class="btn-row">
-    <a class="btn btn-gold" href="winning.html">Winning numbers</a>
-    <a class="btn btn-mag" href="connect.html">Join this Sunday</a>
+  <!-- SUB-PAGE 2: STATISTICS -->
+  <h2 class="section-title" id="statistics">The numbers behind the numbers</h2>
+  <div class="tx-rule"></div>
+  <p class="blurb" style="margin-top:0">Explore historical winning number data from across MineBig's lifetime — spot patterns, frequencies, and trends to help guide your picks.</p>
+  <div class="filter-row mt">
+    <button class="filter-chip on" data-days="0" type="button">All-time</button>
+    <button class="filter-chip" data-days="365" type="button">Last year</button>
+    <button class="filter-chip" data-days="90" type="button">Last 90 days</button>
+    <button class="filter-chip" data-days="30" type="button">Last 30 days</button>
+  </div>
+  <div class="stat-row">
+    <div class="card">
+      <h3 class="card-h">MineBig 4D — most drawn digits</h3>
+      <div id="stats-most-d4"></div>
+      <h3 class="card-h" style="margin-top:24px">MineBig 4D — least drawn digits</h3>
+      <div id="stats-least-d4"></div>
+    </div>
+    <div class="card">
+      <h3 class="card-h">MineBig 6D — most drawn digits</h3>
+      <div id="stats-most-d6"></div>
+      <h3 class="card-h" style="margin-top:24px">MineBig 6D — least drawn digits</h3>
+      <div id="stats-least-d6"></div>
+    </div>
+  </div>
+  <div class="demo-note" style="margin-top:18px">
+    <strong>Disclaimer.</strong> Past results do not guarantee future outcomes — every draw is independent and every number has an equal chance. [Final wording pending legal/compliance confirmation.]
+  </div>
+  <div class="center mt">
+    <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
   </div>
 
   <div class="demo-note">
-    <strong>Demo note.</strong> Winner names, photos and quotes are sample placeholders — real testimonial photos and details will be added before launch. Published results show winner city and country only.
+    <strong>Demo note.</strong> Symbol mappings and statistics are sample data for preview. The full word-to-number list comes from the client before launch.
   </div>
 </main>
 
@@ -209,7 +226,7 @@
 <button class="to-top" id="to-top" type="button" aria-label="Back to top">↑</button>
 
 <script src="js/data.js"></script>
-<script src="js/testimonials.js"></script>
+<script src="js/star-numbers.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

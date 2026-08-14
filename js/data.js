@@ -124,12 +124,21 @@ const MINEBIG = (() => {
 
   // ---- demo ticket-status lookup ----
   const DEMO_WIN_CODE = "4-19-27-33-41-49"; // the demo winning code
+  const CODE_PATTERN = /^[0-9]+([\s,\-;]+[0-9]+)*$/;
   function normalize(code) {
     return code.trim().split(/[\s,\-;]+/).filter(Boolean).join("-");
   }
+  function isValidCodeShape(codeStr) {
+    // digits + separators only, exactly 6 natural numbers
+    if (typeof codeStr !== "string" || !CODE_PATTERN.test(codeStr.trim())) return false;
+    const parts = normalize(codeStr).split("-");
+    return parts.length === 6 && parts.every((p) => /^[1-9][0-9]*$/.test(p));
+  }
   function lookupTicket(codeStr) {
-    const c = normalize(codeStr);
-    if (!c) return { status: "missing" };
+    const raw = String(codeStr || "").trim();
+    if (!raw) return { status: "missing" };
+    if (!CODE_PATTERN.test(raw)) return { status: "invalid", code: raw };
+    const c = normalize(raw);
     if (c === DEMO_WIN_CODE) return { status: "win", code: c };
     const nums = c.split("-").map(Number);
     if (nums.some((n) => isTaken(n))) return { status: "taken", code: c };
@@ -148,12 +157,184 @@ const MINEBIG = (() => {
     sessionStorage.removeItem("minebig_agent");
   }
 
+  // ============================================================
+  // MineBig 4D / 6D games (content-document model)
+  // ============================================================
+
+  const GAMES = [
+    {
+      id: "d4",
+      name: "MineBig 4D",
+      digits: 4,
+      tagline: "Pick your lucky 4 digits, win big.",
+      price: "Entry — confirm with client",
+      accent: "gold",
+    },
+    {
+      id: "d6",
+      name: "MineBig 6D",
+      digits: 6,
+      tagline: "Six digits, bigger shot at the jackpot.",
+      price: "Entry — confirm with client",
+      accent: "blue",
+    },
+  ];
+
+  const PRIZE_TIERS = [
+    { key: "first", label: "1st Prize" },
+    { key: "second", label: "2nd Prize" },
+    { key: "third", label: "3rd Prize" },
+    { key: "special", label: "Special" },
+    { key: "consolation", label: "Consolation" },
+  ];
+
+  // Demo draw archive per game — most recent first.
+  // Winner identity is never shown: only city + country (per content doc).
+  const DRAWS = {
+    d4: [
+      { date: "2026-08-09", num: "4821", city: "Kuala Lumpur", country: "Malaysia" },
+      { date: "2026-08-02", num: "1930", city: "Penang", country: "Malaysia" },
+      { date: "2026-07-26", num: "7745", city: "Johor Bahru", country: "Malaysia" },
+      { date: "2026-07-19", num: "0218", city: "Ipoh", country: "Malaysia" },
+      { date: "2026-07-12", num: "6689", city: "Kuching", country: "Malaysia" },
+      { date: "2026-07-05", num: "3417", city: "Kota Kinabalu", country: "Malaysia" },
+      { date: "2026-06-28", num: "9052", city: "Melaka", country: "Malaysia" },
+      { date: "2026-06-21", num: "1834", city: "Shah Alam", country: "Malaysia" },
+      { date: "2026-06-14", num: "5601", city: "Kuala Terengganu", country: "Malaysia" },
+      { date: "2026-06-07", num: "2274", city: "Seremban", country: "Malaysia" },
+      { date: "2026-05-31", num: "4890", city: "Alor Setar", country: "Malaysia" },
+      { date: "2026-05-24", num: "1153", city: "Kuantan", country: "Malaysia" },
+      { date: "2026-05-17", num: "8476", city: "Kuala Lumpur", country: "Malaysia" },
+      { date: "2026-05-10", num: "6602", city: "Miri", country: "Malaysia" },
+      { date: "2026-05-03", num: "3079", city: "Petaling Jaya", country: "Malaysia" },
+    ],
+    d6: [
+      { date: "2026-08-09", num: "482196", city: "Kuala Lumpur", country: "Malaysia" },
+      { date: "2026-08-02", num: "193055", city: "Penang", country: "Malaysia" },
+      { date: "2026-07-26", num: "774512", city: "Johor Bahru", country: "Malaysia" },
+      { date: "2026-07-19", num: "021897", city: "Ipoh", country: "Malaysia" },
+      { date: "2026-07-12", num: "668930", city: "Kuching", country: "Malaysia" },
+      { date: "2026-07-05", num: "341728", city: "Kota Kinabalu", country: "Malaysia" },
+      { date: "2026-06-28", num: "905261", city: "Melaka", country: "Malaysia" },
+      { date: "2026-06-21", num: "183476", city: "Shah Alam", country: "Malaysia" },
+      { date: "2026-06-14", num: "560198", city: "Kuala Terengganu", country: "Malaysia" },
+      { date: "2026-06-07", num: "227443", city: "Seremban", country: "Malaysia" },
+      { date: "2026-05-31", num: "489075", city: "Alor Setar", country: "Malaysia" },
+      { date: "2026-05-24", num: "115364", city: "Kuantan", country: "Malaysia" },
+      { date: "2026-05-17", num: "847625", city: "Kuala Lumpur", country: "Malaysia" },
+      { date: "2026-05-10", num: "660219", city: "Miri", country: "Malaysia" },
+      { date: "2026-05-03", num: "307948", city: "Petaling Jaya", country: "Malaysia" },
+    ],
+  };
+
+  // Demo "taken" numbers per game (weekly reset, like the 6-number pool).
+  const SEED_TAKEN_BY_GAME = {
+    d4: ["0000", "1111", "4821", "1930", "7745", "8888", "9999", "0218"],
+    d6: ["482196", "193055", "774512", "111111", "000000", "021897", "888888"],
+  };
+
+  function gameTakenKey(gameId) {
+    return `minebig_taken_${gameId}_${weekKey()}`;
+  }
+
+  function getTakenForGame(gameId) {
+    try {
+      const raw = localStorage.getItem(gameTakenKey(gameId));
+      if (raw) return new Set(JSON.parse(raw));
+    } catch (e) { /* fall through to seed */ }
+    return new Set(SEED_TAKEN_BY_GAME[gameId] || []);
+  }
+
+  function isNumberTaken(gameId, numStr) {
+    return getTakenForGame(gameId).has(String(numStr).trim());
+  }
+
+  // ---- Symbolic Dictionary (star numbers) ----
+  // Sample mappings only — full word→number list comes from the client.
+  const DICTIONARY = [
+    { word: "Rose", nums: ["0417", "2914"] },
+    { word: "Raven", nums: ["0713", "8206"] },
+    { word: "Flower (general)", nums: ["1834", "6610"] },
+    { word: "Cat", nums: ["2290", "4551"] },
+    { word: "Snake", nums: ["0318", "7412"] },
+    { word: "Fish", nums: ["5538", "9027"] },
+    { word: "Bird", nums: ["1297", "3814"] },
+    { word: "Lotus", nums: ["8812", "2309"] },
+    { word: "Mango", nums: ["4206", "7754"] },
+    { word: "Durian", nums: ["1335", "6980"] },
+    { word: "Rain", nums: ["9004", "2711"] },
+    { word: "Lightning", nums: ["6680", "1122"] },
+    { word: "Moon", nums: ["7015", "4493"] },
+    { word: "Sun", nums: ["2111", "8880"] },
+    { word: "Star", nums: ["7702", "3158"] },
+    { word: "Boat", nums: ["5699", "2045"] },
+    { word: "Train", nums: ["4040", "9582"] },
+    { word: "Car", nums: ["8123", "6750"] },
+    { word: "House", nums: ["1414", "9290"] },
+    { word: "Tree", nums: ["2304", "7689"] },
+    { word: "Baby", nums: ["6611", "0330"] },
+    { word: "Wedding", nums: ["8800", "4627"] },
+    { word: "Funeral", nums: ["1413", "7719"] },
+    { word: "Gold", nums: ["9990", "0842"] },
+    { word: "Water", nums: ["3021", "6508"] },
+    { word: "Fire", nums: ["5566", "1937"] },
+    { word: "Dragon", nums: ["8888", "2199"] },
+    { word: "Phoenix", nums: ["7788", "4013"] },
+    { word: "Tiger", nums: ["0123", "5555"] },
+    { word: "Elephant", nums: ["4000", "8211"] },
+  ];
+
+  // ---- statistics helpers (star numbers) ----
+  function digitFreq(gameId, days = 0) {
+    const draws = DRAWS[gameId] || [];
+    const cutoff = days > 0 ? Date.now() - days * 864e5 : 0;
+    const counts = {};
+    for (const d of draws) {
+      if (days > 0 && new Date(d.date).getTime() < cutoff) continue;
+      for (const ch of d.num) counts[ch] = (counts[ch] || 0) + 1;
+    }
+    return counts;
+  }
+
+  function mostFrequent(gameId, days = 0, n = 10) {
+    return Object.entries(digitFreq(gameId, days))
+      .sort((a, b) => b[1] - a[1] || a[0] - b[0])
+      .slice(0, n);
+  }
+
+  function leastFrequent(gameId, days = 0, n = 10) {
+    return Object.entries(digitFreq(gameId, days))
+      .sort((a, b) => a[1] - b[1] || a[0] - b[0])
+      .slice(0, n);
+  }
+
+  // ---- selection clipboard (try your luck) ----
+  function getClipboard() {
+    try { return JSON.parse(localStorage.getItem("minebig_clipboard")) || []; }
+    catch (e) { return []; }
+  }
+  function addToClipboard(gameId, num) {
+    const list = getClipboard().filter((x) => !(x.game === gameId && x.num === num));
+    list.push({ game: gameId, num: String(num), at: Date.now() });
+    localStorage.setItem("minebig_clipboard", JSON.stringify(list));
+    return list;
+  }
+  function removeFromClipboard(gameId, num) {
+    const list = getClipboard().filter((x) => !(x.game === gameId && x.num === num));
+    localStorage.setItem("minebig_clipboard", JSON.stringify(list));
+    return list;
+  }
+
   return {
     weekKey, isLiveWindow, nextSundayNoon,
     getTaken, setTaken, isTaken, suggestAlternatives,
     getLogbook, addLogEntry,
     TIERS, WINNERS, lifetimeCounts,
-    DEMO_WIN_CODE, lookupTicket,
+    DEMO_WIN_CODE, lookupTicket, normalize, isValidCodeShape,
     agentName, setAgent, clearAgent,
+    GAMES, PRIZE_TIERS, DRAWS,
+    getTakenForGame, isNumberTaken,
+    DICTIONARY, digitFreq, mostFrequent, leastFrequent,
+    getClipboard, addToClipboard, removeFromClipboard,
   };
 })();

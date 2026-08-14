@@ -7,75 +7,85 @@ Documented from the built world (ground truth over intention).
 
 ## World
 
-**Teletext Results Service** (chosen by the captain via the impeccable direction
-page; seed e8b9b4b6; challenger fused: broadcast teletext magazine).
+**Jackpot Lounge** — the gameified premium-lottery world the captain pinned to
+magnum4d.my as the client standard. The terminal/teletext world (previous
+pass) is retired: no scanlines, no VT323, no page-number strips. The draw now
+feels like a premium game night — gold, noir, and a glowing countdown.
 
-The draw announces like a teletext broadcast: flat black CRT ground with subtle
-scanlines, page-numbered navigation (P100–P520), yellow double-height headers,
-cyan live figures, block-mosaic number tiles, REVEAL and HOLD states, keyed-digit
-input. The captain's later marketing steer added a flashy hero layer on top:
-logo-left/search-right top bar, hero banner with mosaic artwork, "Get yours now"
-CTA, next-winner countdown row, a moving info ticker, and a scrollable "Inside
-MineBig" carousel led by "What our winners say".
+Built and QA-verified with Gemini vision against magnum4d.my screenshots
+(desktop full page, desktop hero, mobile) plus the site's own CSS tokens.
 
 ## Palette
 
-Broadcast eight on black (teletext's fixed palette, not a picked scheme):
+Gold + noir on white, taken from Magnum's own stylesheet tokens:
 
-- Black `#000000` ground (CRT), panels `#0a0a0a` / `#111`
-- White `#ffffff` body text
-- Yellow `#ffff00` — headers, primary CTA, winners
-- Cyan `#00ffff` — live figures, countdown, links, availability
-- Magenta `#ff00ff` — special tier, V2.0 chip, accents
-- Green `#00ff00` — available states
-- Red `#ff0000` — alerts, LIVE, 18+ (always as block fill with black glyphs)
+- Gold `#ffc000` (primary) with `#ffd54f` highlight and `#f5a800` deep —
+  CTAs, active nav, number balls, accents. Button gradient `#ffd54f→#ffc000`.
+- Noir: `#040707` ink; hero/footer gradients from `#171a28` → `#141821` →
+  `#0c0f1a`, with a gold radial glow (`rgba(255,200,0,.2)` ellipse at top)
+- Blue `#00a3e3` (game 2 accent, links), Orange `#f58220`, Red `#eb2020`,
+  Green `#0ea864` (available), Violet `#7b2ff7` (special tier)
+- Neutrals: white ground, `#f7f8fa` section alt, `#333` body text, `#6b7078`
+  dim, `#e8eaed` hairlines
+- Shadows: soft navy (`0 8px 32px rgba(3,0,39,.10) + 0 4px 24px rgba(3,0,39,.07)`),
+  the Magnum elevation feel
 
-Rule: colored elements are filled blocks with black glyphs — never colored text
-on dark at small sizes. Contrast floor: black-on-color blocks everywhere.
+Rule: gold fills carry black glyphs; colored text only at large sizes or on
+light tints. Contrast floor AA (`--dim: #6b7078` on white ≈ 5.5:1).
 
 ## Type
 
-- Display + body + data: **VT323** (teletext bitmap face), fallback ui-monospace.
-- Sizes: body 16–17px; h1 clamp(34–58px) line-height ~1.1–1.18 uppercase;
-  section titles 27–34px uppercase yellow; countdown figures 30–60px cyan.
-- Uppercase reserved for headings, labels, buttons, control rows — not prose.
+- **Rubik** (300–900, Google Fonts) — the Magnum face, loaded with system
+  fallbacks. No monospace anywhere as costume.
+- Scale: body 15.5–16px; hero h1 clamp(34–58px) weight 900, tight tracking
+  (-0.02em); section titles 26–34px weight 800; labels 12–13.5px uppercase,
+  tracked 0.4–1.5px. Uppercase reserved for labels, buttons, control rows.
 
 ## Components
 
-- **Top bar:** logo (M tile + wordmark + V2.0 chip) left; page chip + live clock
-  (blinking seconds) + Search button right. Second row: page strip (numbered
-  tabs) ending in a Login button. Mobile: clock/chip hidden, strip collapses to
-  a Pages/Index toggle.
-- **Search panel:** keyword jump list — Next draw & countdown, Past results,
-  Check a ticket, About us, What our winners say, Connect to an agent, FAQ,
-  Play responsibly, Login — each links to its numbered page. Closes on
-  outside click / Escape.
-- **Hero banner:** copy + CTA left, block-mosaic SVG scene right (trophy, balls,
-  confetti, SUNDAY 12PM), stacks on mobile. No eyebrow.
-- **Next winner row:** "Next winner on SUN 16 AUG 2026 · 12:00 PM" + live
-  countdown units (blinking seconds).
-- **Ticker:** infinite marquee of live facts (winners so far, tickets left,
-  draw times); duplicated track for seamless loop; static under
-  prefers-reduced-motion. (Captain-requested marketing element.)
-- **Carousel:** scroll-snap slides — What our winners say / Latest draw /
-  Lucky numbers / How it works; arrow + dot controls; instant scroll
-  (smooth+mandatory snap stalls in Chromium).
-- **Blocks:** cards = flat panels, hard 2px rules, zero radius/blur/gradient
-  (except scanlines). Buttons = solid blocks, press = 2px shift.
-- **States:** REVEAL (results), HOLD (countdown freeze), blinking LIVE/seconds,
-  hover = solid color fills with black glyphs, keyboard focus = 3px yellow
-  outline, reduced motion respected for blink/scroll.
+- **Header:** sticky two-row light bar (logo row + nav row, like Magnum).
+  Gold radial M tile; nav tabs pill-shaped with gold active state; dropdowns
+  (Star Numbers, Help) on hover/focus with white cards; search, language
+  (demo), and a gold **Log In** pill. Mobile: hamburger → full drawer with
+  grouped sub-links.
+- **Banner slider (home):** 3 rotating banners per the content document —
+  Jackpot Hero (gold), New Player Promo (blue, 4 steps), Winners Spotlight
+  (orange, pending tag). Auto-advance 7s, dots + arrows, pause on hover/touch,
+  reduced-motion respected.
+- **Heroes:** noir + gold-glow radial, floating glossy number balls
+  (float animation, staggered).
+- **Buttons:** pills with gold/blue/orange/green gradients, lift
+  `translateY(-2px)` on hover, deeper shadow; press shifts down 1px.
+- **Number balls:** glossy radial-gold circles with black numerals; color
+  variants per game/tier.
+- **Countdown:** dark cards with gold top-edge datum, large gold mono-figure
+  numerals, blinking seconds, tracked uppercase labels. Two countdowns on the
+  Next Draw page (4D + 6D).
+- **Cards:** white, 20px radius, 1px hairline, soft navy shadow, hover
+  elevation. Nested cards avoided.
+- **Tables:** white rounded containers, dark header rows, gold pill number
+  chips, hover row tint.
+- **Clipboard (Try Your Luck):** sticky bottom panel, gold border, number
+  chips with per-game labels, remove buttons, agent hand-off CTA.
+- **Forms/keypad:** 2px borders, gold focus ring, rounded game-style keypad
+  buttons (round, gold ENTER).
+- **Footer:** dark noir trust footer — brand + socials + 21+ chip, Company
+  links (FAQ, Careers, Contact Us, About, Biggest Sensation), Customer
+  Service (phone/hours/email), Draw Alerts newsletter, bottom bar with
+  © 2026 MineBig Corporation Sdn Bhd, Privacy, Disclaimer & Terms. Fixed
+  gold "back to top" button appears after scroll.
 
 ## Motion
 
-Blink (demo band, LIVE, seconds, play button) — the broadcast idiom; ticker
-marquee; press-shift buttons. One authored moment per surface; no entrance
-animation stunts.
+One authored moment per surface: banner slider cross-fade (home), countdown
+seconds blink, floating hero balls, button lift, ticker marquee (paused under
+reduced motion). Exponential ease-out curves; no entrance stunts.
 
 ## Notes
 
-- Detector findings on hover-state contrast are resolution noise: every hover
-  rule pairs a solid fill with black glyphs (verified in computed styles).
-- Scanlines are the world's deliberate CRT texture (detector's
-  repeating-stripes flag accepted).
-- Login: one page (P500), role cards Player/Agent (keys 1/2) → P510/P520.
+- Age gate uses 21+ per the content document's reference (confirm MineBig's
+  policy before launch).
+- All hero/prize/winner copy marked `[pending client confirmation]` stays
+  visibly open — nothing fabricated.
+- Verified: no horizontal overflow at 1440/390px, zero console errors on all
+  17 pages, availability/clipboard/login/portal flows exercised in browser.

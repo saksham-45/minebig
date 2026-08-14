@@ -3,117 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
-<title>MineBig.com — Back, Better Than Ever | V2.0</title>
+<meta name="theme-color" content="#040707">
+<title>MineBig.com — Your Lucky Numbers Are Waiting</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="crt">
+<body>
 <!--
-  MINEBIG V2.0 — TELETEXT RESULTS SERVICE (direction contract)
-  THESIS: The draw as a broadcast index — a lottery that announces like a teletext magazine, refusing the neon-jackpot casino cliche.
-  OWN-WORLD: Flat black CRT ground with scanlines; the broadcast eight (white body, yellow double-height headers, cyan live figures, green available, red alerts); block-mosaic tiles, hard 2px rules, zero radius, zero blur, zero gradient; VT323 bitmap face; page-number navigation (P100-P520).
-  STORY: A visitor lands on the weekly broadcast: the countdown and latest draw are live figures on black; every section is a numbered page; ticket checks hide behind REVEAL; the brand's 25-year trust reads as a calm, factual bulletin.
-  FIRST VIEWPORT: P100 header bar with live clock; double-height yellow "MINEBIG.COM IS BACK, BETTER THAN EVER." on black; six number tiles of the latest draw; the countdown as cyan figures; one yellow primary action block (CONNECT TO AGENT).
-  FORM: Teletext Results Service (chosen challenger, seed e8b9b4b6); page-numbered topology, keyed-digit input, REVEAL and HOLD states, subpage index navigation.
+  MINEBIG V2.0 — JACKPOT LOUNGE (direction contract)
+  THESIS: A lottery that feels like a premium game night — gold, noir and a glowing countdown, refusing both the teletext terminal and the neon-casino cliche.
+  OWN-WORLD: White ground, gold #ffc000 primary with #ffd54f→#ffc000 pill CTAs, high-contrast noir heroes with gold-glow radial, glossy number balls, Rubik type, 16-20px radius cards, soft navy shadows, lift-on-hover motion.
+  STORY: A visitor lands on the weekly jackpot broadcast: three rotating hero banners, a live countdown to Sunday 12 PM, past results, and a clear path to pick numbers and connect with an agent.
+  FIRST VIEWPORT: Gold logo tile; nav with Next Draw · Results and Winners · MineBig Star Numbers · Try Your Luck · Play Responsibly · Biggest Sensation · Help; banner slider with the jackpot headline; countdown card with gold numerals.
+  FORM: Gameified lottery (client-canon: magnum4d.my) — results-first, transparency sections, prize tiers, responsible play, rich footer.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
-<nav class="nav tx-bar">
-  <div class="bar-row">
+<header class="site-header">
+  <div class="header-inner">
     <a class="brand" href="index.html">
       <span class="ball-logo">M</span>
-      <span>MineBig.com <span class="v2">V2.0</span></span>
+      <span class="brand-name">MineBig.com <span class="v2">V2.0</span></span>
     </a>
-    <span class="pg">P100</span>
-    <span class="clk" id="tx-clock"></span>
-    <div class="search-wrap">
-      <button class="search-btn" id="search-btn" type="button" aria-expanded="false" aria-controls="search-panel">⌕ Search</button>
-      <div class="search-panel" id="search-panel">
-        <p class="search-hint">Jump to</p>
-        <a href="upcoming.html"><span class="pn">P110</span> Next draw &amp; countdown</a>
-        <a href="winning.html"><span class="pn">P140</span> Past results &amp; winning numbers</a>
-        <a href="check.html"><span class="pn">P150</span> Check a ticket / number availability</a>
-        <a href="about.html"><span class="pn">P120</span> About us</a>
-        <a href="testimonials.html"><span class="pn">P130</span> What our winners say</a>
-        <a href="connect.html"><span class="pn">P160</span> Contact an agent</a>
-        <a href="faq.html"><span class="pn">P170</span> FAQ — help</a>
-        <a href="play-responsibly.html"><span class="pn">P200</span> Play responsibly</a>
-        <a href="login.html"><span class="pn">P500</span> Login</a>
+
+    <nav class="main-nav" aria-label="Main">
+      <a href="upcoming.html" data-page="upcoming.html">Next Draw</a>
+      <a href="winning.html" data-page="winning.html">Results &amp; Winners</a>
+      <div class="drop">
+        <button type="button" aria-haspopup="true">MineBig Star Numbers <span class="drop-arrow">▼</span></button>
+        <div class="drop-menu">
+          <a href="star-numbers.html#dictionary">Symbolic Dictionary<small>What does your dream mean?</small></a>
+          <a href="star-numbers.html#statistics">Statistics<small>The numbers behind the numbers</small></a>
+        </div>
       </div>
+      <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
+      <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
+      <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
+      <div class="drop">
+        <button type="button" aria-haspopup="true">Help <span class="drop-arrow">▼</span></button>
+        <div class="drop-menu">
+          <a href="contact.html">Contact Us<small>Got a question? We're here to help</small></a>
+          <a href="faq.html">FAQs<small>Frequently asked questions</small></a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="header-utils">
+      <div class="search-wrap">
+        <button class="icon-btn" id="search-btn" type="button" aria-expanded="false" aria-controls="search-panel" aria-label="Search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg></button>
+        <div class="search-panel" id="search-panel">
+          <p class="search-hint">Jump to</p>
+          <a href="upcoming.html">Next draw &amp; countdown</a>
+          <a href="winning.html">Results &amp; winners</a>
+          <a href="star-numbers.html">MineBig Star Numbers</a>
+          <a href="try-your-luck.html">Try your luck</a>
+          <a href="check.html">Check a ticket</a>
+          <a href="about.html">About us</a>
+          <a href="testimonials.html">What our winners say</a>
+          <a href="connect.html">Connect with an agent</a>
+          <a href="biggest-sensation.html">Biggest sensation</a>
+          <a href="faq.html">FAQ — help</a>
+          <a href="contact.html">Contact us</a>
+          <a href="play-responsibly.html">Play responsibly</a>
+        </div>
+      </div>
+      <div class="lang-wrap" id="lang-wrap">
+        <button class="icon-btn lang-btn" type="button" aria-label="Language" aria-haspopup="true">EN</button>
+        <div class="lang-menu">
+          <button type="button" class="on">English</button>
+          <button type="button">Bahasa Malaysia</button>
+          <button type="button">中文</button>
+        </div>
+      </div>
+      <a class="btn-login" href="login.html" data-page="login.html">Log In</a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">☰</button>
     </div>
   </div>
-  <div class="tx-pages" id="tx-pages">
-    <button class="pages-toggle" id="pages-toggle" type="button" aria-expanded="false" aria-controls="tx-pages">☰ Menu</button>
-    <div class="strip">
-      <a href="index.html" data-page="index.html" class="active"><span class="pn">P100</span> Home</a>
-      <a href="upcoming.html" data-page="upcoming.html"><span class="pn">P110</span> Events</a>
-      <a href="about.html" data-page="about.html"><span class="pn">P120</span> About</a>
-      <a href="testimonials.html" data-page="testimonials.html"><span class="pn">P130</span> Testimonials</a>
-      <a href="winning.html" data-page="winning.html"><span class="pn">P140</span> Results</a>
-      <a href="check.html" data-page="check.html"><span class="pn">P150</span> Check</a>
-      <a href="connect.html" data-page="connect.html"><span class="pn">P160</span> Agent</a>
-      <a href="faq.html" data-page="faq.html"><span class="pn">P170</span> FAQ</a>
-      <a href="play-responsibly.html" data-page="play-responsibly.html"><span class="pn">P200</span> 18+</a>
-      <a href="login.html" class="portal" data-page="login.html"><span class="pn">P500</span> Login</a>
-    </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+  <div class="m-label">Main</div>
+  <a href="index.html" data-page="index.html">Home</a>
+  <a href="upcoming.html" data-page="upcoming.html">Next Draw</a>
+  <a href="winning.html" data-page="winning.html">Results &amp; Winners</a>
+  <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
+  <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
+  <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
+  <div class="m-label">MineBig Star Numbers</div>
+  <div class="m-sub">
+    <a href="star-numbers.html#dictionary">Symbolic Dictionary</a>
+    <a href="star-numbers.html#statistics">Statistics</a>
+  </div>
+  <div class="m-label">Help</div>
+  <div class="m-sub">
+    <a href="contact.html">Contact Us</a>
+    <a href="faq.html">FAQs</a>
+  </div>
+  <div class="m-label">Language</div>
+  <div class="m-sub lang-sub">
+    <button type="button" class="lang-opt on">English</button>
+    <button type="button" class="lang-opt">Bahasa Malaysia</button>
+    <button type="button" class="lang-opt">中文</button>
+  </div>
+  <div class="m-label">More</div>
+  <div class="m-sub">
+    <a href="check.html">Check a ticket</a>
+    <a href="about.html">About us</a>
+    <a href="testimonials.html">Testimonials</a>
+    <a href="connect.html">Connect with an agent</a>
+    <a href="login.html">Log In</a>
   </div>
 </nav>
 
 <main class="page">
-  <!-- HERO BANNER -->
-  <section class="hero-banner">
-    <div>
-      <h1>MineBig.com is back, <span class="yl">better than ever.</span></h1>
-      <p class="sub">Same trust. Same dreams. <em>Improved experience, better care.</em></p>
-      <div class="cta-row">
-        <a class="btn btn-gold" href="connect.html">Get yours now</a>
-        <a class="btn btn-ghost" href="upcoming.html">Next draw</a>
+  <!-- BANNER SLIDER -->
+  <div class="banner-slider" id="home-slider">
+    <div class="banner-track">
+      <div class="banner-slide on">
+        <div class="b-content">
+          <h2>Your Lucky Numbers <span class="yl">Are Waiting</span></h2>
+          <p>Check the upcoming jackpot and see how close you are to a life-changing win.</p>
+          <div class="cta-row">
+            <a class="btn btn-gold" href="upcoming.html">View Next Draw →</a>
+          </div>
+        </div>
+        <div class="hero-balls" aria-hidden="true">
+          <span class="h-ball">4</span><span class="h-ball b-blue">8</span><span class="h-ball b-orange">2</span>
+          <span class="h-ball b-red">1</span><span class="h-ball">9</span><span class="h-ball b-blue">6</span>
+        </div>
+      </div>
+
+      <div class="banner-slide s-blue">
+        <div class="b-content">
+          <h2>New Here? <span class="yl">Get Started in Minutes</span></h2>
+          <p>Just a few simple steps to place your first ticket.</p>
+          <div class="steps-inline">
+            <span><b>1</b> Click "Try Your Luck"</span>
+            <span><b>2</b> Connect with an agent</span>
+            <span><b>3</b> Buy your ticket</span>
+            <span><b>4</b> Wait for the draw</span>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
+          </div>
+        </div>
+        <div class="hero-balls" aria-hidden="true">
+          <span class="h-ball b-blue">1</span><span class="h-ball">2</span><span class="h-ball b-orange">3</span>
+          <span class="h-ball b-red">4</span><span class="h-ball b-blue">5</span><span class="h-ball">6</span>
+        </div>
+      </div>
+
+      <div class="banner-slide s-orange">
+        <div class="b-content">
+          <h2>Winners <span class="yl">Spotlight</span></h2>
+          <p>Headline and story coming from our winners — watch this space.</p>
+          <span class="pending-tag">Content pending — client to provide</span>
+          <div class="cta-row">
+            <a class="btn btn-gold" href="winning.html">See Past Results →</a>
+          </div>
+        </div>
+        <div class="hero-balls" aria-hidden="true">
+          <span class="h-ball b-orange">7</span><span class="h-ball">7</span><span class="h-ball b-red">4</span>
+          <span class="h-ball b-blue">5</span><span class="h-ball b-orange">1</span><span class="h-ball">2</span>
+        </div>
       </div>
     </div>
-    <div class="hb-art" aria-hidden="true">
-      <svg viewBox="0 0 480 300" role="img">
-        <rect width="480" height="300" fill="#000"/>
-        <rect x="14" y="14" width="452" height="272" fill="none" stroke="#444" stroke-width="2"/>
-        <!-- confetti blocks -->
-        <rect x="24" y="30" width="14" height="14" fill="#ffff00"/>
-        <rect x="52" y="22" width="10" height="10" fill="#00ffff"/>
-        <rect x="80" y="34" width="12" height="12" fill="#ff00ff"/>
-        <rect x="386" y="24" width="12" height="12" fill="#00ff00"/>
-        <rect x="414" y="34" width="10" height="10" fill="#ffff00"/>
-        <rect x="440" y="22" width="12" height="12" fill="#ff00ff"/>
-        <rect x="30" y="252" width="10" height="10" fill="#00ff00"/>
-        <rect x="56" y="262" width="12" height="12" fill="#ffff00"/>
-        <rect x="400" y="256" width="12" height="12" fill="#00ffff"/>
-        <rect x="428" y="266" width="10" height="10" fill="#ffff00"/>
-        <!-- marquee text -->
-        <text x="240" y="64" text-anchor="middle" font-family="monospace" font-size="17" font-weight="bold" fill="#ffff00" letter-spacing="4">SUNDAY 12PM</text>
-        <!-- trophy -->
-        <rect x="196" y="120" width="88" height="16" fill="#ffff00"/>
-        <rect x="212" y="100" width="56" height="24" fill="#ffff00"/>
-        <rect x="186" y="136" width="108" height="12" fill="#ffff00"/>
-        <rect x="196" y="148" width="88" height="34" fill="#ff00ff"/>
-        <rect x="222" y="182" width="36" height="30" fill="#ffff00"/>
-        <rect x="206" y="212" width="68" height="10" fill="#ffff00"/>
-        <rect x="176" y="222" width="128" height="16" fill="#ffff00"/>
-        <!-- balls popping -->
-        <rect x="58" y="150" width="72" height="72" fill="#ffff00"/>
-        <rect x="58" y="150" width="72" height="72" fill="none" stroke="#000" stroke-width="3"/>
-        <text x="94" y="200" text-anchor="middle" font-family="monospace" font-size="34" font-weight="bold" fill="#000">7</text>
-        <rect x="350" y="140" width="72" height="72" fill="#00ffff"/>
-        <rect x="350" y="140" width="72" height="72" fill="none" stroke="#000" stroke-width="3"/>
-        <text x="386" y="190" text-anchor="middle" font-family="monospace" font-size="34" font-weight="bold" fill="#000">12</text>
-        <rect x="204" y="60" width="52" height="52" fill="#ff00ff"/>
-        <rect x="204" y="60" width="52" height="52" fill="none" stroke="#000" stroke-width="3"/>
-        <text x="230" y="96" text-anchor="middle" font-family="monospace" font-size="24" font-weight="bold" fill="#000">49</text>
-        <!-- winner ribbon -->
-        <rect x="110" y="244" width="260" height="14" fill="#00ff00"/>
-        <text x="240" y="256" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#000" letter-spacing="2">7 PRIZE TIERS · RM</text>
-      </svg>
+    <button class="banner-arrow prev" type="button" aria-label="Previous banner">‹</button>
+    <button class="banner-arrow next" type="button" aria-label="Next banner">›</button>
+    <div class="banner-dots">
+      <button type="button" aria-label="Banner 1"></button>
+      <button type="button" aria-label="Banner 2"></button>
+      <button type="button" aria-label="Banner 3"></button>
     </div>
-  </section>
+  </div>
 
-  <!-- NEXT WINNER + COUNTDOWN -->
+  <!-- NEXT DRAW + COUNTDOWN -->
   <div class="card next-winner">
     <div class="nw-line">
       <span class="nw-lbl">Next winner on</span> <strong id="nw-date">SUNDAY ··</strong> · 12:00 PM
@@ -125,14 +190,14 @@
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track" id="ticker-track">
       <span class="tk-star">★</span> <span id="tk-winners">91</span> WINNERS SO FAR
-      <span class="tk-star">★</span> NEXT DRAW: <span class="tk-val">214</span> TICKETS LEFT
-      <span class="tk-star">★</span> LIVE EVERY SUNDAY 12 PM
-      <span class="tk-star">★</span> 7 PRIZE TIERS EVERY DRAW
+      <span class="tk-star">★</span> NEXT DRAW: <span class="tk-val">SUNDAY 12 PM</span>
+      <span class="tk-star">★</span> TWO GAMES — MINEBIG 4D &amp; MINEBIG 6D
+      <span class="tk-star">★</span> 5 PRIZE TIERS EVERY DRAW
       <span class="tk-star">★</span> VERIFIED AGENTS, FACE-TO-FACE PRIZES
       <span class="tk-star">★</span> <span id="tk-winners2">91</span> WINNERS SO FAR
-      <span class="tk-star">★</span> NEXT DRAW: <span class="tk-val">214</span> TICKETS LEFT
-      <span class="tk-star">★</span> LIVE EVERY SUNDAY 12 PM
-      <span class="tk-star">★</span> 7 PRIZE TIERS EVERY DRAW
+      <span class="tk-star">★</span> NEXT DRAW: <span class="tk-val">SUNDAY 12 PM</span>
+      <span class="tk-star">★</span> TWO GAMES — MINEBIG 4D &amp; MINEBIG 6D
+      <span class="tk-star">★</span> 5 PRIZE TIERS EVERY DRAW
       <span class="tk-star">★</span> VERIFIED AGENTS, FACE-TO-FACE PRIZES
     </div>
   </div>
@@ -166,19 +231,19 @@
       </div>
       <div class="car-slide" data-slide="3">
         <h3>↔ How the draw works</h3>
-        <p class="muted" style="line-height:1.6">1 · Pick 6 numbers — live availability.<br>2 · Your agent locks your code.<br>3 · Sunday 12 PM — watch the live draw.<br>4 · Winners published; prizes delivered face to face.</p>
+        <p class="muted" style="line-height:1.6">1 · Pick your 4 or 6 digits — live availability.<br>2 · Your agent completes the purchase.<br>3 · Sunday 12 PM — watch the live draw.<br>4 · Winners published; prizes delivered face to face.</p>
         <a class="btn btn-gold" href="upcoming.html">Next draw →</a>
       </div>
     </div>
     <div class="car-dots" id="car-dots"></div>
   </div>
 
-  <p class="blurb" style="max-width:680px;margin:34px auto 0;text-align:center">
+  <p class="blurb">
     <strong>For 25 years, MineBig has been a name people trusted</strong> — passed along by word of mouth, community to community. Now it has been reborn, more refined, in a fresh new attire — and this is only the beginning.
     <a class="more" href="about.html">More →</a>
   </p>
 
-  <h2 class="section-title"><span class="pn">P101</span> What is MineBig.com?</h2>
+  <h2 class="section-title">What is MineBig.com?</h2>
   <div class="tx-rule"></div>
   <div class="grid3">
     <div class="card feature">
@@ -186,42 +251,42 @@
       <p>Every Sunday at 12 PM, a live 15-minute draw. Simple, open, and everyone can watch. Outside the live window, a countdown ticks down to the next draw.</p>
     </div>
     <div class="card feature">
-      <h3><span class="ico">#</span> Pick your 6 numbers</h3>
-      <p>Choose any 6 natural numbers. Check live whether each number is still available — and get smart suggestions when one is taken. Your code is locked the moment you buy it.</p>
+      <h3><span class="ico">#</span> Two games to play</h3>
+      <p>MineBig 4D — pick your lucky 4 digits. MineBig 6D — six digits for a bigger shot at the jackpot. Check availability live before you buy.</p>
     </div>
     <div class="card feature">
       <h3><span class="ico">↔</span> Everything through your agent</h3>
-      <p>Buy your ticket, receive your receipt, and collect your prize — all face to face with a verified local agent. No apps, no hidden steps. Just people, numbers, and a real chance.</p>
+      <p>Buy your ticket, receive your receipt, and collect your prize — all face to face with a verified local agent. No payments happen on this website.</p>
     </div>
     <div class="card feature">
-      <h3><span class="ico">★</span> 7 prize tiers weekly</h3>
-      <p>1st, 2nd, 3rd, a Special Prize, and three Consolation prizes — every single Sunday, all in RM.</p>
+      <h3><span class="ico">★</span> 5 prize tiers weekly</h3>
+      <p>1st, 2nd, 3rd, Special and Consolation prizes — every single Sunday, for both games.</p>
     </div>
     <div class="card feature">
-      <h3><span class="ico">▤</span> Transparent winners archive</h3>
-      <p>Every winning number published — the last 3 months in full, plus a lifetime record of which numbers have won over the years.</p>
+      <h3><span class="ico">▤</span> Transparent results archive</h3>
+      <p>Every winning number published — a browsable timeline of past draws with winner locations.</p>
     </div>
     <div class="card feature">
-      <h3><span class="ico">?</span> Check any code</h3>
-      <p>Enter your 6-number code and see if it won — or check whether a number is still available before you buy. No login needed.</p>
+      <h3><span class="ico">?</span> Check any number</h3>
+      <p>Check whether a number is still available before you buy, and check your ticket status. No login needed.</p>
     </div>
   </div>
 
-  <h2 class="section-title"><span class="pn">P102</span> How the draw works</h2>
+  <h2 class="section-title">How the draw works</h2>
   <div class="tx-rule"></div>
   <div class="steps">
     <div class="step">
       <div class="num">1</div>
       <div>
-        <h3>Pick your 6 numbers</h3>
-        <p>Any natural numbers that are still available this week. Check availability live — if a number is taken, the site suggests available alternatives.</p>
+        <h3>Pick your numbers</h3>
+        <p>Choose a 4-digit or 6-digit number that is still available this week. Check availability live — the site tells you instantly.</p>
       </div>
     </div>
     <div class="step">
       <div class="num mag">2</div>
       <div>
-        <h3>Your agent locks your code</h3>
-        <p>Buy through a verified agent. The moment you buy, that combination is created and blocked — no one else can sell it until Sunday.</p>
+        <h3>Connect with your agent</h3>
+        <p>Your agent completes the purchase face to face. No payment happens on the website — the agent handles the transaction.</p>
       </div>
     </div>
     <div class="step">
@@ -234,26 +299,26 @@
     <div class="step">
       <div class="num">4</div>
       <div>
-        <h3>Winners are published &amp; contacted</h3>
-        <p>Results go up on the site and the agent portal. Your agent reaches out and hands over your prize, face to face.</p>
+        <h3>Collect your prize face to face</h3>
+        <p>Winners are published on this site. Your agent contacts you and hands over your prize in person — winner names stay private, only the city and country are shown.</p>
       </div>
     </div>
   </div>
 
-  <h2 class="section-title"><span class="pn">P103</span> Where to claim</h2>
+  <h2 class="section-title">Where to claim</h2>
   <div class="tx-rule"></div>
   <div class="grid3">
     <div class="card feature">
-      <h3><span class="ico">▣</span> Ticket &amp; receipt</h3>
-      <p>Your agent sells the ticket and hands you the receipt in person. Nothing is delivered digitally — it's all human, all trusted.</p>
+      <h3><span class="ico">↔</span> Through your agent</h3>
+      <p>Your ticket, your receipt and your prize all come from the same verified agent who sold you the ticket. No apps, no hidden steps.</p>
     </div>
     <div class="card feature">
-      <h3><span class="ico">★</span> Prize handover</h3>
-      <p>Win? Your agent confirms your code and hands over your prize face to face. Every tier — from 1st to Consolation 3 — is delivered with care.</p>
+      <h3><span class="ico">★</span> Winner privacy</h3>
+      <p>Results show the winning number and the winner's city and country — never their name. Identity stays between the winner and their agent.</p>
     </div>
     <div class="card feature">
-      <h3><span class="ico">✕</span> No online payments, ever</h3>
-      <p>This website never takes payments. It informs, connects, and publishes results — the agent handles the rest, offline.</p>
+      <h3><span class="ico">?</span> Need help?</h3>
+      <p>Questions about draws, tickets or prizes? Visit our <a href="faq.html">FAQs</a> or <a href="contact.html">contact us</a> — we're here to help.</p>
     </div>
   </div>
 
@@ -267,36 +332,59 @@
 </main>
 
 <footer class="footer">
-  <div class="fbrand">MineBig.com <span style="color:var(--yellow)">V2.0</span></div>
-  Same trust. Same dreams. Improved experience, better care.<br>
-  Every Sunday 12 PM · Live draw · 7 prize tiers
-  <div class="ctrl">
-    <span><span class="pn">P100</span> HOME</span>
-    <span><span class="pn">P110</span> EVENTS</span>
-    <span><span class="pn">P120</span> ABOUT</span>
-    <span><span class="pn">P130</span> TESTIMONIALS</span>
-    <span><span class="pn">P140</span> RESULTS</span>
-    <span><span class="pn">P150</span> CHECK</span>
-    <span><span class="pn">P160</span> AGENT</span>
-    <span><span class="pn">P170</span> FAQ</span>
-    <span><span class="pn">P200</span> RESPONSIBLE</span>
-    <span><span class="pn">P500</span> LOGIN</span>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="fbrand"><span class="ball-logo">M</span> MineBig.com <span class="v2" style="font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--orange),var(--red));border-radius:100px;padding:2px 9px;margin-left:4px;vertical-align:middle">V2.0</span></div>
+        <p class="ftag">Same trust. Same dreams. Improved experience, better care. Every Sunday 12 PM · Live draw · Two games · Five prize tiers.</p>
+        <div class="f-social" aria-label="Follow us">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="TikTok">♪</a>
+          <a href="#" aria-label="Instagram">◎</a>
+          <a href="#" aria-label="Xiaohongshu / RED">R</a>
+          <a href="#" aria-label="YouTube">▶</a>
+        </div>
+        <span class="legal-18">21+ · Play Responsibly</span>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="biggest-sensation.html">Biggest Sensation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Customer Service</h4>
+        <div class="f-contact">
+          Phone: <a href="tel:+60">+60 [confirm number]</a><br>
+          Hours: 9:00 AM – 7:00 PM<br>
+          Email: <a href="mailto:hello@minebig.com">hello@minebig.com</a>
+        </div>
+      </div>
+      <div>
+        <h4>Draw Alerts</h4>
+        <p class="ftag">Get notified before every Sunday draw.</p>
+        <div class="newsletter">
+          <input type="email" id="nl-email" placeholder="Email for draw alerts">
+          <button id="nl-submit" type="button">Get alerts</button>
+          <span class="nl-msg" id="nl-msg"></span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MineBig Corporation Sdn Bhd [registration no. pending]</span>
+      <div class="f-legal-links">
+        <a href="play-responsibly.html#privacy">Privacy</a>
+        <a href="play-responsibly.html#terms">Disclaimer &amp; Terms of Usage</a>
+      </div>
+    </div>
   </div>
-  <div class="newsletter">
-    <input type="email" id="nl-email" placeholder="EMAIL FOR DRAW ALERTS">
-    <button id="nl-submit" type="button">Get alerts</button>
-    <span class="nl-msg" id="nl-msg"></span>
-  </div>
-  <div class="f-links">
-    <a href="connect.html">Contact an agent</a>
-    <a href="faq.html">FAQ</a>
-    <a href="play-responsibly.html">Play Responsibly</a>
-    <a href="play-responsibly.html#privacy">Privacy</a>
-    <a href="play-responsibly.html#terms">Terms</a>
-  </div>
-  <div class="f-contact">Contact: <a href="mailto:hello@minebig.com">hello@minebig.com</a> · © 2026 MineBig.com</div>
-  <span class="legal-18">18+ · Play Responsibly</span>
 </footer>
+
+<button class="to-top" id="to-top" type="button" aria-label="Back to top">↑</button>
 
 <script src="js/data.js"></script>
 <script src="js/home.js"></script>

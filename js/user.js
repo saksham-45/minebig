@@ -37,6 +37,10 @@
     localStorage.setItem(`minebig_codes_${name}`, JSON.stringify(list));
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+
   function renderCodes() {
     const box = byId("my-codes");
     const codes = myCodes();
@@ -44,7 +48,7 @@
       box.innerHTML = `<p class="muted center" style="padding:10px 0">No codes saved yet — add a code below to track it.</p>`;
       return;
     }
-    box.innerHTML = codes.map((c) => {
+    box.innerHTML = codes.map((c, idx) => {
       const r = MINEBIG.lookupTicket(c.code);
       let pill, cls;
       if (r.status === "win") { cls = "win"; pill = `<span class="pill warn">🏆 WINNER</span>`; }
@@ -53,11 +57,22 @@
       else { cls = "missing"; pill = `<span class="pill">Invalid code</span>`; }
       const d = new Date(c.at);
       return `<div class="card feature" style="margin-top:12px">
-        <h3>🎟️ <span class="gold">${c.code.replace(/-/g, " - ")}</span></h3>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+          <h3>🎟️ <span class="gold">${escapeHtml(c.code.replace(/-/g, " - "))}</span></h3>
+          <button type="button" data-idx="${idx}" class="del-code" aria-label="Remove code ${escapeHtml(c.code)}" style="flex:none;width:34px;height:34px;border-radius:50%;border:none;background:var(--red);color:#fff;font-size:15px;font-weight:900;cursor:pointer">×</button>
+        </div>
         ${pill}
         <p class="muted" style="font-size:14px;margin-top:6px">Saved ${d.toLocaleDateString()} · codes reset every Sunday 12 PM</p>
       </div>`;
     }).join("");
+    box.querySelectorAll(".del-code").forEach((b) => {
+      b.addEventListener("click", () => {
+        const list = myCodes();
+        list.splice(Number(b.dataset.idx), 1);
+        saveCodes(list);
+        renderCodes();
+      });
+    });
   }
 
   function bindAddCode() {
@@ -65,8 +80,13 @@
     if (!btn) return;
     btn.addEventListener("click", () => {
       const input = byId("new-code");
-      const code = MINEBIG.normalize ? normalizeSafe(input.value) : input.value.trim();
+      const raw = input.value;
+      const code = MINEBIG.normalize ? MINEBIG.normalize(raw) : normalizeSafe(raw);
       if (!code) { byId("add-code-msg").textContent = "Enter your 6 numbers first."; return; }
+      if (!MINEBIG.isValidCodeShape(raw)) {
+        byId("add-code-msg").textContent = "Codes are 6 natural numbers — e.g. 4 19 27 33 41 49.";
+        return;
+      }
       const list = myCodes();
       if (list.some((c) => c.code === code)) {
         byId("add-code-msg").textContent = "That code is already in your list.";

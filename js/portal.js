@@ -161,7 +161,7 @@
     box.innerHTML = tickets.map((t) => {
       const recorded = t.buyer;
       return `<div class="card feature mt" style="margin-top:14px">
-        <h3>🎟️ <span class="gold">${t.code.replace(/-/g, " - ")}</span> ${t.week}</h3>
+        <h3>🎟️ <span class="gold">${escapeHtml(t.code.replace(/-/g, " - "))}</span> ${escapeHtml(t.week)}</h3>`
         ${recorded
           ? `<p><span class="pill ok">Recorded — sold to ${escapeHtml(t.buyer)}</span></p>`
           : `<p class="muted">Not yet recorded. Who did you sell this to?</p>
@@ -202,7 +202,7 @@
       const stamp = d.toLocaleDateString() + " " + d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
       return `<tr>
         <td data-label="Time">${stamp}</td>
-        <td data-label="Code sold">${e.code.replace(/-/g, " - ")}</td>
+        <td data-label="Code sold">${escapeHtml(e.code.replace(/-/g, " - "))}</td>
         <td data-label="Buyer">${escapeHtml(e.buyer)}</td>
         <td data-label="Phone">${escapeHtml(e.phone)}</td>
         <td data-label="Status"><span class="won-tag" style="background:linear-gradient(90deg,#4ade80,#22d3ee);color:#04222b">PERMANENT</span></td>

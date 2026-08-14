@@ -1,47 +1,44 @@
 /* ============================================================
-   Winning Numbers — last 3 months + lifetime number archive
+   Results & Winners — latest 4D/6D results + results timeline
    ============================================================ */
 
 (function () {
-  document.addEventListener("DOMContentLoaded", () => {
-    // latest draw hero
-    const latest = MINEBIG.WINNERS[0];
-    const latestNums = document.getElementById("latest-nums");
-    if (latestNums) {
-      latestNums.innerHTML = latest.nums.map((n) => `<span class="ball">${n}</span>`).join("");
-    }
-    const latestDate = document.getElementById("latest-date");
-    if (latestDate) latestDate.textContent = latest.date;
-
-    // last 3 months draws
-    const tbody = document.getElementById("draws-body");
-    if (tbody) {
-      tbody.innerHTML = MINEBIG.WINNERS.map((w) => {
-        const nums = w.nums.map((n) => `<span class="num-chip">${n}</span>`).join("");
-        const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "—").join(" · ");
-        return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning numbers">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
-      }).join("");
-    }
-
-    // lifetime frequency
-    const freq = document.getElementById("lifetime-body");
-    if (freq) {
-      const rows = MINEBIG.lifetimeCounts();
-      const max = rows[0][1];
-      freq.innerHTML = rows.map(([n, c]) => {
-        const pct = Math.round((c / max) * 100);
-        return `<tr>
-          <td data-label="Number"><span class="num-chip">${n}</span></td>
-          <td data-label="Times won">${c}</td>
-          <td data-label="Frequency"><div style="height:8px;background:rgba(255,255,255,0.08);overflow:hidden">
-            <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,var(--yellow),var(--magenta))"></div>
-          </div></td>
-        </tr>`;
-      }).join("");
-    }
-  });
+  function byId(id) { return document.getElementById(id); }
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const latest = MINEBIG.DRAWS;
+
+    // ---- latest results: 4D + 6D ----
+    const nums4 = byId("latest-nums-d4");
+    const nums6 = byId("latest-nums-d6");
+    if (nums4) {
+      nums4.innerHTML = latest.d4[0].num.split("").map((d) => `<span class="ball">${d}</span>`).join("");
+    }
+    if (nums6) {
+      nums6.innerHTML = latest.d6[0].num.split("").map((d) => `<span class="ball teal">${d}</span>`).join("");
+    }
+    const d4 = byId("latest-date-d4");
+    const d6 = byId("latest-date-d6");
+    if (d4) d4.textContent = latest.d4[0].date;
+    if (d6) d6.textContent = latest.d6[0].date;
+
+    // ---- results timeline ----
+    function timelineRows(gameId, tbodyId) {
+      const tbody = byId(tbodyId);
+      if (!tbody) return;
+      tbody.innerHTML = MINEBIG.DRAWS[gameId].map((d) =>
+        `<tr>
+          <td data-label="Draw date">${d.date}</td>
+          <td data-label="Winning number"><span class="num-chip">${d.num}</span></td>
+          <td data-label="Winner location">${escapeHtml(d.city)}, ${escapeHtml(d.country)}</td>
+        </tr>`
+      ).join("");
+    }
+    timelineRows("d4", "timeline-d4");
+    timelineRows("d6", "timeline-d6");
+  });
 })();

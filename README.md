@@ -17,24 +17,19 @@ online, or collects prizes online. The website informs and connects; tickets,
 receipts and prizes are handled face to face by verified agents. There is no
 cart, no checkout, no wallet, and no payment page.
 
-## Visual world — "Teletext Results Service"
+## Visual world — "Jackpot Lounge"
 
-The site is designed as a broadcast teletext magazine (the chosen direction
-from the impeccable design-roll flow):
+Gameified premium lottery look, modeled on **magnum4d.my** (the client's pinned
+canon — analyzed with Gemini vision):
 
-- Flat black CRT ground with subtle scanlines; the broadcast eight — white
-  body, yellow double-height headers, cyan live figures, green available,
-  red alerts; no gradients, no blur, no rounded corners
-- VT323 bitmap typeface; block-mosaic number tiles; hard 2px rules
-- Page-number navigation: P100 Home · P110 Events · P120 About · P130
-  Testimonials · P140 Results · P150 Check · P160 Agent · P170 FAQ · P200
-  18+ · P500 Login · P510 My Account · P520 Agent Portal
-- Broadcast idioms: live clock in the header bar, blinking seconds, HOLD
-  (freezes the countdown), REVEAL (ticket results), keyed-digit input
-  (on-screen keypad on the Check page), subpage index navigation on mobile
-- Structural research from Magnum 4D still applies to content: results-first
-  homepage, how-the-draw-works transparency, where-to-claim, lucky number
-  generator, FAQ, responsible play, newsletter footer
+- White ground with gold `#ffc000` primary; high-contrast noir heroes with a
+  gold-glow radial; glossy number balls; Rubik type (the Magnum face)
+- 16–20px radius cards, soft navy shadows (`0 8px 32px rgba(3,0,39,…)`),
+  pill CTAs with lift-on-hover, 0.3s ease transitions
+- Content structured per the MineBig content document (`MineBig_Website_Content.pdf`):
+  banner slider (3 banners), two-game countdowns, results timeline with winner
+  city/country only, symbolic dictionary + statistics, Try Your Luck flow with
+  a selection clipboard, Biggest Sensation (pending), Help (Contact Us + FAQ)
 
 ## Pages
 
@@ -42,44 +37,51 @@ Public website:
 
 | Page | Path | What it does |
 |---|---|---|
-| Home | `index.html` (P100) | Hero, latest draw feed, lucky number generator, how-the-draw-works, where-to-claim |
-| Upcoming Events | `upcoming.html` (P110) | Live countdown to Sunday 12 PM; 15-min live window; preview + HOLD demo controls |
-| About Us | `about.html` (P120) | 25-year relaunch story + how the site works |
-| Testimonials | `testimonials.html` (P130) | Latest-draw winners grouped by the 7 prize tiers |
-| Winning Numbers | `winning.html` (P140) | Latest draw, last 3 months, lifetime number frequency |
-| Check Status | `check.html` (P150) | Ticket status lookup (keypad entry) + availability with suggestions |
-| Connect to Agent | `connect.html` (P160) | Lead form (name, phone, area, preferred time) + email |
-| FAQ | `faq.html` (P170) | Help accordion |
-| Play Responsibly | `play-responsibly.html` (P200) | Responsible play, privacy, terms (anchored) |
+| Home | `index.html` | 3-banner slider, next-draw countdown, ticker, carousel, how-the-draw-works |
+| Next Draw | `upcoming.html` | Countdowns for MineBig 4D & 6D, game banners, how-draws-work accordion, prize accordions, demo walkthrough |
+| Results & Winners | `winning.html` | Latest 4D/6D results + browsable results timeline (winner city/country only) |
+| Star Numbers | `star-numbers.html` | Symbolic Dictionary (searchable) + Statistics (most/least drawn digits, date filters) |
+| Try Your Luck | `try-your-luck.html` | Pick numbers (4D/6D), live availability check, selection clipboard, agent hand-off |
+| Play Responsibly | `play-responsibly.html` | 21+ age banner, know-your-limits, support resources, privacy & terms (anchored) |
+| Biggest Sensation | `biggest-sensation.html` | Content pending (per content doc) |
+| Help — FAQs | `faq.html` | Categorized accordion: Getting Started, Buying, Draws, Prizes, Account |
+| Help — Contact | `contact.html` | Customer service info + contact form |
+| Careers | `careers.html` | Content pending (footer link) |
+| About | `about.html` | 25-year reborn story + how the site works |
+| Testimonials | `testimonials.html` | Latest-draw winners grouped by prize tier |
+| Check Status | `check.html` | Ticket status lookup (keypad entry) + 6-number availability |
 
 One login, two channels:
 
 | Page | Path | What it does |
 |---|---|---|
-| Login | `login.html` (P500) | Single login — the user selects **Player** or **Agent** (keys 1/2), then signs in |
-| My Account | `user-portal.html` (P510) | Player channel: save ticket codes, see win/sold/not-found status, latest draw |
-| Agent Portal | `agent-portal.html` (P520) | Agent channel: pick 6 numbers with live availability → buy & lock the code → record the sale → permanent log book → winner announcements |
+| Login | `login.html` | Single login — the user selects **Player** or **Agent** (keys 1/2), then signs in |
+| My Account | `user-portal.html` | Player channel: save ticket codes, see win/sold/not-found status, latest draw |
+| Agent Portal | `agent-portal.html` | Agent channel: pick 6 numbers with live availability → lock the code → record the sale → permanent log book → winner announcements |
 
 ## Weekly logic (implemented)
 
-- Draw runs **every Sunday at 12:00 PM** (visitor's local time), lasts 15 minutes.
-- Countdown runs all week; at 12:00 PM Sunday it switches to the live playback
-  state and loops back to the next Sunday when the 15 minutes end.
-- Codes are **any 6 natural numbers**, subject to availability.
-- A bought combination is **locked** (no other agent can sell it) for that week.
+- Draws run **every Sunday at 12:00 PM** (visitor's local time), last 15 minutes
+  — one countdown per game (MineBig 4D, MineBig 6D).
+- Codes are **any 6 natural numbers** in the agent/portal model, subject to
+  availability; a bought combination is **locked** for that week.
 - **Every Sunday the pool resets** — taken numbers are keyed by week
-  (`minebig_taken_<year-W##>`) and clear automatically.
+  (`minebig_taken_<year-W##>`).
 - Log book entries are **permanent** — no edit or delete.
+- Try Your Luck availability is per game (4D = 4 digits, 6D = 6 digits), seeded
+  with sample "taken" numbers, reset weekly. The selection clipboard persists
+  in localStorage until cleared and hands off to the agent form.
 
 ## Demo tips
 
-- Winning demo code: `4 19 27 33 41 49` → shows the WINNER result.
-- Taken demo numbers: `7`, `12`, `19`, `23`, `27`, `33`, `41`, `49`, `56`, `61`, `78`
-  (any of these triggers the "taken" state and suggested alternatives).
-- `Events` → "Preview live event" shows the 15-minute live state; "HOLD
-  countdown" freezes the tick.
+- Winning demo code (check page): `4 19 27 33 41 49` → shows the WINNER result.
+- Taken demo numbers: `7`, `12`, `19`, `23`, `27`, `33`, `41`, `49`, `56`, `61`,
+  `78` (any of these triggers the "taken" state and suggested alternatives).
+- Try Your Luck: `1234` (4D) is available; `1111` is taken. Switch to 6D and
+  try a 6-digit number.
+- `Next Draw` → "Preview live" shows the 15-minute live state.
 - `Login` → pick Player or Agent (any credentials work), or press 1 / 2.
-- Agent Portal → "Demo: reset this week's taken numbers" clears the pool.
+- Agent Portal → "Reset numbers" clears this week's pool.
 
 ## Run locally
 
@@ -89,8 +91,8 @@ python3 -m http.server 8099
 # open http://127.0.0.1:8099
 ```
 
-Any static file server works. The site uses the VT323 Google Font with
-monospace fallbacks.
+Any static file server works. The site uses the Rubik Google Font with system
+fallbacks.
 
 ## Deploy (free)
 
@@ -105,6 +107,12 @@ The site is fully static — drop the folder onto any static host:
 - Brand logo / visual identity (V2.0 look)
 - Testimonial photos and real quotes
 - Prize amounts per tier (currently RM, amounts TBD)
-- Real player and agent credentials and lead routing (email/CRM) for the form
+- Entry prices for MineBig 4D / 6D
+- Draw mechanism details (officiation, generation, verification) per content doc
+- Full symbolic dictionary word→number list
+- Real player and agent credentials and lead routing (email/CRM) for the forms
+- Hand-off mechanism for agent connection (WhatsApp / live chat / call)
+- Minimum age policy confirmation (21 used per content doc reference)
+- Phone number, registration number, social platform links (footer)
 - Licensing confirmation for the operating region (Malaysia)
 - Real draw data feed and backend for codes (currently browser-local demo logic)

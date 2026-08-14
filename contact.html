@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Testimonials — MineBig.com</title>
+<title>Contact Us — MineBig.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
       <div class="drop">
         <button type="button" aria-haspopup="true">Help <span class="drop-arrow">▼</span></button>
         <div class="drop-menu">
-          <a href="contact.html">Contact Us<small>Got a question? We're here to help</small></a>
+          <a href="contact.html" class="active">Contact Us<small>Got a question? We're here to help</small></a>
           <a href="faq.html">FAQs<small>Frequently asked questions</small></a>
         </div>
       </div>
@@ -117,39 +117,51 @@
 
 <main class="page">
   <section class="hero hero-page">
-    <h1>Real people. <span class="gold">Real wins.</span></h1>
-    <p class="sub">Five prize tiers every Sunday — <em>meet the winners of the latest draws.</em></p>
+    <h1>Got a question? <span class="gold">We're here to help.</span></h1>
+    <p class="sub">Reach out to our team for any enquiries or assistance — <em>we usually reply within one business day.</em></p>
   </section>
 
-  <div id="winners-by-tier"></div>
+  <div class="grid2" style="margin-top:26px">
+    <div class="card">
+      <h3 class="card-h">Customer service</h3>
+      <div class="f-contact" style="margin-top:6px;font-size:16.5px;line-height:1.9">
+        <strong style="color:var(--ink)">Phone:</strong> <a href="tel:+60">+60 [confirm number]</a><br>
+        <strong style="color:var(--ink)">Hours:</strong> 9:00 AM – 7:00 PM<br>
+        <strong style="color:var(--ink)">Email:</strong> <a href="mailto:hello@minebig.com">hello@minebig.com</a>
+      </div>
+      <h3 class="card-h" style="margin-top:26px">Office / location</h3>
+      <p class="muted">[Site address details — to be updated later]</p>
+      <h3 class="card-h" style="margin-top:26px">Connect with an agent</h3>
+      <p class="muted" style="line-height:1.7">Looking to buy a ticket? Use the <a href="connect.html">Connect with an Agent</a> page — an agent will reach out to complete your purchase face to face.</p>
+    </div>
 
-  <h2 class="section-title">Voices from the community</h2>
-  <div class="tx-rule"></div>
-  <div class="grid3">
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "Trusted for a reason"</h3>
-      <p>"I've been playing through the same agent for years. When my number came up, he came to my house the same day with the prize. That's MineBig."</p>
-      <p class="muted mt" style="margin-top:10px">— Regular player, Penang</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "Simple and honest"</h3>
-      <p>"No apps, no confusing steps. I pick my numbers, my agent completes the purchase, and I watch the draw live on Sunday. Couldn't be simpler."</p>
-      <p class="muted mt" style="margin-top:10px">— Player, Kuala Lumpur</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">▣</span> "The website changed everything"</h3>
-      <p>"Now I can check my numbers anytime and see the winners published. It feels more transparent than ever — Version 2.0 delivered."</p>
-      <p class="muted mt" style="margin-top:10px">— Player, Johor Bahru</p>
-    </div>
-  </div>
+    <div class="card form-card" style="max-width:none">
+      <h3 class="card-h">Send us a message</h3>
+      <form id="contact-form" onsubmit="return false">
+        <label for="c-name">Name</label>
+        <input type="text" id="c-name" placeholder="Full name">
 
-  <div class="btn-row">
-    <a class="btn btn-gold" href="winning.html">Winning numbers</a>
-    <a class="btn btn-mag" href="connect.html">Join this Sunday</a>
+        <label for="c-email">Email</label>
+        <input type="email" id="c-email" placeholder="you@example.com">
+
+        <label for="c-subject">Subject</label>
+        <input type="text" id="c-subject" placeholder="How can we help?">
+
+        <label for="c-message">Message</label>
+        <textarea id="c-message" rows="5" placeholder="Write your message here…"></textarea>
+
+        <p id="c-err" style="color:var(--red-deep);font-size:14px;margin-top:10px"></p>
+        <button class="btn btn-gold" id="c-submit" type="submit">Submit</button>
+      </form>
+      <div class="result ok" id="c-ok">
+        <h3>✓ Message received!</h3>
+        <p>Thank you — our team will get back to you shortly.</p>
+      </div>
+    </div>
   </div>
 
   <div class="demo-note">
-    <strong>Demo note.</strong> Winner names, photos and quotes are sample placeholders — real testimonial photos and details will be added before launch. Published results show winner city and country only.
+    <strong>Demo note.</strong> This form is a preview — submissions are stored only in your browser. Real contact routing will be connected at launch.
   </div>
 </main>
 
@@ -209,7 +221,7 @@
 <button class="to-top" id="to-top" type="button" aria-label="Back to top">↑</button>
 
 <script src="js/data.js"></script>
-<script src="js/testimonials.js"></script>
+<script src="js/contact.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
