@@ -70,36 +70,61 @@
     });
   }
 
-  // ---- language selector (demo) ----
+  // ---- language selector: free on-the-fly Google Translate widget ----
+  const MB_LANGS = {
+    en: "English", hi: "Hindi", ta: "Tamil", te: "Telugu", kn: "Kannada",
+    ml: "Malayalam", es: "Spanish", fr: "French", de: "German", it: "Italian",
+  };
+
+  function setLang(code) {
+    const combo = document.querySelector(".goog-te-combo");
+    if (!combo) return;
+    combo.value = code === "en" ? "" : code;
+    combo.dispatchEvent(new Event("change"));
+  }
+
   function languageSelect() {
-    // header dropdown
     const wrap = document.getElementById("lang-wrap");
     if (wrap) {
+      const menu = wrap.querySelector(".lang-menu");
+      if (menu) menu.innerHTML = '<div id="google_translate_element" aria-label="Choose language"></div>';
       const btn = wrap.querySelector(".lang-btn");
-      const opts = wrap.querySelectorAll(".lang-menu button");
       if (btn) {
         btn.addEventListener("click", (e) => {
           e.stopPropagation();
           wrap.classList.toggle("open");
-        });
-        opts.forEach((b) => {
-          b.addEventListener("click", () => {
-            wrap.querySelectorAll(".lang-menu button").forEach((x) => x.classList.toggle("on", x === b));
-            btn.textContent = b.textContent;
-            wrap.classList.remove("open");
-          });
         });
         document.addEventListener("click", (e) => {
           if (!wrap.contains(e.target)) wrap.classList.remove("open");
         });
       }
     }
-    // mobile drawer options (demo: marks the selection, no i18n yet)
+    // mobile drawer options drive the same widget
+    document.querySelectorAll(".mobile-nav .lang-sub").forEach((sub) => {
+      sub.innerHTML = Object.entries(MB_LANGS).map(([code, name]) =>
+        `<button type="button" class="lang-opt${code === "en" ? " on" : ""}" data-lang="${code}">${name}</button>`).join("");
+    });
     document.querySelectorAll(".mobile-nav .lang-opt").forEach((b) => {
       b.addEventListener("click", () => {
         document.querySelectorAll(".mobile-nav .lang-opt").forEach((x) => x.classList.toggle("on", x === b));
+        setLang(b.dataset.lang);
       });
     });
+
+    window.googleTranslateElementInit = function () {
+      if (window.__mbTranslateInit) return;
+      window.__mbTranslateInit = true;
+      /* global google */
+      new google.translate.TranslateElement({
+        pageLanguage: "en",
+        includedLanguages: Object.keys(MB_LANGS).join(","),
+        layout: google.translate.TranslateElement.InlineLayout.VERTICAL,
+        autoDisplay: false,
+      }, "google_translate_element");
+    };
+    const s = document.createElement("script");
+    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.head.appendChild(s);
   }
 
   // ---- back to top ----
@@ -112,10 +137,32 @@
     btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
-  // ---- banner slider (home) ----
+  // ---- banner slider (home): scroll-snap swipe + confetti price reveal ----
+  function burstPrizes() {
+    const stage = document.querySelector(".prize-stage");
+    if (!stage) return;
+    const wrap = stage.querySelector(".confetti-wrap");
+    if (wrap && !wrap.childElementCount) {
+      const colors = ["#ffc000", "#ffd54f", "#00a3e3", "#f58220", "#eb2020", "#7b2ff7", "#0ea864"];
+      for (let p = 0; p < 26; p++) {
+        const c = document.createElement("i");
+        c.style.setProperty("--dx", (Math.random() * 260 - 130).toFixed(0) + "px");
+        c.style.setProperty("--dy", (Math.random() * -220 - 40).toFixed(0) + "px");
+        c.style.setProperty("--rot", (Math.random() * 720 - 360).toFixed(0) + "deg");
+        c.style.setProperty("--delay", (Math.random() * 0.35).toFixed(2) + "s");
+        c.style.background = colors[p % colors.length];
+        wrap.appendChild(c);
+      }
+    }
+    stage.classList.remove("burst");
+    void stage.offsetWidth; // restart the animation
+    stage.classList.add("burst");
+  }
+
   function bannerSlider() {
     const slider = document.querySelector(".banner-slider");
     if (!slider) return;
+    const track = slider.querySelector(".banner-track");
     const slides = Array.from(slider.querySelectorAll(".banner-slide"));
     const dots = Array.from(slider.querySelectorAll(".banner-dots button"));
     const prev = slider.querySelector(".banner-arrow.prev");
@@ -123,27 +170,42 @@
     let i = 0;
     let timer = null;
 
-    function show(n) {
+    function activate(n) {
       i = (n + slides.length) % slides.length;
       slides.forEach((s, k) => s.classList.toggle("on", k === i));
       dots.forEach((d, k) => d.classList.toggle("on", k === i));
+    }
+    function go(n) {
+      activate(n);
+      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: "smooth" });
+      if (i === 0) burstPrizes();
       restart();
     }
     function restart() {
       clearInterval(timer);
-      timer = setInterval(() => show(i + 1), 7000);
+      timer = setInterval(() => go(i + 1), 8000);
     }
-    prev && prev.addEventListener("click", () => show(i - 1));
-    next && next.addEventListener("click", () => show(i + 1));
-    dots.forEach((d, k) => d.addEventListener("click", () => show(k)));
-    // pause on hover / touch
+    let scrollTimer = null;
+    track.addEventListener("scroll", () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        const at = track.scrollLeft;
+        let idx = 0;
+        for (let k = 0; k < slides.length; k++) {
+          if (slides[k].offsetLeft - track.offsetLeft <= at + 20) idx = k;
+        }
+        if (idx !== i) { activate(idx); if (idx === 0) burstPrizes(); restart(); }
+      }, 80);
+    }, { passive: true });
+    prev && prev.addEventListener("click", () => go(i - 1));
+    next && next.addEventListener("click", () => go(i + 1));
+    dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
     slider.addEventListener("mouseenter", () => clearInterval(timer));
     slider.addEventListener("mouseleave", restart);
     slider.addEventListener("touchstart", () => clearInterval(timer), { passive: true });
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      clearInterval(timer);
-    }
-    show(0);
+    slider.addEventListener("touchend", restart, { passive: true });
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) clearInterval(timer);
+    go(0);
   }
 
   document.addEventListener("DOMContentLoaded", () => {

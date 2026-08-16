@@ -12,8 +12,8 @@ Static HTML/CSS/JS, no build step; served on Vercel (production: https://minebig
 
 ## Users
 
-- **Players** (primary public audience): Malaysian adults who play the weekly Sunday draw. Scene: checking results on a phone, weekday evenings; buy via a local agent face to face; want to know when the draw is, whether their 6-number code won, and who to contact. No accounts required to check status — a free player login lets them save codes.
-- **Agents** (portal users): verified local sellers. Scene: on their phone at the shop or market; pick 6 numbers for a buyer, lock the code, record the sale in a permanent log book, contact winners for prize handover.
+- **Players** (primary public audience): Malaysian adults who play the weekly Sunday draw. Scene: checking results on a phone, weekday evenings; buy via a local agent face to face; want to know when the draw is, whether their 4- or 6-digit code won, and who to contact. No accounts required to check status — a free player login lets them save codes.
+- **Agents** (portal users): verified local sellers. Scene: on their phone at the shop or market; pick a 4- or 6-digit code for a buyer, lock the code, record the sale in a permanent log book, contact winners for prize handover.
 
 ## Product Purpose
 
@@ -26,10 +26,10 @@ MineBig.com V2.0 is the relaunch of a 25-year-old word-of-mouth brand: the websi
 ## Operating Context
 
 - Draw cadence: every Sunday 12:00 PM (visitor's local time), 15-minute live playback, then countdown to next Sunday. One countdown per game.
-- Games: MineBig 4D (4-digit number) and MineBig 6D (6-digit number), per the MineBig content document. Availability is checked live per game; taken numbers are seeded sample data reset weekly. The agent portal retains the legacy 6-natural-number code model for the demo.
+- Games: MineBig 4D (4-digit number) and MineBig 6D (6-digit number), per the MineBig content document. Availability is checked live per game; taken numbers are seeded sample data reset weekly. All lottery numbers site-wide, including the agent portal picker, display as single digits 0-9 forming 4- or 6-digit codes.
 - Prizes: 5 tiers per game (1st, 2nd, 3rd, Special, Consolation), currency RM; amounts still TBD/pending client confirmation.
 - Region: Malaysia. Licensing for the operating entity is an open item.
-- One login page where the user selects their own role (player or agent); player area saves codes and shows status; agent area sells/locks codes and keeps a permanent log book.
+- One login page where player login is default, with a small "Agent login" link at the bottom; player area saves codes and shows status; agent area sells/locks codes and keeps a permanent log book.
 - Demo data (winners, taken numbers, log book) lives in browser localStorage, keyed by week.
 
 ## Capabilities and Constraints

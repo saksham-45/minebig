@@ -12,7 +12,9 @@
   }
 
   function numBtn(n) {
-    return `<button type="button" class="mb-num" data-num="${escapeHtml(n)}">${escapeHtml(n)}</button>`;
+    const digits = String(n).split("").map((d) =>
+      `<button type="button" class="mb-num" data-num="${escapeHtml(n)}">${escapeHtml(d)}</button>`).join("");
+    return `<span class="mb-num-group">${digits}</span>`;
   }
 
   function renderBoard(el, board, game) {

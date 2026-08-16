@@ -115,7 +115,7 @@
 </nav>
 
 <main class="page">
-  <!-- BANNER SLIDER -->
+  <!-- BANNER SLIDER (swipeable) -->
   <div class="banner-slider" id="home-slider">
     <div class="banner-track">
       <div class="banner-slide on">
@@ -126,9 +126,17 @@
             <a class="btn btn-gold" href="upcoming.html">View Next Draw →</a>
           </div>
         </div>
-        <div class="hero-balls" aria-hidden="true">
-          <span class="h-ball">4</span><span class="h-ball b-blue">8</span><span class="h-ball b-orange">2</span>
-          <span class="h-ball b-red">1</span><span class="h-ball">9</span><span class="h-ball b-blue">6</span>
+        <div class="prize-stage" aria-hidden="true">
+          <div class="confetti-wrap"></div>
+          <div class="prize-box">
+            <span class="pb-lid"></span>
+            <span class="pb-body"><b>?</b></span>
+          </div>
+          <div class="prize-cards">
+            <div class="prize-card pc1"><b>1st</b><span>Grand Prize</span></div>
+            <div class="prize-card pc2"><b>2nd</b><span>Grand Prize</span></div>
+            <div class="prize-card pc3"><b>3rd</b><span>Grand Prize</span></div>
+          </div>
         </div>
       </div>
 
@@ -144,6 +152,7 @@
           </div>
           <div class="cta-row">
             <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
+            <a class="btn btn-ghost light" href="#how-to-play">How to Play</a>
           </div>
         </div>
         <div class="hero-balls" aria-hidden="true">
@@ -155,8 +164,10 @@
       <div class="banner-slide s-orange">
         <div class="b-content">
           <h2>Winners <span class="yl">Spotlight</span></h2>
-          <p>Headline and story coming from our winners — watch this space.</p>
-          <span class="pending-tag">Content pending — client to provide</span>
+          <div class="spot-quote">
+            <p class="quote">“I checked my code on Sunday night and could not believe it. My agent came the very next day.”</p>
+            <p class="who">Kumar V. — Special Prize, draw of 2026-08-09</p>
+          </div>
           <div class="cta-row">
             <a class="btn btn-gold" href="winning.html">See Past Results →</a>
           </div>
@@ -184,19 +195,17 @@
     <div class="countdown" id="home-countdown"></div>
   </div>
 
-  <!-- TICKER -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track" id="ticker-track">
-      <span class="tk-star">★</span> <span id="tk-winners">91</span> WINNERS SO FAR
-      <span class="tk-star">★</span> NEXT DRAW: <span class="tk-val">SUNDAY 12 PM</span>
-      <span class="tk-star">★</span> TWO GAMES — MINEBIG 4D &amp; MINEBIG 6D
-      <span class="tk-star">★</span> 5 PRIZE TIERS EVERY DRAW
-      <span class="tk-star">★</span> VERIFIED AGENTS, FACE-TO-FACE PRIZES
-      <span class="tk-star">★</span> <span id="tk-winners2">91</span> WINNERS SO FAR
-      <span class="tk-star">★</span> NEXT DRAW: <span class="tk-val">SUNDAY 12 PM</span>
-      <span class="tk-star">★</span> TWO GAMES — MINEBIG 4D &amp; MINEBIG 6D
-      <span class="tk-star">★</span> 5 PRIZE TIERS EVERY DRAW
-      <span class="tk-star">★</span> VERIFIED AGENTS, FACE-TO-FACE PRIZES
+  <!-- MASCOT STRIP (replaces the scrolling ticker) -->
+  <div class="mascot-strip">
+    <img class="mascot-strip__face" src="img/mascot-hero.svg" alt="Milly, the MineBig beaver mascot">
+    <div class="mascot-strip__text">
+      <p class="mascot-strip__hi">Hi, I'm <b>Milly</b> — MineBig's lucky beaver! Here's what's happening:</p>
+      <div class="mascot-strip__stats">
+        <span class="ms-chip">★ <b id="tk-winners">91</b> winners so far</span>
+        <span class="ms-chip">★ Next draw <b class="tk-val">Sunday 12 PM</b></span>
+        <span class="ms-chip">★ Two games — <b>4D &amp; 6D</b></span>
+        <span class="ms-chip">★ 5 prize tiers every draw</span>
+      </div>
     </div>
   </div>
 
@@ -215,36 +224,35 @@
         <div id="car-winners"></div>
       </div>
       <div class="car-slide" data-slide="1">
-        <h3>▤ Latest draw results</h3>
-        <div id="car-results"></div>
-        <p class="note"><a href="winning.html">All results →</a></p>
-      </div>
-      <div class="car-slide" data-slide="2">
         <h3>◆ Lucky numbers</h3>
-        <p class="muted">Six available numbers, picked for you.</p>
+        <p class="muted">Six digits, picked for you.</p>
         <div class="mini-balls" id="car-lucky"></div>
         <div class="btn-row">
           <button class="btn btn-teal" id="car-lucky-refresh" type="button">New numbers</button>
         </div>
       </div>
-      <div class="car-slide" data-slide="3">
-        <h3>↔ How the draw works</h3>
-        <div class="how-list">
-          <div class="how-item"><span class="n" aria-hidden="true">1</span><span>Pick your 4 or 6 digits — live availability.</span></div>
-          <div class="how-item"><span class="n" aria-hidden="true">2</span><span>Your agent completes the purchase.</span></div>
-          <div class="how-item"><span class="n" aria-hidden="true">3</span><span>Sunday 12 PM — watch the live draw.</span></div>
-          <div class="how-item"><span class="n" aria-hidden="true">4</span><span>Winners published; prizes delivered face to face.</span></div>
-        </div>
-        <a class="btn btn-gold" href="upcoming.html">Next draw →</a>
-      </div>
     </div>
     <div class="car-dots" id="car-dots"></div>
   </div>
 
-  <p class="blurb">
-    <strong>For 25 years, MineBig has been a name people trusted</strong> — passed along by word of mouth, community to community. Now it has been reborn, more refined, in a fresh new attire — and this is only the beginning.
-    <a class="more" href="about.html">More →</a>
-  </p>
+  <!-- 25 YEARS — premium heritage banner -->
+  <div class="heritage-banner">
+    <p class="heritage-p">
+      <strong>For 25 years, MineBig has been a name people trusted</strong> — passed along by word of mouth, community to community. Now it has been reborn, more refined, in a fresh new attire — and this is only the beginning.
+    </p>
+    <div class="heritage-foot">
+      <div class="heritage-brand">
+        <span class="ball-logo">M</span>
+        <h2>Mine<span>Big</span></h2>
+        <p class="heritage-quote">“Same trust, same dreams — now better than ever.” <span class="heritage-who">— A winner from the very first draw</span></p>
+      </div>
+      <div class="heritage-lucky">
+        <span class="hl-label">Lucky numbers</span>
+        <div class="mini-balls" id="heritage-lucky" aria-label="Lucky numbers"></div>
+      </div>
+    </div>
+  </div>
+
 
   <h2 class="section-title">What is MineBig.com?</h2>
   <div class="tx-rule"></div>
@@ -275,35 +283,61 @@
     </div>
   </div>
 
-  <h2 class="section-title">How the draw works</h2>
+  <h2 class="section-title" id="how-to-play">How the draw works</h2>
   <div class="tx-rule"></div>
-  <div class="steps">
-    <div class="step">
-      <div class="num">1</div>
-      <div>
-        <h3>Pick your numbers</h3>
-        <p>Choose a 4-digit or 6-digit number that is still available this week. Check availability live — the site tells you instantly.</p>
+  <p class="blurb" style="margin-top:0">Try it yourself — walk through a draw in four quick steps.</p>
+
+  <div class="tutorial" id="draw-tutorial">
+    <div class="tut-tabs" role="tablist" aria-label="How the draw works">
+      <button class="tut-tab on" type="button" data-step="1" role="tab"><span class="n">1</span> Pick digits</button>
+      <button class="tut-tab" type="button" data-step="2" role="tab"><span class="n">2</span> Buy ticket</button>
+      <button class="tut-tab" type="button" data-step="3" role="tab"><span class="n">3</span> Watch draw</button>
+      <button class="tut-tab" type="button" data-step="4" role="tab"><span class="n">4</span> Claim prize</button>
+    </div>
+
+    <div class="tut-pane on" data-step="1">
+      <h3>Pick your 6 digits</h3>
+      <p>Tap any digits from 0 to 9 to build your code. That's how a ticket starts.</p>
+      <div class="tut-keypad" id="tut-keypad" aria-label="Digit keypad"></div>
+      <div class="tut-pick" id="tut-pick" aria-label="Your picked digits"></div>
+      <div class="btn-row">
+        <button class="btn btn-teal" id="tut-next" type="button" disabled>Next →</button>
       </div>
     </div>
-    <div class="step">
-      <div class="num mag">2</div>
-      <div>
-        <h3>Connect with your agent</h3>
-        <p>Your agent completes the purchase face to face. No payment happens on the website — the agent handles the transaction.</p>
+
+    <div class="tut-pane" data-step="2">
+      <h3>Hand it to your agent</h3>
+      <p>Your agent confirms the code is available and completes the purchase face to face. No payment happens on this website.</p>
+      <div class="tut-ticket" aria-label="Your ticket">
+        <span class="tt-head">MINEBIG 6D — SUNDAY DRAW</span>
+        <span class="tt-code" id="tut-ticket-code">------</span>
+        <span class="tt-foot">Sold by your verified local agent</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-teal" id="tut-next2" type="button">Next →</button>
       </div>
     </div>
-    <div class="step">
-      <div class="num teal">3</div>
-      <div>
-        <h3>Watch the live draw — Sunday 12 PM</h3>
-        <p>Every draw is live and open for everyone to watch. Simple, transparent, and announced right here on the website.</p>
+
+    <div class="tut-pane" data-step="3">
+      <h3>Watch the Sunday draw</h3>
+      <p>Every Sunday at 12 PM the draw is live for 15 minutes. Your code is matched against the winning digits.</p>
+      <div class="tut-draw" aria-label="Winning digits">
+        <div class="mini-balls" id="tut-winning"></div>
+      </div>
+      <p class="tut-verdict" id="tut-verdict"></p>
+      <div class="btn-row">
+        <button class="btn btn-teal" id="tut-next3" type="button">Next →</button>
       </div>
     </div>
-    <div class="step">
-      <div class="num">4</div>
-      <div>
-        <h3>Collect your prize face to face</h3>
-        <p>Winners are published on this site. Your agent contacts you and hands over your prize in person — winner names stay private, only the city and country are shown.</p>
+
+    <div class="tut-pane" data-step="4">
+      <h3>Claim your prize face to face</h3>
+      <p>Winners are published on this site. Your agent contacts you and hands over your prize in person — winner names stay private, only the city and country are shown.</p>
+      <div class="tut-mascot">
+        <img src="img/mascot-care.svg" alt="Milly the beaver celebrating">
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
       </div>
     </div>
   </div>

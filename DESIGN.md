@@ -45,19 +45,33 @@ light tints. Contrast floor AA (`--dim: #6b7078` on white ≈ 5.5:1).
 
 - **Header:** sticky two-row light bar (logo row + nav row, like Magnum).
   Gold radial M tile; nav tabs pill-shaped with gold active state; dropdowns
-  (Star Numbers, Help) on hover/focus with white cards; search, language
-  (demo), and a gold **Log In** pill. Mobile: hamburger → full drawer with
-  grouped sub-links.
-- **Banner slider (home):** 3 rotating banners per the content document —
-  Jackpot Hero (gold), New Player Promo (blue, 4 steps), Winners Spotlight
-  (orange, pending tag). Auto-advance 7s, dots + arrows, pause on hover/touch,
-  reduced-motion respected.
-- **Heroes:** noir + gold-glow radial, floating glossy number balls
-  (float animation, staggered).
+  (Star Numbers, Help) on hover/focus with white cards; search, on-the-fly
+  language switcher using the free Google Translate widget (English, Hindi,
+  Tamil, Telugu, Kannada, Malayalam, Spanish, French, German, Italian), and a
+  gold **Log In** pill (defaults to Player login with an Agent link). Mobile:
+  hamburger → full drawer with grouped sub-links.
+- **Banner slider (home):** A touch-swipeable premium carousel with 3 rotating
+  banners: banner 1 gets a motion graphic where a gold price box explodes with
+  confetti and reveals three grand prize cards, banner 2 keeps its get-started
+  steps and adds a 'How to Play' button anchoring to the interactive tutorial,
+  and banner 3 is a winners spotlight with a real quote. Auto-advance 7s,
+  dots + arrows, pause on hover/touch, reduced-motion respected.
+- **Mascot Strip & Mascot SVG:** High-quality original SVG friendly beaver mascot
+  (hero pose and responsible-play pose) replacing old mannequins. Home page uses
+  a mobile-friendly mascot strip with live stats instead of a marquee ticker.
+  Responsible-play pose carries the key messages on the play-responsibly page.
+- **Heroes & Heritage Banner:** noir + gold-glow radial, floating glossy number balls.
+  The 25-years hero is a premium heritage banner featuring paragraph text up top,
+  Mine Big title and winner quote at the bottom, and single-digit lucky numbers inside.
+- **Interactive Tutorial:** A new interactive 4-step 'How the draw works' tutorial
+  (pick 6 digits on keypad, ticket step, draw reveal with match verdict, claim step)
+  replacing static steps. Tutorial cards link here wherever 'see how it works' appears.
 - **Buttons:** pills with gold/blue/orange/green gradients, lift
   `translateY(-2px)` on hover, deeper shadow; press shifts down 1px.
-- **Number balls:** glossy radial-gold circles with black numerals; color
-  variants per game/tier.
+- **Number balls:** all lottery numbers site-wide display as single digits 0-9
+  forming 4- or 6-digit codes (winners archive, portals, testimonials, check page,
+  agent portal picker). Visualized as glossy radial-gold circles with black numerals;
+  color variants per game/tier.
 - **Countdown:** dark cards with gold top-edge datum, large gold mono-figure
   numerals, blinking seconds, tracked uppercase labels. Two countdowns on the
   Next Draw page (4D + 6D).
@@ -77,9 +91,7 @@ light tints. Contrast floor AA (`--dim: #6b7078` on white ≈ 5.5:1).
 
 ## Motion
 
-One authored moment per surface: banner slider cross-fade (home), countdown
-seconds blink, floating hero balls, button lift, ticker marquee (paused under
-reduced motion). Exponential ease-out curves; no entrance stunts.
+One authored moment per surface: banner slider premium touch-swipe carousel transitions, confetti gold price box explosion (home), countdown seconds blink, floating hero balls, button lift, and interactive tutorial animations. Exponential ease-out curves; no entrance stunts.
 
 ## Notes
 

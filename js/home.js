@@ -1,9 +1,22 @@
 /* ============================================================
-   Home (P100) — hero countdown, ticker, carousel, lucky numbers
+   Home (P100) — hero countdown, mascot stats, carousel, lucky
+   single-digit numbers, and the interactive how-to-draw tutorial
    ============================================================ */
 
 (function () {
   function byId(id) { return document.getElementById(id); }
+
+  // random available digit code (single digits 0-9 only)
+  function randomCode(gameId, digits) {
+    let code = "";
+    for (let i = 0; i < digits; i++) code += Math.floor(Math.random() * 10);
+    return MINEBIG.isNumberTaken(gameId, code) ? randomCode(gameId, digits) : code;
+  }
+
+  function digitChips(code) {
+    return String(code).split("").map((d, i) =>
+      `<span class="ball${i % 2 ? " teal" : ""}">${d}</span>`).join("");
+  }
 
   document.addEventListener("DOMContentLoaded", () => {
     // ---- next winner date + countdown ----
@@ -31,12 +44,10 @@
       setInterval(render, 1000);
     }
 
-    // ---- ticker figures ----
+    // ---- mascot strip stats ----
     const winners = MINEBIG.WINNERS.length * 7;
     const tk1 = byId("tk-winners");
-    const tk2 = byId("tk-winners2");
     if (tk1) tk1.textContent = winners;
-    if (tk2) tk2.textContent = winners;
 
     // ---- carousel: winners slide ----
     const carWinners = byId("car-winners");
@@ -54,35 +65,18 @@
       ).join("");
     }
 
-    // ---- carousel: results slide ----
-    const carResults = byId("car-results");
-    if (carResults) {
-      const latest = MINEBIG.WINNERS[0];
-      carResults.innerHTML =
-        `<p class="muted">Draw of ${latest.date}</p>` +
-        `<div class="mini-balls">${latest.nums.map((n, i) => `<span class="ball ${["", "teal", "mag"][i % 3]}">${n}</span>`).join("")}</div>` +
-        `<div class="res-list">` +
-        MINEBIG.TIERS.map((t) => `<div class="res-line"><span class="tier-chip ${t.cls}">${t.label}</span><span class="res-name">${latest.winners[t.key]}</span></div>`).join("") +
-        `</div>`;
-    }
-
-    // ---- carousel: lucky numbers slide ----
+    // ---- lucky numbers (single digits, home carousel + heritage banner) ----
     const carLucky = byId("car-lucky");
-    if (carLucky) {
-      function roll() {
-        const taken = MINEBIG.getTaken();
-        const pool = [];
-        for (let n = 1; n <= 99 && pool.length < 20; n++) if (!taken.has(n)) pool.push(n);
-        const picked = [];
-        while (picked.length < 6 && pool.length) picked.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
-        carLucky.innerHTML = picked.length
-          ? picked.map((n, i) => `<span class="ball ${["", "teal", "mag", "", "teal"][i % 5]}">${n}</span>`).join("")
-          : `<p class="muted">All taken this week — back after Sunday.</p>`;
-      }
-      const rb = byId("car-lucky-refresh");
-      if (rb) rb.addEventListener("click", roll);
-      roll();
+    const heritageLucky = byId("heritage-lucky");
+    function roll() {
+      const code = randomCode("d6", 6);
+      if (carLucky) carLucky.innerHTML = digitChips(code);
+      if (heritageLucky) heritageLucky.innerHTML = digitChips(code);
     }
+    const rb = byId("car-lucky-refresh");
+    if (rb) rb.addEventListener("click", roll);
+    if (carLucky || heritageLucky) roll();
+    window.addEventListener("minebig:sheet-loaded", roll);
 
     // ---- carousel arrows + dots ----
     const track = byId("car-track");
@@ -96,7 +90,7 @@
         b.setAttribute("aria-label", "Slide " + (i + 1));
         if (i === 0) b.classList.add("on");
         b.addEventListener("click", () => {
-          track.scrollTo({ left: track.children[i].offsetLeft - track.offsetLeft, behavior: "auto" });
+          track.scrollTo({ left: track.children[i].offsetLeft - track.offsetLeft, behavior: "smooth" });
         });
         dotsWrap.appendChild(b);
         dots.push(b);
@@ -117,7 +111,7 @@
           if (track.children[i].offsetLeft - track.offsetLeft <= at + 20) idx = i;
         }
         const prev = Math.max(0, idx - 1);
-        track.scrollTo({ left: track.children[prev].offsetLeft - track.offsetLeft, behavior: "auto" });
+        track.scrollTo({ left: track.children[prev].offsetLeft - track.offsetLeft, behavior: "smooth" });
       });
       byId("car-next").addEventListener("click", () => {
         const at = track.scrollLeft;
@@ -126,8 +120,75 @@
           if (track.children[i].offsetLeft - track.offsetLeft <= at + 20) idx = i;
         }
         const next = Math.min(slides - 1, idx + 1);
-        track.scrollTo({ left: track.children[next].offsetLeft - track.offsetLeft, behavior: "auto" });
+        track.scrollTo({ left: track.children[next].offsetLeft - track.offsetLeft, behavior: "smooth" });
       });
+    }
+
+    // ---- interactive how-to-draw tutorial ----
+    const tut = byId("draw-tutorial");
+    if (tut) {
+      const panes = Array.from(tut.querySelectorAll(".tut-pane"));
+      const tabs = Array.from(tut.querySelectorAll(".tut-tab"));
+      const keypad = byId("tut-keypad");
+      const pick = byId("tut-pick");
+      const nextBtn = byId("tut-next");
+      const ticketCode = byId("tut-ticket-code");
+      const winning = byId("tut-winning");
+      const verdict = byId("tut-verdict");
+      let picked = [];
+
+      function renderPick() {
+        if (!pick) return;
+        pick.innerHTML = picked.map((d) => `<span class="ball">${d}</span>`).join("") +
+          Array.from({ length: 6 - picked.length }).map(() => `<span class="ball ghost">·</span>`).join("");
+        if (nextBtn) nextBtn.disabled = picked.length !== 6;
+      }
+      if (keypad) {
+        for (let d = 0; d <= 9; d++) {
+          const b = document.createElement("button");
+          b.type = "button";
+          b.textContent = d;
+          b.setAttribute("aria-label", "Digit " + d);
+          b.addEventListener("click", () => {
+            if (picked.length >= 6) return;
+            picked.push(d);
+            renderPick();
+          });
+          keypad.appendChild(b);
+        }
+        const clr = document.createElement("button");
+        clr.type = "button";
+        clr.className = "clr";
+        clr.textContent = "CLR";
+        clr.setAttribute("aria-label", "Clear picked digits");
+        clr.addEventListener("click", () => { picked = []; renderPick(); });
+        keypad.appendChild(clr);
+      }
+      function go(step) {
+        panes.forEach((p) => p.classList.toggle("on", p.dataset.step === String(step)));
+        tabs.forEach((t) => t.classList.toggle("on", t.dataset.step === String(step)));
+      }
+      tabs.forEach((t) => t.addEventListener("click", () => go(t.dataset.step)));
+      if (nextBtn) nextBtn.addEventListener("click", () => {
+        if (ticketCode) ticketCode.textContent = picked.join("");
+        go(2);
+      });
+      const next2 = byId("tut-next2");
+      if (next2) next2.addEventListener("click", () => {
+        const boards = MINEBIG.BOARDS && MINEBIG.BOARDS.d6;
+        const win = boards && boards.length ? String(boards[0].first) : "482196";
+        if (winning) winning.innerHTML = String(win).split("").map((d) => `<span class="ball mag">${d}</span>`).join("");
+        const got = String(win).split("").reduce((n, d, i) => n + (d === picked[i] ? 1 : 0), 0);
+        if (verdict) {
+          verdict.innerHTML = got === 6
+            ? `<b style="color:var(--gold-deep)">★ Perfect match — you would have won 1st prize!</b>`
+            : `You matched <b>${got}</b> of 6 digits.${got >= 4 ? " That's a prize tier!" : " Better luck next Sunday."}`;
+        }
+        go(3);
+      });
+      const next3 = byId("tut-next3");
+      if (next3) next3.addEventListener("click", () => go(4));
+      renderPick();
     }
   });
 })();
