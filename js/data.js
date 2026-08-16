@@ -494,7 +494,7 @@ const MINEBIG = (() => {
     { word: "Phoenix", nums: ["7788","4013"], symbol: "🦅", image: "" },
     { word: "Tiger", nums: ["0123","5555"], symbol: "🐯", image: "" },
     { word: "Elephant", nums: ["4000","8211"], symbol: "🐘", image: "" },
-  ];;
+  ];
 
   // ---- statistics helpers (star numbers) ----
   function digitFreq(gameId, days = 0) {

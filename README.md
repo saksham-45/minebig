@@ -37,19 +37,19 @@ Public website:
 
 | Page | Path | What it does |
 |---|---|---|
-| Home | `index.html` | 3-banner slider, next-draw countdown, mascot strip with live stats, carousel, how-the-draw-works |
-| Next Draw | `upcoming.html` | Countdowns for MineBig 4D & 6D, game banners, how-draws-work accordion, prize accordions, demo walkthrough |
-| Results & Winners | `winning.html` | Latest 4D/6D results + browsable results timeline (winner city/country only) |
-| Star Numbers | `star-numbers.html` | Symbolic Dictionary (searchable) + Statistics (most/least drawn digits, date filters) |
-| Try Your Luck | `try-your-luck.html` | Pick numbers (4D/6D), live availability check, selection clipboard, agent hand-off |
-| Play Responsibly | `play-responsibly.html` | 21+ age banner, know-your-limits, support resources, privacy & terms (anchored) |
+| Home | `index.html` | Premium touch-swipeable banner carousel, next-draw countdown, mascot strip with live stats, 25-year heritage banner, 4-step interactive tutorial |
+| Next Draw | `upcoming.html` | Countdowns for MineBig 4D & 6D, game banners, ticket prices, recent-winners sample, prize accordions, interactive tutorial link |
+| Results & Winners | `winning.html` | Latest 4D/6D results, browsable results timeline (winner city/country only), Help & Support buttons |
+| Star Numbers | `star-numbers.html` | Searchable Symbolic Dictionary with emojis/images, dynamic digit statistics |
+| Try Your Luck | `try-your-luck.html` | Pick numbers (4D/6D), live availability check, links to Symbolic Dictionary/Statistics, clipboard, agent hand-off |
+| Play Responsibly | `play-responsibly.html` | 21+ age banner, Milly beaver pose, know-your-limits, support resources, privacy & terms |
 | Biggest Sensation | `biggest-sensation.html` | Content pending (per content doc) |
 | Help — FAQs | `faq.html` | Categorized accordion: Getting Started, Buying, Draws, Prizes, Account |
 | Help — Contact | `contact.html` | Customer service info + contact form |
 | Careers | `careers.html` | Content pending (footer link) |
 | About | `about.html` | 25-year reborn story + how the site works |
 | Testimonials | `testimonials.html` | Latest-draw winners grouped by prize tier |
-| Check Status | `check.html` | Ticket status lookup (keypad entry) + 4- or 6-digit code availability |
+| Check Status | `check.html` | Ticket status lookup (keypad entry for 4D or 6D, auto-detects length) + 4- or 6-digit code availability |
 
 One login, two channels:
 
@@ -57,7 +57,7 @@ One login, two channels:
 |---|---|---|
 | Login | `login.html` | Player login by default; small "Agent login" link at the bottom opens the agent channel |
 | My Account | `user-portal.html` | Player channel: save ticket codes, see win/sold/not-found status, latest draw |
-| Agent Portal | `agent-portal.html` | Agent channel: pick a 6-digit code with live availability → lock the code → record the sale → permanent log book → winner announcements |
+| Agent Portal | `agent-portal.html` | Agent channel: pick/lock 6-digit codes with per-code locking, record sale → permanent log book → winner announcements |
 
 ## Weekly logic (implemented)
 
@@ -95,6 +95,26 @@ python3 -m http.server 8099
 Any static file server works. The site uses the Rubik Google Font with system
 fallbacks.
 
+## Symbolic Dictionary Tooling
+
+A zero-dependency Node tool (`scripts/dictionary-tool.mjs`) is provided to import and export the Symbolic Dictionary. It syncs the dictionary data in `js/data.js` with the CSV file `data/symbolic-dictionary.csv`.
+
+- **Export dictionary to CSV:**
+  ```bash
+  node scripts/dictionary-tool.mjs export
+  ```
+- **Import dictionary from CSV:**
+  ```bash
+  node scripts/dictionary-tool.mjs import
+  ```
+
+CSV schema (header row required):
+- `word`: the symbol's name (string)
+- `nums`: one or more 4-digit numbers, joined with `|` (e.g. `0417|2914`)
+- `symbol`: an emoji shown when no image is set
+- `image`: optional image URL; wins over `symbol` when set
+- `meaning`: optional free-text meaning shown under the word
+
 ## Deploy (free)
 
 The site is fully static — drop the folder onto any static host:
@@ -116,4 +136,4 @@ The site is fully static — drop the folder onto any static host:
 - Minimum age policy confirmation (21 used per content doc reference)
 - Phone number, registration number, social platform links (footer)
 - Licensing confirmation for the operating region (Malaysia)
-- Real draw data feed and backend for codes (currently browser-local demo logic; an optional published Google Sheet CSV feed slot lives in `js/data.js` as `RESULTS_SHEET_CSV_URL`)
+- Real draw data feed and backend for codes (currently browser-local demo logic; an optional published Google Sheet CSV feed slot lives in `js/data.js` as `RESULTS_SHEET_CSV_URL` with columns `date,game,num`)
