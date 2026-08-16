@@ -189,43 +189,226 @@ const MINEBIG = (() => {
   ];
 
   // Demo draw archive per game — most recent first.
-  // Winner identity is never shown: only city + country (per content doc).
+  // Winner identity is never shown (per our privacy commitment).
   const DRAWS = {
     d4: [
-      { date: "2026-08-09", num: "4821", city: "Kuala Lumpur", country: "Malaysia" },
-      { date: "2026-08-02", num: "1930", city: "Penang", country: "Malaysia" },
-      { date: "2026-07-26", num: "7745", city: "Johor Bahru", country: "Malaysia" },
-      { date: "2026-07-19", num: "0218", city: "Ipoh", country: "Malaysia" },
-      { date: "2026-07-12", num: "6689", city: "Kuching", country: "Malaysia" },
-      { date: "2026-07-05", num: "3417", city: "Kota Kinabalu", country: "Malaysia" },
-      { date: "2026-06-28", num: "9052", city: "Melaka", country: "Malaysia" },
-      { date: "2026-06-21", num: "1834", city: "Shah Alam", country: "Malaysia" },
-      { date: "2026-06-14", num: "5601", city: "Kuala Terengganu", country: "Malaysia" },
-      { date: "2026-06-07", num: "2274", city: "Seremban", country: "Malaysia" },
-      { date: "2026-05-31", num: "4890", city: "Alor Setar", country: "Malaysia" },
-      { date: "2026-05-24", num: "1153", city: "Kuantan", country: "Malaysia" },
-      { date: "2026-05-17", num: "8476", city: "Kuala Lumpur", country: "Malaysia" },
-      { date: "2026-05-10", num: "6602", city: "Miri", country: "Malaysia" },
-      { date: "2026-05-03", num: "3079", city: "Petaling Jaya", country: "Malaysia" },
+      { date: "2026-08-09", num: "4821" },
+      { date: "2026-08-02", num: "1930" },
+      { date: "2026-07-26", num: "7745" },
+      { date: "2026-07-19", num: "0218" },
+      { date: "2026-07-12", num: "6689" },
+      { date: "2026-07-05", num: "3417" },
+      { date: "2026-06-28", num: "9052" },
+      { date: "2026-06-21", num: "1834" },
+      { date: "2026-06-14", num: "5601" },
+      { date: "2026-06-07", num: "2274" },
+      { date: "2026-05-31", num: "4890" },
+      { date: "2026-05-24", num: "1153" },
+      { date: "2026-05-17", num: "8476" },
+      { date: "2026-05-10", num: "6602" },
+      { date: "2026-05-03", num: "3079" },
     ],
     d6: [
-      { date: "2026-08-09", num: "482196", city: "Kuala Lumpur", country: "Malaysia" },
-      { date: "2026-08-02", num: "193055", city: "Penang", country: "Malaysia" },
-      { date: "2026-07-26", num: "774512", city: "Johor Bahru", country: "Malaysia" },
-      { date: "2026-07-19", num: "021897", city: "Ipoh", country: "Malaysia" },
-      { date: "2026-07-12", num: "668930", city: "Kuching", country: "Malaysia" },
-      { date: "2026-07-05", num: "341728", city: "Kota Kinabalu", country: "Malaysia" },
-      { date: "2026-06-28", num: "905261", city: "Melaka", country: "Malaysia" },
-      { date: "2026-06-21", num: "183476", city: "Shah Alam", country: "Malaysia" },
-      { date: "2026-06-14", num: "560198", city: "Kuala Terengganu", country: "Malaysia" },
-      { date: "2026-06-07", num: "227443", city: "Seremban", country: "Malaysia" },
-      { date: "2026-05-31", num: "489075", city: "Alor Setar", country: "Malaysia" },
-      { date: "2026-05-24", num: "115364", city: "Kuantan", country: "Malaysia" },
-      { date: "2026-05-17", num: "847625", city: "Kuala Lumpur", country: "Malaysia" },
-      { date: "2026-05-10", num: "660219", city: "Miri", country: "Malaysia" },
-      { date: "2026-05-03", num: "307948", city: "Petaling Jaya", country: "Malaysia" },
+      { date: "2026-08-09", num: "482196" },
+      { date: "2026-08-02", num: "193055" },
+      { date: "2026-07-26", num: "774512" },
+      { date: "2026-07-19", num: "021897" },
+      { date: "2026-07-12", num: "668930" },
+      { date: "2026-07-05", num: "341728" },
+      { date: "2026-06-28", num: "905261" },
+      { date: "2026-06-21", num: "183476" },
+      { date: "2026-06-14", num: "560198" },
+      { date: "2026-06-07", num: "227443" },
+      { date: "2026-05-31", num: "489075" },
+      { date: "2026-05-24", num: "115364" },
+      { date: "2026-05-17", num: "847625" },
+      { date: "2026-05-10", num: "660219" },
+      { date: "2026-05-03", num: "307948" },
     ],
   };
+
+  function hashSeed(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i += 1) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function mulberry32(a) {
+    return function next() {
+      let t = (a += 0x6D2B79F5);
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function uniqueNums(rng, digits, count, used) {
+    const out = [];
+    let guard = 0;
+    const cap = 10 ** digits;
+    while (out.length < count && guard < 8000) {
+      const n = String(Math.floor(rng() * cap)).padStart(digits, "0");
+      if (!used.has(n)) {
+        used.add(n);
+        out.push(n);
+      }
+      guard += 1;
+    }
+    return out;
+  }
+
+  function boardFromDraw(draw, digits, gameId) {
+    const rng = mulberry32(hashSeed(gameId + ":" + draw.date + ":" + draw.num));
+    const used = new Set([draw.num]);
+    const rest = uniqueNums(rng, digits, 25, used);
+    return {
+      date: draw.date,
+      first: draw.num,
+      second: rest[0],
+      third: rest[1],
+      special: rest.slice(2, 15),
+      consolation: rest.slice(15, 25),
+    };
+  }
+
+  function boardsFor(gameId) {
+    const game = GAMES.find((g) => g.id === gameId);
+    const digits = game ? game.digits : 4;
+    return (DRAWS[gameId] || []).map((d) => boardFromDraw(d, digits, gameId));
+  }
+
+  const BOARDS = {
+    d4: boardsFor("d4"),
+    d6: boardsFor("d6"),
+  };
+
+  function drawCode(dateStr) {
+    const d = new Date(dateStr + "T12:00:00");
+    const yearStart = new Date(d.getFullYear(), 0, 1);
+    const week = Math.floor((d - yearStart) / (7 * 864e5)) + 1;
+    return `${String(week).padStart(3, "0")}/${String(d.getFullYear()).slice(2)}`;
+  }
+
+  function formatDrawDate(dateStr) {
+    const d = new Date(dateStr + "T12:00:00");
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return `${String(d.getDate()).padStart(2, "0")} ${months[d.getMonth()]} ${d.getFullYear()} (${days[d.getDay()]})`;
+  }
+
+  function formatShortDate(dateStr) {
+    const d = new Date(dateStr + "T12:00:00");
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return `${String(d.getDate()).padStart(2, "0")} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  function meaningFor(num) {
+    const n = String(num);
+    const last4 = n.slice(-4);
+    const hits = DICTIONARY.filter((entry) => entry.nums.some((x) => x === last4 || n.endsWith(x)));
+    if (hits.length) {
+      return hits.map((h) => h.word).join(", ");
+    }
+    return "No dictionary match for this sample number.";
+  }
+
+  // ---- draw board editor: simple text entry that auto-populates ----
+  // One draw per line: YYYY-MM-DD | 1st 2nd 3rd | special... | consolation...
+  // Omitted 2nd/3rd/Special/Consolation values auto-fill deterministically.
+  const OVERRIDE_KEY = "minebig_draw_boards_v1";
+
+  function boardToLine(board) {
+    return [
+      board.date,
+      [board.first, board.second, board.third].filter(Boolean).join(" "),
+      (board.special || []).join(" "),
+      (board.consolation || []).join(" "),
+    ].join(" | ");
+  }
+
+  function lineToBoard(line, digits, gameId) {
+    const parts = line.split("|").map((p) => p.trim());
+    if (!parts.length || !parts[0]) return null;
+    const date = parts[0];
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return { error: `Bad date "${date}" — use YYYY-MM-DD.` };
+    }
+    const ok = (n) => new RegExp(`^\\d{${digits}}$`).test(n);
+    const nums = (parts[1] || "").split(/\s+/).filter(Boolean);
+    if (!nums.length) return { error: `Missing numbers for ${date}.` };
+    if (!nums.every(ok)) {
+      return { error: `Numbers for ${date} must be exactly ${digits} digits.` };
+    }
+    let special = (parts[2] || "").split(/\s+/).filter(Boolean);
+    let consolation = (parts[3] || "").split(/\s+/).filter(Boolean);
+    if (special.some((n) => !ok(n)) || consolation.some((n) => !ok(n))) {
+      return { error: `Special/Consolation numbers for ${date} must be exactly ${digits} digits.` };
+    }
+    const first = nums[0];
+    let second = nums[1] || null;
+    let third = nums[2] || null;
+    special = special.slice(0, 13);
+    consolation = consolation.slice(0, 10);
+    const missing = (second ? 0 : 1) + (third ? 0 : 1) + (13 - special.length) + (10 - consolation.length);
+    if (missing > 0) {
+      const rng = mulberry32(hashSeed(gameId + ":" + date + ":" + first));
+      const used = new Set([first, second, third, ...special, ...consolation].filter(Boolean));
+      const rest = uniqueNums(rng, digits, missing, used);
+      let i = 0;
+      if (!second) second = rest[i++];
+      if (!third) third = rest[i++];
+      while (special.length < 13) special.push(rest[i++]);
+      while (consolation.length < 10) consolation.push(rest[i++]);
+    }
+    return { date, first, second, third, special, consolation };
+  }
+
+  function parseBoardText(gameId, text) {
+    const game = GAMES.find((g) => g.id === gameId);
+    const digits = game ? game.digits : 4;
+    const boards = [];
+    const errors = [];
+    for (const raw of String(text || "").split("\n")) {
+      const line = raw.trim();
+      if (!line) continue;
+      const res = lineToBoard(line, digits, gameId);
+      if (!res) continue;
+      if (res.error) { errors.push(res.error); continue; }
+      boards.push(res);
+    }
+    if (!boards.length) errors.push("No valid draw lines found.");
+    boards.sort((a, b) => (a.date < b.date ? 1 : -1));
+    return { boards, errors };
+  }
+
+  function serializeBoards(gameId) {
+    return getBoards(gameId).map(boardToLine).join("\n");
+  }
+
+  function saveBoardOverrides(d4Text, d6Text) {
+    try { localStorage.setItem(OVERRIDE_KEY, JSON.stringify({ d4: d4Text, d6: d6Text })); }
+    catch (e) { /* storage unavailable */ }
+  }
+
+  function clearBoardOverrides() {
+    try { localStorage.removeItem(OVERRIDE_KEY); } catch (e) { /* noop */ }
+  }
+
+  function getBoards(gameId) {
+    try {
+      const raw = localStorage.getItem(OVERRIDE_KEY);
+      if (raw) {
+        const store = JSON.parse(raw);
+        const parsed = parseBoardText(gameId, store[gameId] || "");
+        if (parsed.boards.length) return parsed.boards;
+      }
+    } catch (e) { /* fall back to demo */ }
+    return BOARDS[gameId];
+  }
+
 
   // Demo "taken" numbers per game (weekly reset, like the 6-number pool).
   const SEED_TAKEN_BY_GAME = {
@@ -244,6 +427,7 @@ const MINEBIG = (() => {
     } catch (e) { /* fall through to seed */ }
     return new Set(SEED_TAKEN_BY_GAME[gameId] || []);
   }
+
 
   function isNumberTaken(gameId, numStr) {
     return getTakenForGame(gameId).has(String(numStr).trim());
@@ -332,7 +516,9 @@ const MINEBIG = (() => {
     TIERS, WINNERS, lifetimeCounts,
     DEMO_WIN_CODE, lookupTicket, normalize, isValidCodeShape,
     agentName, setAgent, clearAgent,
-    GAMES, PRIZE_TIERS, DRAWS,
+    GAMES, PRIZE_TIERS, DRAWS, BOARDS,
+    drawCode, formatDrawDate, formatShortDate, meaningFor,
+    parseBoardText, serializeBoards, saveBoardOverrides, clearBoardOverrides, getBoards,
     getTakenForGame, isNumberTaken,
     DICTIONARY, digitFreq, mostFrequent, leastFrequent,
     getClipboard, addToClipboard, removeFromClipboard,

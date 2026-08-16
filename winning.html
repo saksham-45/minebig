@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Results and Winners — MineBig.com</title>
+<title>Draw Results — MineBig.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   OWN-WORLD: White ground, gold #ffc000 primary with #ffd54f→#ffc000 pill CTAs, high-contrast noir heroes with gold-glow radial, glossy number balls, Rubik type, 16-20px radius cards, soft navy shadows, lift-on-hover motion.
   STORY: A visitor lands on the weekly jackpot broadcast: three rotating hero banners, a live countdown to Sunday 12 PM, past results, and a clear path to pick numbers and connect with an agent.
   FIRST VIEWPORT: Gold logo tile; nav with Next Draw · Results and Winners · MineBig Star Numbers · Try Your Luck · Play Responsibly · Biggest Sensation · Help; banner slider with the jackpot headline; countdown card with gold numerals.
-  FORM: Gameified lottery (client-canon: magnum4d.my) — results-first, transparency sections, prize tiers, responsible play, rich footer.
+  FORM: Gameified lottery — results-first, transparency sections, prize tiers, responsible play, rich footer.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 <header class="site-header">
@@ -71,7 +71,6 @@
         <button class="icon-btn lang-btn" type="button" aria-label="Language" aria-haspopup="true">EN</button>
         <div class="lang-menu">
           <button type="button" class="on">English</button>
-          <button type="button">Bahasa Malaysia</button>
           <button type="button">中文</button>
         </div>
       </div>
@@ -102,7 +101,6 @@
   <div class="m-label">Language</div>
   <div class="m-sub lang-sub">
     <button type="button" class="lang-opt on">English</button>
-    <button type="button" class="lang-opt">Bahasa Malaysia</button>
     <button type="button" class="lang-opt">中文</button>
   </div>
   <div class="m-label">More</div>
@@ -115,65 +113,67 @@
   </div>
 </nav>
 
-<main class="page">
-  <section class="hero hero-page">
-    <h1>Every draw. Every winner. <span class="gold">Published.</span></h1>
-    <p class="sub">The latest MineBig 4D and 6D results, plus a browsable timeline of past draws <em>with winner details.</em></p>
-  </section>
-
-  <!-- 1. LATEST RESULTS -->
-  <h2 class="section-title">Latest results</h2>
-  <div class="tx-rule"></div>
-  <div class="grid2">
-    <div class="card" style="text-align:center">
-      <h3 class="card-h"><span class="pill warn">MineBig 4D</span></h3>
-      <p class="muted">Draw of <span id="latest-date-d4"></span></p>
-      <div class="balls" style="justify-content:center" id="latest-nums-d4"></div>
-      <div class="center mt"><a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a></div>
-    </div>
-    <div class="card" style="text-align:center">
-      <h3 class="card-h"><span class="pill warn">MineBig 6D</span></h3>
-      <p class="muted">Draw of <span id="latest-date-d6"></span></p>
-      <div class="balls" style="justify-content:center" id="latest-nums-d6"></div>
-      <div class="center mt"><a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a></div>
-    </div>
-  </div>
-
-  <!-- 2. RESULTS TIMELINE -->
-  <h2 class="section-title">Results timeline</h2>
-  <div class="tx-rule"></div>
-  <div class="grid2">
-    <div class="card">
-      <h3 class="card-h">MineBig 4D — past results</h3>
-      <div class="table-wrap" style="margin-top:10px">
-        <table>
-          <thead>
-            <tr><th>Draw date</th><th>Winning number</th><th>Winner location</th></tr>
-          </thead>
-          <tbody id="timeline-d4"></tbody>
-        </table>
+<main class="page draw-page">
+  <div class="draw-head">
+    <h1 class="draw-title">Draw Results</h1>
+    <div class="mb-datepicker">
+      <span class="mb-datepicker__label">Show results</span>
+      <button type="button" class="mb-datepicker__btn" id="draw-date-btn" aria-expanded="false" aria-controls="draw-cal">
+        <span id="draw-date-field">—</span>
+        <span class="mb-datepicker__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        </span>
+      </button>
+      <div class="mb-cal" id="draw-cal" hidden>
+        <div class="mb-cal__nav">
+          <button type="button" id="draw-cal-prev" aria-label="Previous month">‹</button>
+          <div id="draw-cal-label"></div>
+          <button type="button" id="draw-cal-next" aria-label="Next month">›</button>
+        </div>
+        <div class="mb-cal__grid" id="draw-cal-grid"></div>
       </div>
     </div>
-    <div class="card">
-      <h3 class="card-h">MineBig 6D — past results</h3>
-      <div class="table-wrap" style="margin-top:10px">
-        <table>
-          <thead>
-            <tr><th>Draw date</th><th>Winning number</th><th>Winner location</th></tr>
-          </thead>
-          <tbody id="timeline-d6"></tbody>
-        </table>
-      </div>
+    <button type="button" class="mb-edit-btn" id="draw-edit-btn" aria-label="Edit draw results">✎ Edit results</button>
+  </div>
+
+  <div class="draw-editor" id="draw-editor" hidden>
+    <div class="draw-editor__head">
+      <h2>Edit draw results</h2>
+      <button type="button" class="draw-editor__x" id="draw-editor-close" aria-label="Close editor">×</button>
+    </div>
+    <p class="draw-editor__hint">One draw per line: <code>YYYY-MM-DD | 1st 2nd 3rd | special numbers… | consolation numbers…</code>. Leave the 2nd/3rd prize or the Special/Consolation lists out and they auto-fill.</p>
+    <label for="draw-editor-d4">MineBig 4D</label>
+    <textarea id="draw-editor-d4" rows="8" spellcheck="false"></textarea>
+    <label for="draw-editor-d6">MineBig 6D</label>
+    <textarea id="draw-editor-d6" rows="8" spellcheck="false"></textarea>
+    <p class="draw-editor__status" id="draw-editor-status"></p>
+    <div class="draw-editor__actions">
+      <button type="button" class="btn btn-gold" id="draw-editor-apply">Apply</button>
+      <button type="button" class="btn" id="draw-editor-reset">Reset demo data</button>
     </div>
   </div>
-  <p class="note">Winner names are never shown — only the city and country, per our privacy commitment.</p>
 
-  <div class="center mt">
-    <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
+  <div class="mb-tabs" id="draw-tabs" role="tablist" aria-label="Recent draws"></div>
+
+  <p class="mb-meaning" id="num-meaning" hidden></p>
+
+  <div class="draw-boards" id="draw-boards">
+    <article class="mb-ticket" id="ticket-d4"></article>
+    <article class="mb-ticket" id="ticket-d6"></article>
+    <a class="mb-guide" href="upcoming.html">
+      <span class="mb-guide__title">How draws work?</span>
+      <span class="mb-guide__plus" aria-hidden="true">+</span>
+    </a>
+    <a class="mb-guide" href="faq.html">
+      <span class="mb-guide__title">Where to claim?</span>
+      <span class="mb-guide__plus" aria-hidden="true">+</span>
+    </a>
   </div>
+
+  <p class="note">Winner names are never shown, per our privacy commitment.</p>
 
   <div class="demo-note">
-    <strong>Demo note.</strong> Draw data is sample data for preview. Real draw results will be published here after every live event, along with the full archive.
+    <strong>Demo note.</strong> Prize boards are sample data for preview. Real 1st, 2nd, 3rd, Special and Consolation numbers will be published here after every live Sunday draw.
   </div>
 </main>
 
@@ -205,7 +205,7 @@
       <div>
         <h4>Customer Service</h4>
         <div class="f-contact">
-          Phone: <a href="tel:+60">+60 [confirm number]</a><br>
+          Phone: [confirm number]<br>
           Hours: 9:00 AM – 7:00 PM<br>
           Email: <a href="mailto:hello@minebig.com">hello@minebig.com</a>
         </div>
@@ -221,7 +221,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 MineBig Corporation Sdn Bhd [registration no. pending]</span>
+      <span>© 2026 MineBig Corporation [registration no. pending]</span>
       <div class="f-legal-links">
         <a href="play-responsibly.html#privacy">Privacy</a>
         <a href="play-responsibly.html#terms">Disclaimer &amp; Terms of Usage</a>
