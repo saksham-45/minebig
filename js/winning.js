@@ -50,6 +50,10 @@
           <div class="mb-grid">${board.consolation.map(numBtn).join("")}</div>
         </div>
       </div>
+      <p class="mb-ticket__foot">
+        <span>Draw slip · ${escapeHtml(MINEBIG.drawCode(board.date))}</span>
+        <span>Official · Sunday 12 PM</span>
+      </p>
     `;
   }
 
@@ -83,6 +87,8 @@
       renderBoard(ticket4, boardOn(boards4, selected), MINEBIG.GAMES[0]);
       renderBoard(ticket6, boardOn(boards6, selected), MINEBIG.GAMES[1]);
       if (dateField) dateField.textContent = MINEBIG.formatShortDate(selected);
+      const stampCode = byId("stamp-code");
+      if (stampCode) stampCode.textContent = MINEBIG.drawCode(selected);
       if (tabs) {
         tabs.querySelectorAll(".mb-tab").forEach((btn) => {
           const on = btn.dataset.date === selected;
