@@ -41,6 +41,10 @@
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
+  function digitChips(code) {
+    return String(code).split("").map((d) => `<span class="ball sm">${escapeHtml(d)}</span>`).join("");
+  }
+
   function renderCodes() {
     const box = byId("my-codes");
     const codes = myCodes();
@@ -58,7 +62,7 @@
       const d = new Date(c.at);
       return `<div class="card feature" style="margin-top:12px">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
-          <h3>🎟️ <span class="gold">${escapeHtml(c.code.replace(/-/g, " - "))}</span></h3>
+          <h3>🎟️ <span class="gold">${digitChips(c.code)}</span></h3>
           <button type="button" data-idx="${idx}" class="del-code" aria-label="Remove code ${escapeHtml(c.code)}" style="flex:none;width:34px;height:34px;border-radius:50%;border:none;background:var(--red);color:#fff;font-size:15px;font-weight:900;cursor:pointer">×</button>
         </div>
         ${pill}
@@ -81,12 +85,13 @@
     btn.addEventListener("click", () => {
       const input = byId("new-code");
       const raw = input.value;
-      const code = MINEBIG.normalize ? MINEBIG.normalize(raw) : normalizeSafe(raw);
-      if (!code) { byId("add-code-msg").textContent = "Enter your 6 numbers first."; return; }
-      if (!MINEBIG.isValidCodeShape(raw)) {
-        byId("add-code-msg").textContent = "Codes are 6 natural numbers — e.g. 4 19 27 33 41 49.";
+      const clean = String(raw || "").replace(/[\s,\-;]+/g, "");
+      if (!clean) { byId("add-code-msg").textContent = "Enter your code first."; return; }
+      if (!/^\d{4}$/.test(clean) && !/^\d{6}$/.test(clean)) {
+        byId("add-code-msg").textContent = "Codes are 4 or 6 single digits (0-9) — e.g. 4821 or 482196.";
         return;
       }
+      const code = clean;
       const list = myCodes();
       if (list.some((c) => c.code === code)) {
         byId("add-code-msg").textContent = "That code is already in your list.";
@@ -102,16 +107,13 @@
     input.addEventListener("keydown", (e) => { if (e.key === "Enter") btn.click(); });
   }
 
-  function normalizeSafe(v) {
-    return v.trim().split(/[\s,\-;]+/).filter(Boolean).join("-");
-  }
 
   function renderLatest() {
     const latest = MINEBIG.WINNERS[0];
     const date = byId("user-latest-date");
     const nums = byId("user-latest-nums");
     if (date) date.textContent = latest.date;
-    if (nums) nums.innerHTML = latest.nums.map((n) => `<span class="ball sm">${n}</span>`).join("");
+    if (nums) nums.innerHTML = MINEBIG.digitCode(latest.nums).map((n) => `<span class="ball sm">${n}</span>`).join("");
   }
 
   document.addEventListener("DOMContentLoaded", () => {

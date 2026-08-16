@@ -48,42 +48,58 @@
     });
   }
 
-  // ================= number picker =================
-  const slots = [0, 1, 2, 3, 4, 5].map(() => ({
-    el: null, status: null,
-  }));
+  // ================= number picker (6 single digits) =================
+  const slots = [0, 1, 2, 3, 4, 5].map(() => ({ el: null, status: null }));
+
+  function currentCode() {
+    return slots.map((s) => s.el.value).join("");
+  }
 
   function statusOf(slot) {
-    const v = Number(slot.el.value);
-    if (!slot.el.value.trim()) return { kind: "empty", label: "empty" };
-    if (!Number.isInteger(v) || v <= 0) return { kind: "bad", label: "invalid" };
-    if (MINEBIG.isTaken(v)) return { kind: "taken", label: "taken" };
-    return { kind: "ok", label: "available" };
+    const v = slot.el.value.trim();
+    if (!v) return { kind: "empty", label: "empty" };
+    if (!/^[0-9]$/.test(v)) return { kind: "bad", label: "digit 0-9" };
+    return { kind: "ok", label: "" };
   }
 
   function renderSlotStatus(i) {
     const s = slots[i];
     const st = statusOf(s);
-    s.status.className = "status " + (st.kind === "ok" ? "ok" : st.kind === "taken" || st.kind === "bad" ? "bad" : "");
+    s.status.className = "status " + (st.kind === "bad" ? "bad" : "");
     s.status.textContent = st.label;
     return st;
   }
 
-  function renderSuggestions() {
+  function randomFreeCode() {
+    let c = "";
+    for (let i = 0; i < 6; i++) c += Math.floor(Math.random() * 10);
+    return MINEBIG.isNumberTaken("d6", c) ? randomFreeCode() : c;
+  }
+
+  function renderCodeStatus() {
     const box = byId("suggest-box");
-    const takenNums = slots.map((s, i) => statusOf(s).kind === "taken" ? Number(s.el.value) : null).filter((n) => n !== null);
-    if (!takenNums.length) { box.classList.remove("show"); box.innerHTML = ""; return; }
-    const sugg = MINEBIG.suggestAlternatives(takenNums[0], 5);
-    box.classList.add("show");
-    box.innerHTML =
-      `<strong class="teal">Number ${takenNums[0]} is taken — available nearby:</strong><br>` +
-      sugg.map((s) => `<span class="s-num" data-n="${s}">${s}</span>`).join("");
-    box.querySelectorAll(".s-num").forEach((el) => {
-      el.addEventListener("click", () => {
-        const target = slots.find((s, i) => statusOf(s).kind === "taken");
-        if (target) { target.el.value = el.dataset.n; renderSlotStatus(slots.indexOf(target)); renderSuggestions(); }
+    const code = currentCode();
+    if (code.length !== 6) { box.classList.remove("show"); box.innerHTML = ""; return; }
+    if (MINEBIG.isNumberTaken("d6", code)) {
+      const alts = [];
+      while (alts.length < 3) {
+        const c = randomFreeCode();
+        if (c !== code && !alts.includes(c)) alts.push(c);
+      }
+      box.classList.add("show");
+      box.innerHTML =
+        `<strong class="teal">Code ${code} is taken — available nearby:</strong><br>` +
+        alts.map((c) => `<span class="s-num" data-n="${c}">${c}</span>`).join("");
+      box.querySelectorAll(".s-num").forEach((el) => {
+        el.addEventListener("click", () => {
+          el.dataset.n.split("").forEach((d, k) => { slots[k].el.value = d; renderSlotStatus(k); });
+          renderCodeStatus();
+        });
       });
-    });
+    } else {
+      box.classList.add("show");
+      box.innerHTML = `<strong style="color:var(--green)">✓ Code ${code} is available this week.</strong>`;
+    }
   }
 
   function initPicker() {
@@ -93,7 +109,7 @@
         status: byId(`num-${i}-status`),
       };
       slots[i] = slot;
-      slot.el.addEventListener("input", () => { renderSlotStatus(i); renderSuggestions(); });
+      slot.el.addEventListener("input", () => { renderSlotStatus(i); renderCodeStatus(); });
       slot.el.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           const next = byId(`num-${Math.min(i + 1, 5)}`);
@@ -107,26 +123,25 @@
       const out = byId("buy-result");
       const states = slots.map((_, i) => renderSlotStatus(i));
       const invalid = states.some((s) => s.kind === "bad");
-      const taken = states.some((s) => s.kind === "taken");
       const empty = states.some((s) => s.kind === "empty");
-      if (empty) { showBuy(out, "missing", "Fill all 6 number slots first."); return; }
-      if (invalid) { showBuy(out, "taken", "Every slot must be a natural number (1, 2, 3…)."); return; }
-      if (taken) { showBuy(out, "taken", "One or more numbers are already taken this week — use the suggested alternatives."); return; }
-      const nums = slots.map((s) => Number(s.el.value));
-      const code = nums.join("-");
-      const takenSet = MINEBIG.getTaken();
-      nums.forEach((n) => takenSet.add(n));
-      MINEBIG.setTaken(takenSet);
+      if (empty) { showBuy(out, "missing", "Fill all 6 digit slots first."); return; }
+      if (invalid) { showBuy(out, "taken", "Every slot must be a single digit (0-9)."); return; }
+      const code = currentCode();
+      if (MINEBIG.isNumberTaken("d6", code)) { showBuy(out, "taken", "This code is already taken this week — use the suggested alternatives."); return; }
+      const takenSet = MINEBIG.getTakenForGame("d6");
+      takenSet.add(code);
+      MINEBIG.setTakenForGame("d6", takenSet);
       const tickets = getTickets();
       tickets.push({ code, at: Date.now(), week, agent: MINEBIG.agentName(), buyer: null, phone: null });
       localStorage.setItem("minebig_tickets", JSON.stringify(tickets));
-      showBuy(out, "win", `Code created and locked: <span class="big-nums">${code.replace(/-/g, " - ")}</span><br>No other agent can sell this combination this week. Record the sale in your log book below.`);
+      showBuy(out, "win", `Code created and locked: <span class="big-nums">${code.split("").join(" ")}</span><br>No other agent can sell this code this week. Record the sale in your log book below.`);
       renderTickets();
       renderLogbook();
+      renderCodeStatus();
     });
 
     byId("demo-reset").addEventListener("click", () => {
-      MINEBIG.setTaken(new Set());
+      MINEBIG.setTakenForGame("d6", new Set());
       localStorage.removeItem("minebig_tickets");
       slots.forEach((_, i) => { slots[i].el.value = ""; renderSlotStatus(i); });
       byId("suggest-box").classList.remove("show");
@@ -134,7 +149,7 @@
       renderLogbook();
       const out = byId("buy-result");
       out.className = "result show ok";
-      out.innerHTML = `<h3>Pool reset</h3><p>This week's pool is fresh again — all numbers available.</p>`;
+      out.innerHTML = `<h3>Pool reset</h3><p>This week's codes are fresh again — all codes available.</p>`;
     });
   }
 
@@ -216,12 +231,12 @@
     const latest = MINEBIG.WINNERS[0];
     const tbody = byId("winners-body");
     const rows = MINEBIG.WINNERS.map((w) => {
-      const nums = w.nums.map((n) => `<span class="num-chip">${n}</span>`).join("");
+      const nums = MINEBIG.digitCode(w.nums).map((n) => `<span class="num-chip">${n}</span>`).join("");
       const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "—").join(" · ");
-      return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning numbers">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
+      return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning digits">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
     }).join("");
     tbody.innerHTML = rows;
-    const latestNums = latest.nums.map((n) => `<span class="ball sm mag">${n}</span>`).join("");
+    const latestNums = MINEBIG.digitCode(latest.nums).map((n) => `<span class="ball sm mag">${n}</span>`).join("");
     byId("latest-nums").innerHTML = latestNums;
     byId("latest-date").textContent = latest.date;
   }

@@ -121,33 +121,23 @@
   </section>
 
   <div class="card form-card">
-    <div class="card-h">Choose your role</div>
+    <div class="card-h" id="role-label">Player login</div>
 
-    <div class="role-select" id="role-select">
-      <div class="role-card" data-role="player" id="role-player" tabindex="0" role="button" aria-pressed="false">
-        <span class="role-key">1</span>
-        <h3>Player</h3>
-        <p>Track my numbers &amp; check wins</p>
-      </div>
-      <div class="role-card" data-role="agent" id="role-agent" tabindex="0" role="button" aria-pressed="false">
-        <span class="role-key">2</span>
-        <h3>Agent</h3>
-        <p>Sell, lock numbers &amp; log sales</p>
-      </div>
-    </div>
-
-    <div id="login-form" style="display:none">
-      <p class="muted" style="text-transform:uppercase" id="role-label">Signed in as Player</p>
+    <div id="login-form">
+      <p class="muted" style="text-transform:uppercase" id="role-hint">Track your codes &amp; check wins</p>
       <label for="login-name">Your name</label>
       <input type="text" id="login-name" placeholder="e.g. Siti" autocomplete="name">
       <label for="login-pass">Password</label>
       <input type="password" id="login-pass" placeholder="••••••••" autocomplete="off">
       <p id="login-err" style="color:var(--red-deep);font-size:14px;margin-top:10px"></p>
       <button class="btn btn-gold" id="login-btn" type="button">Log in</button>
-      <p class="note" style="margin-top:12px"><a href="#" id="switch-role">← Switch role</a></p>
     </div>
 
-      </div>
+    <div class="login-switch">
+      <p class="muted">Are you an agent?</p>
+      <a class="btn btn-ghost dark small" id="agent-login" href="login.html?role=agent">Agent login</a>
+    </div>
+  </div>
 </main>
 
 <footer class="footer">

@@ -5,6 +5,11 @@
 
 const MINEBIG = (() => {
   // ---- weekly key: taken numbers reset every Sunday 12:00 ----
+  // ---- optional live results feed (published Google Sheet CSV) ----
+  // Columns: date,game,num  (date=YYYY-MM-DD, game=d4|d6, num=4- or 6-digit code).
+  // Empty URL = built-in demo data. Paste the published-to-web CSV link to go live.
+  const RESULTS_SHEET_CSV_URL = "";
+
   function weekKey(d = new Date()) {
     const sunday = new Date(d);
     const day = sunday.getDay();
@@ -30,6 +35,7 @@ const MINEBIG = (() => {
     const days = (7 - t.getDay()) % 7;
     t.setDate(t.getDate() + days);
     t.setHours(12, 0, 0, 0);
+    if (t.getTime() <= now.getTime()) t.setDate(t.getDate() + 7); // reset at 12:00 sharp
     return t;
   }
 
@@ -113,6 +119,11 @@ const MINEBIG = (() => {
     { date: "2026-05-17", nums: [4, 16, 25, 37, 52, 58], winners: { first: "Sharon V.", second: "Imran G.", third: "Kai L.", special: "Muthu R.", c1: "Ada T.", c2: "Nana W.", c3: "Roy D." } },
   ];
 
+  // digits of a legacy pool draw as a 6-digit single-digit code (display only)
+  function digitCode(nums) {
+    return nums.map((n) => String(Number(n) % 10));
+  }
+
   // ---- lifetime frequency: how often each number has won ----
   function lifetimeCounts() {
     const counts = {};
@@ -122,27 +133,29 @@ const MINEBIG = (() => {
     return Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0] - b[0]);
   }
 
-  // ---- demo ticket-status lookup ----
-  const DEMO_WIN_CODE = "4-19-27-33-41-49"; // the demo winning code
-  const CODE_PATTERN = /^[0-9]+([\s,\-;]+[0-9]+)*$/;
-  function normalize(code) {
-    return code.trim().split(/[\s,\-;]+/).filter(Boolean).join("-");
+  // ---- ticket-status lookup (4-digit or 6-digit single-digit codes) ----
+  const DEMO_WIN_CODE = "482196"; // demo winning 6D code (compatibility)
+
+  function demoWinCodes() {
+    // the newest first-prize code of each game is the demo winning code
+    const wins = {};
+    for (const g of GAMES) {
+      const boards = getBoards(g.id);
+      if (boards.length) wins[g.id] = String(boards[0].first || "");
+    }
+    return wins;
   }
-  function isValidCodeShape(codeStr) {
-    // digits + separators only, exactly 6 natural numbers
-    if (typeof codeStr !== "string" || !CODE_PATTERN.test(codeStr.trim())) return false;
-    const parts = normalize(codeStr).split("-");
-    return parts.length === 6 && parts.every((p) => /^[1-9][0-9]*$/.test(p));
-  }
+
   function lookupTicket(codeStr) {
-    const raw = String(codeStr || "").trim();
+    const raw = String(codeStr || "").replace(/[\s,\-;]+/g, "").trim();
     if (!raw) return { status: "missing" };
-    if (!CODE_PATTERN.test(raw)) return { status: "invalid", code: raw };
-    const c = normalize(raw);
-    if (c === DEMO_WIN_CODE) return { status: "win", code: c };
-    const nums = c.split("-").map(Number);
-    if (nums.some((n) => isTaken(n))) return { status: "taken", code: c };
-    return { status: "notfound", code: c };
+    if (!/^\d{4}$/.test(raw) && !/^\d{6}$/.test(raw)) return { status: "invalid", code: raw };
+    const game = raw.length === 4 ? "d4" : "d6";
+    const code = raw.split("").join("-"); // single digits, one per chip
+    const wins = demoWinCodes();
+    if (wins[game] === raw) return { status: "win", code, game };
+    if (isNumberTaken(game, raw)) return { status: "taken", code, game };
+    return { status: "notfound", code, game };
   }
 
   // ---- agent session ----
@@ -432,41 +445,46 @@ const MINEBIG = (() => {
   function isNumberTaken(gameId, numStr) {
     return getTakenForGame(gameId).has(String(numStr).trim());
   }
+  function setTakenForGame(gameId, set) {
+    localStorage.setItem(gameTakenKey(gameId), JSON.stringify([...set]));
+  }
 
   // ---- Symbolic Dictionary (star numbers) ----
-  // Sample mappings only — full word→number list comes from the client.
+  // Each entry carries a `symbol` (emoji) and an optional `image` (URL).
+  // Rendering: image when present, otherwise the symbol. `meaning` is free text
+  // for the expanded dictionary (see data/symbolic-dictionary.csv + scripts/dictionary-tool.mjs).
   const DICTIONARY = [
-    { word: "Rose", nums: ["0417", "2914"] },
-    { word: "Raven", nums: ["0713", "8206"] },
-    { word: "Flower (general)", nums: ["1834", "6610"] },
-    { word: "Cat", nums: ["2290", "4551"] },
-    { word: "Snake", nums: ["0318", "7412"] },
-    { word: "Fish", nums: ["5538", "9027"] },
-    { word: "Bird", nums: ["1297", "3814"] },
-    { word: "Lotus", nums: ["8812", "2309"] },
-    { word: "Mango", nums: ["4206", "7754"] },
-    { word: "Durian", nums: ["1335", "6980"] },
-    { word: "Rain", nums: ["9004", "2711"] },
-    { word: "Lightning", nums: ["6680", "1122"] },
-    { word: "Moon", nums: ["7015", "4493"] },
-    { word: "Sun", nums: ["2111", "8880"] },
-    { word: "Star", nums: ["7702", "3158"] },
-    { word: "Boat", nums: ["5699", "2045"] },
-    { word: "Train", nums: ["4040", "9582"] },
-    { word: "Car", nums: ["8123", "6750"] },
-    { word: "House", nums: ["1414", "9290"] },
-    { word: "Tree", nums: ["2304", "7689"] },
-    { word: "Baby", nums: ["6611", "0330"] },
-    { word: "Wedding", nums: ["8800", "4627"] },
-    { word: "Funeral", nums: ["1413", "7719"] },
-    { word: "Gold", nums: ["9990", "0842"] },
-    { word: "Water", nums: ["3021", "6508"] },
-    { word: "Fire", nums: ["5566", "1937"] },
-    { word: "Dragon", nums: ["8888", "2199"] },
-    { word: "Phoenix", nums: ["7788", "4013"] },
-    { word: "Tiger", nums: ["0123", "5555"] },
-    { word: "Elephant", nums: ["4000", "8211"] },
-  ];
+    { word: "Rose", nums: ["0417","2914"], symbol: "🌹", image: "" },
+    { word: "Raven", nums: ["0713","8206"], symbol: "🐦‍⬛", image: "" },
+    { word: "Flower (general)", nums: ["1834","6610"], symbol: "🌸", image: "" },
+    { word: "Cat", nums: ["2290","4551"], symbol: "🐱", image: "" },
+    { word: "Snake", nums: ["0318","7412"], symbol: "🐍", image: "" },
+    { word: "Fish", nums: ["5538","9027"], symbol: "🐟", image: "" },
+    { word: "Bird", nums: ["1297","3814"], symbol: "🐦", image: "" },
+    { word: "Lotus", nums: ["8812","2309"], symbol: "🪷", image: "" },
+    { word: "Mango", nums: ["4206","7754"], symbol: "🥭", image: "" },
+    { word: "Durian", nums: ["1335","6980"], symbol: "🍈", image: "" },
+    { word: "Rain", nums: ["9004","2711"], symbol: "🌧️", image: "" },
+    { word: "Lightning", nums: ["6680","1122"], symbol: "⚡", image: "" },
+    { word: "Moon", nums: ["7015","4493"], symbol: "🌙", image: "" },
+    { word: "Sun", nums: ["2111","8880"], symbol: "☀️", image: "" },
+    { word: "Star", nums: ["7702","3158"], symbol: "⭐", image: "" },
+    { word: "Boat", nums: ["5699","2045"], symbol: "⛵", image: "" },
+    { word: "Train", nums: ["4040","9582"], symbol: "🚆", image: "" },
+    { word: "Car", nums: ["8123","6750"], symbol: "🚗", image: "" },
+    { word: "House", nums: ["1414","9290"], symbol: "🏠", image: "" },
+    { word: "Tree", nums: ["2304","7689"], symbol: "🌳", image: "" },
+    { word: "Baby", nums: ["6611","0330"], symbol: "👶", image: "" },
+    { word: "Wedding", nums: ["8800","4627"], symbol: "💒", image: "" },
+    { word: "Funeral", nums: ["1413","7719"], symbol: "🕯️", image: "" },
+    { word: "Gold", nums: ["9990","0842"], symbol: "🪙", image: "" },
+    { word: "Water", nums: ["3021","6508"], symbol: "💧", image: "" },
+    { word: "Fire", nums: ["5566","1937"], symbol: "🔥", image: "" },
+    { word: "Dragon", nums: ["8888","2199"], symbol: "🐉", image: "" },
+    { word: "Phoenix", nums: ["7788","4013"], symbol: "🦅", image: "" },
+    { word: "Tiger", nums: ["0123","5555"], symbol: "🐯", image: "" },
+    { word: "Elephant", nums: ["4000","8211"], symbol: "🐘", image: "" },
+  ];;
 
   // ---- statistics helpers (star numbers) ----
   function digitFreq(gameId, days = 0) {
@@ -509,17 +527,89 @@ const MINEBIG = (() => {
     return list;
   }
 
+  // ---- published-sheet results feed ----
+  // CSV columns: date,game,num. New rows are prepended to the draw archive;
+  // anything unparsable is skipped and the demo data stays untouched.
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let cur = "";
+    let q = false;
+    const push = () => { row.push(cur); cur = ""; };
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (q) {
+        if (ch === '"') {
+          if (text[i + 1] === '"') { cur += '"'; i++; } else q = false;
+        } else cur += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ",") push();
+      else if (ch === "\n" || ch === "\r") {
+        if (ch === "\r" && text[i + 1] === "\n") i++;
+        push();
+        rows.push(row);
+        row = [];
+      } else cur += ch;
+    }
+    push();
+    rows.push(row);
+    return rows;
+  }
+
+  function applySheetCSV(text) {
+    const rows = parseCSV(text);
+    if (rows.length < 2) return;
+    const head = rows[0].map((h) => String(h).trim().toLowerCase());
+    const iDate = head.indexOf("date");
+    const iGame = head.indexOf("game");
+    const iNum = head.indexOf("num");
+    if (iDate < 0 || iGame < 0 || iNum < 0) return;
+    for (let i = 1; i < rows.length; i++) {
+      const r = rows[i];
+      const date = String(r[iDate] || "").trim();
+      const game = String(r[iGame] || "").trim().toLowerCase();
+      const num = String(r[iNum] || "").trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
+      if (game !== "d4" && game !== "d6") continue;
+      if (!new RegExp("^\\d{" + (game === "d4" ? 4 : 6) + "}$").test(num)) continue;
+      DRAWS[game].unshift({ date, num });
+    }
+    // dedupe by date+num, newest first, rebuild boards
+    for (const g of ["d4", "d6"]) {
+      const seen = new Set();
+      DRAWS[g] = DRAWS[g]
+        .filter((d) => { const k = d.date + ":" + d.num; if (seen.has(k)) return false; seen.add(k); return true; })
+        .sort((a, b) => (a.date < b.date ? 1 : -1));
+      BOARDS[g] = boardsFor(g);
+    }
+    if (typeof window !== "undefined" && typeof CustomEvent === "function") {
+      window.dispatchEvent(new CustomEvent("minebig:sheet-loaded"));
+    }
+  }
+
+  let sheetLoaded = false;
+  function loadSheetFeed() {
+    if (!RESULTS_SHEET_CSV_URL || sheetLoaded) return;
+    sheetLoaded = true;
+    if (typeof fetch !== "function") return;
+    fetch(RESULTS_SHEET_CSV_URL, { cache: "no-store" })
+      .then((r) => (r.ok ? r.text() : Promise.reject(new Error("sheet fetch failed"))))
+      .then((text) => applySheetCSV(text))
+      .catch(() => { /* silent fallback to demo data */ });
+  }
+  loadSheetFeed();
+
   return {
     weekKey, isLiveWindow, nextSundayNoon,
     getTaken, setTaken, isTaken, suggestAlternatives,
     getLogbook, addLogEntry,
-    TIERS, WINNERS, lifetimeCounts,
-    DEMO_WIN_CODE, lookupTicket, normalize, isValidCodeShape,
+    TIERS, WINNERS, lifetimeCounts, digitCode,
+    DEMO_WIN_CODE, lookupTicket,
     agentName, setAgent, clearAgent,
     GAMES, PRIZE_TIERS, DRAWS, BOARDS,
     drawCode, formatDrawDate, formatShortDate, meaningFor,
     parseBoardText, serializeBoards, saveBoardOverrides, clearBoardOverrides, getBoards,
-    getTakenForGame, isNumberTaken,
+    getTakenForGame, isNumberTaken, setTakenForGame,
     DICTIONARY, digitFreq, mostFrequent, leastFrequent,
     getClipboard, addToClipboard, removeFromClipboard,
   };

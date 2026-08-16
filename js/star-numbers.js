@@ -17,12 +17,21 @@
     const rows = MINEBIG.DICTIONARY.filter((d) =>
       !q || d.word.toLowerCase().includes(q) || d.nums.some((n) => n.includes(q))
     );
-    grid.innerHTML = rows.map((d) =>
-      `<div class="dict-item">
-        <span class="word">${escapeHtml(d.word)}</span>
-        <span class="nums">${d.nums.map((n) => `<span>${n}</span>`).join("")}</span>
-      </div>`
-    ).join("");
+    grid.innerHTML = rows.map((d) => {
+      const art = d.image
+        ? `<img class="dict-art" src="${escapeHtml(d.image)}" alt="" loading="lazy">`
+        : `<span class="dict-sym" aria-hidden="true">${d.symbol || "⭐"}</span>`;
+      const meaning = d.meaning
+        ? `<span class="dict-meaning">${escapeHtml(d.meaning)}</span>` : "";
+      return `<div class="dict-item">
+        ${art}
+        <div class="dict-body">
+          <span class="word">${escapeHtml(d.word)}</span>
+          ${meaning}
+          <span class="nums">${d.nums.map((n) => `<span>${escapeHtml(n)}</span>`).join("")}</span>
+        </div>
+      </div>`;
+    }).join("");
     const empty = byId("dict-empty");
     if (empty) empty.style.display = rows.length ? "none" : "block";
   }

@@ -49,24 +49,24 @@ Public website:
 | Careers | `careers.html` | Content pending (footer link) |
 | About | `about.html` | 25-year reborn story + how the site works |
 | Testimonials | `testimonials.html` | Latest-draw winners grouped by prize tier |
-| Check Status | `check.html` | Ticket status lookup (keypad entry) + 6-number availability |
+| Check Status | `check.html` | Ticket status lookup (keypad entry) + 4- or 6-digit code availability |
 
 One login, two channels:
 
 | Page | Path | What it does |
 |---|---|---|
-| Login | `login.html` | Single login — the user selects **Player** or **Agent** (keys 1/2), then signs in |
+| Login | `login.html` | Player login by default; small "Agent login" link at the bottom opens the agent channel |
 | My Account | `user-portal.html` | Player channel: save ticket codes, see win/sold/not-found status, latest draw |
-| Agent Portal | `agent-portal.html` | Agent channel: pick 6 numbers with live availability → lock the code → record the sale → permanent log book → winner announcements |
+| Agent Portal | `agent-portal.html` | Agent channel: pick a 6-digit code with live availability → lock the code → record the sale → permanent log book → winner announcements |
 
 ## Weekly logic (implemented)
 
 - Draws run **every Sunday at 12:00 PM** (visitor's local time), last 15 minutes
   — one countdown per game (MineBig 4D, MineBig 6D).
-- Codes are **any 6 natural numbers** in the agent/portal model, subject to
-  availability; a bought combination is **locked** for that week.
-- **Every Sunday the pool resets** — taken numbers are keyed by week
-  (`minebig_taken_<year-W##>`).
+- Codes are **4 digits (MineBig 4D) or 6 digits (MineBig 6D)** built from
+  single digits 0-9; a bought code is **locked** for that week.
+- **Every Sunday the pool resets** — taken codes are keyed by week
+  (`minebig_taken_<game>_<year-W##>`).
 - Log book entries are **permanent** — no edit or delete.
 - Try Your Luck availability is per game (4D = 4 digits, 6D = 6 digits), seeded
   with sample "taken" numbers, reset weekly. The selection clipboard persists
@@ -74,14 +74,15 @@ One login, two channels:
 
 ## Demo tips
 
-- Winning demo code (check page): `4 19 27 33 41 49` → shows the WINNER result.
-- Taken demo numbers: `7`, `12`, `19`, `23`, `27`, `33`, `41`, `49`, `56`, `61`,
-  `78` (any of these triggers the "taken" state and suggested alternatives).
+- Winning demo code (check page): the latest draw's first-prize code per game
+  (defaults: 6D `482196`, 4D `4821`) → shows the WINNER result.
+- Taken demo codes: 6D `111111`, `000000`, `888888`, … and 4D `1111`, `0000`,
+  `8888`, … (see `SEED_TAKEN_BY_GAME` in `js/data.js`).
 - Try Your Luck: `1234` (4D) is available; `1111` is taken. Switch to 6D and
-  try a 6-digit number.
+  try a 6-digit code.
 - `Next Draw` → "Preview live" shows the 15-minute live state.
-- `Login` → pick Player or Agent (any credentials work), or press 1 / 2.
-- Agent Portal → "Reset numbers" clears this week's pool.
+- `Login` → player login by default; the bottom "Agent login" link opens the agent channel (any credentials work).
+- Agent Portal → "Reset numbers" clears this week's locked codes.
 
 ## Run locally
 
@@ -115,4 +116,4 @@ The site is fully static — drop the folder onto any static host:
 - Minimum age policy confirmation (21 used per content doc reference)
 - Phone number, registration number, social platform links (footer)
 - Licensing confirmation for the operating region (Malaysia)
-- Real draw data feed and backend for codes (currently browser-local demo logic)
+- Real draw data feed and backend for codes (currently browser-local demo logic; an optional published Google Sheet CSV feed slot lives in `js/data.js` as `RESULTS_SHEET_CSV_URL`)

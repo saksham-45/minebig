@@ -23,7 +23,7 @@
             <div class="name">${escapeHtml(name)}</div>
             <div class="draw">Winner — draw of ${latest.date}</div>
             <div class="quote">“Winning with MineBig felt personal — my agent walked me through everything, right up to the handover.”</div>
-            <div class="nums">${latest.nums.join(" · ")}</div>
+            <div class="nums">${MINEBIG.digitCode(latest.nums).map((n) => `<span class="ball sm">${n}</span>`).join("")}</div>
           </div>
         </div>`;
     });

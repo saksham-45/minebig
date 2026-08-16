@@ -39,6 +39,22 @@
     if (t4) t4.innerHTML = MINEBIG.PRIZE_TIERS.map(prizeRow).join("");
     if (t6) t6.innerHTML = MINEBIG.PRIZE_TIERS.map(prizeRow).join("");
 
+    // ---- recent winners sample (single digits) ----
+    const winsEl = byId("upcoming-winners");
+    function renderWinnersSample() {
+      if (!winsEl) return;
+      const sample = MINEBIG.WINNERS.slice(0, 3);
+      winsEl.innerHTML = sample.map((w) => {
+        const digits = MINEBIG.digitCode(w.nums).map((d) => `<span class="ball sm">${d}</span>`).join("");
+        return `<div class="win-row">
+          <div class="win-row__date">${MINEBIG.formatShortDate(w.date)}</div>
+          <div class="win-row__digits">${digits}</div>
+          <div class="win-row__tiers">1st — ${w.winners.first} · Special — ${w.winners.special}</div>
+        </div>`;
+      }).join("");
+    }
+    renderWinnersSample();
+    window.addEventListener("minebig:sheet-loaded", renderWinnersSample);
     function showLive(until) {
       if (liveView) liveView.style.display = "block";
       if (cdD4) cdD4.closest(".card").style.display = "none";

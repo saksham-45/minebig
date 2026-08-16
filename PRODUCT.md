@@ -12,8 +12,8 @@ Static HTML/CSS/JS, no build step; served on Vercel (production: https://minebig
 
 ## Users
 
-- **Players** (primary public audience): Malaysian adults who play the weekly Sunday draw. Scene: checking results on a phone, weekday evenings; buy via a local agent face to face; want to know when the draw is, whether their 6-number code won, and who to contact. No accounts required to check status — a free player login lets them save codes.
-- **Agents** (portal users): verified local sellers. Scene: on their phone at the shop or market; pick 6 numbers for a buyer, lock the code, record the sale in a permanent log book, contact winners for prize handover.
+- **Players** (primary public audience): Malaysian adults who play the weekly Sunday draw. Scene: checking results on a phone, weekday evenings; buy via a local agent face to face; want to know when the draw is, whether their 4- or 6-digit code won, and who to contact. No accounts required to check status — a free player login lets them save codes.
+- **Agents** (portal users): verified local sellers. Scene: on their phone at the shop or market; pick a 4- or 6-digit code for a buyer, lock the code, record the sale in a permanent log book, contact winners for prize handover.
 
 ## Product Purpose
 

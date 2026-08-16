@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Milly the beaver holding a gold heart shield, the responsible play mascot">
+  <defs>
+    <linearGradient id="cfur" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9c6b3f"/>
+      <stop offset="1" stop-color="#6d4426"/>
+    </linearGradient>
+    <linearGradient id="cfurLight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b88650"/>
+      <stop offset="1" stop-color="#8a5a33"/>
+    </linearGradient>
+    <linearGradient id="cmuzzle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ecc193"/>
+      <stop offset="1" stop-color="#d9a066"/>
+    </linearGradient>
+    <linearGradient id="cheart" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd54f"/>
+      <stop offset="1" stop-color="#f0a80a"/>
+    </linearGradient>
+    <filter id="csoft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1a120a" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <!-- shadow -->
+  <ellipse cx="100" cy="184" rx="60" ry="10" fill="#000" opacity="0.18"/>
+
+  <!-- tail -->
+  <path d="M30 130 C16 120 13 98 27 90 C41 82 62 88 66 100 L72 134 C74 148 62 154 46 152 Z" fill="#4a3826"/>
+
+  <!-- body -->
+  <g filter="url(#csoft)">
+    <path d="M58 116 C52 92 66 72 100 72 C134 72 148 92 142 116 C138 150 128 172 100 172 C72 172 62 150 58 116 Z" fill="url(#cfur)"/>
+    <path d="M78 92 C76 108 82 122 100 122 C118 122 124 108 122 92 C118 78 82 78 78 92 Z" fill="url(#cmuzzle)" opacity="0.95"/>
+  </g>
+
+  <!-- legs -->
+  <ellipse cx="82" cy="168" rx="17" ry="11" fill="#5c3a20"/>
+  <ellipse cx="118" cy="168" rx="17" ry="11" fill="#5c3a20"/>
+
+  <!-- arms hugging the heart shield -->
+  <g filter="url(#csoft)">
+    <path d="M54 122 C44 112 42 94 50 84 C56 76 66 78 68 86 L70 100 C72 112 66 122 58 124 Z" fill="url(#cfurLight)"/>
+    <path d="M146 122 C156 112 158 94 150 84 C144 76 134 78 132 86 L130 100 C128 112 134 122 142 124 Z" fill="url(#cfurLight)"/>
+  </g>
+
+  <!-- heart shield -->
+  <g filter="url(#csoft)">
+    <path d="M100 118 C98 110 78 98 68 92 C58 86 52 76 58 66 C64 56 76 54 84 62 C92 70 96 76 100 82 C104 76 108 70 116 62 C124 54 136 56 142 66 C148 76 142 86 132 92 C122 98 102 110 100 118 Z" fill="url(#cheart)" stroke="#b97c08" stroke-width="2.5"/>
+    <path d="M76 72 C72 64 78 58 86 62 C90 64 94 68 98 74" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+    <text x="100" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="800" fill="#fff">21+</text>
+  </g>
+
+  <!-- head -->
+  <g filter="url(#csoft)">
+    <path d="M76 74 C74 56 84 40 100 40 C116 40 126 56 124 74 C122 88 112 96 100 96 C88 96 78 88 76 74 Z" fill="url(#cfur)"/>
+    <ellipse cx="80" cy="46" rx="9" ry="11" fill="url(#cfurLight)"/>
+    <ellipse cx="80" cy="46" rx="4.5" ry="6" fill="#e9b98c"/>
+    <ellipse cx="120" cy="46" rx="9" ry="11" fill="url(#cfurLight)"/>
+    <ellipse cx="120" cy="46" rx="4.5" ry="6" fill="#e9b98c"/>
+    <ellipse cx="100" cy="82" rx="24" ry="17" fill="url(#cmuzzle)"/>
+    <ellipse cx="100" cy="74" rx="7" ry="5.5" fill="#3b2415"/>
+    <ellipse cx="98" cy="72.5" rx="2.2" ry="1.8" fill="#fff" opacity="0.7"/>
+    <rect x="92.5" y="84" width="7" height="10" rx="2.5" fill="#fff" stroke="#e3d9c8" stroke-width="1"/>
+    <rect x="100.5" y="84" width="7" height="10" rx="2.5" fill="#fff" stroke="#e3d9c8" stroke-width="1"/>
+    <!-- closed happy eyes -->
+    <path d="M80 63 C82 60 88 60 90 63" fill="none" stroke="#241a12" stroke-width="3" stroke-linecap="round"/>
+    <path d="M110 63 C112 60 118 60 120 63" fill="none" stroke="#241a12" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="78" cy="74" rx="4" ry="2.6" fill="#e98a5a" opacity="0.55"/>
+    <ellipse cx="122" cy="74" rx="4" ry="2.6" fill="#e98a5a" opacity="0.55"/>
+  </g>
+</svg>
