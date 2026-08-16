@@ -312,7 +312,7 @@ const MINEBIG = (() => {
     if (hits.length) {
       return hits.map((h) => h.word).join(", ");
     }
-    return "No dictionary match for this sample number.";
+    return "No dictionary match for this number.";
   }
 
   // ---- draw board editor: simple text entry that auto-populates ----

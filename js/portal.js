@@ -33,7 +33,7 @@
       const name = (byId("login-name").value || "").trim();
       const pass = byId("login-pass").value;
       if (!name) { byId("login-err").textContent = "Enter an agent name to continue."; return; }
-      if (!pass) { byId("login-err").textContent = "Enter the portal password. (Demo: any password works.)"; return; }
+      if (!pass) { byId("login-err").textContent = "Enter the portal password."; return; }
       MINEBIG.setAgent(name);
       location.href = "agent-portal.html";
     });
@@ -134,7 +134,7 @@
       renderLogbook();
       const out = byId("buy-result");
       out.className = "result show ok";
-      out.innerHTML = `<h3>Demo reset</h3><p>This week's pool is fresh again — all numbers available.</p>`;
+      out.innerHTML = `<h3>Pool reset</h3><p>This week's pool is fresh again — all numbers available.</p>`;
     });
   }
 
@@ -160,8 +160,9 @@
     }
     box.innerHTML = tickets.map((t) => {
       const recorded = t.buyer;
-      return `<div class="card feature mt" style="margin-top:14px">
-        <h3>🎟️ <span class="gold">${escapeHtml(t.code.replace(/-/g, " - "))}</span> ${escapeHtml(t.week)}</h3>`
+      return `
+      <div class="card feature mt" style="margin-top:14px">
+        <h3>🎟️ <span class="gold">${escapeHtml(t.code.replace(/-/g, " - "))}</span> ${escapeHtml(t.week)}</h3>
         ${recorded
           ? `<p><span class="pill ok">Recorded — sold to ${escapeHtml(t.buyer)}</span></p>`
           : `<p class="muted">Not yet recorded. Who did you sell this to?</p>

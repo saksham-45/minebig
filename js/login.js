@@ -31,7 +31,7 @@
     const err = byId("login-err");
     if (!role) { err.textContent = "Choose a role first — player or agent."; return; }
     if (!name) { err.textContent = "Enter your name."; return; }
-    if (!pass) { err.textContent = "Enter a password. (Demo: any password works.)"; return; }
+    if (!pass) { err.textContent = "Enter a password."; return; }
 
     if (role === "agent") {
       sessionStorage.setItem("minebig_agent", name);

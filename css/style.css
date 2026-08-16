@@ -1577,22 +1577,6 @@ body:has(.draw-page) { background: #f6f6f6; }
 }
 
 /* ============================================================
-   Demo note
-   ============================================================ */
-.demo-note {
-  margin-top: 34px;
-  background: #fff8e1;
-  border: 1px solid var(--gold);
-  border-radius: var(--radius);
-  padding: 18px 22px;
-  font-size: 14px;
-  color: #7a5b00;
-  line-height: 1.6;
-}
-.demo-note strong { color: var(--gold-deep); }
-.demo-note a { color: var(--blue-deep); font-weight: 700; }
-
-/* ============================================================
    Footer — dark trust footer
    ============================================================ */
 .footer {

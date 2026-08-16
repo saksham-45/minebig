@@ -245,7 +245,7 @@
         MINEBIG.clearBoardOverrides();
         ta4.value = MINEBIG.serializeBoards("d4");
         ta6.value = MINEBIG.serializeBoards("d6");
-        if (status) { status.textContent = "Demo data restored."; status.className = "draw-editor__status is-ok"; }
+        if (status) { status.textContent = "Default boards restored."; status.className = "draw-editor__status is-ok"; }
         reloadBoards();
       });
     }
