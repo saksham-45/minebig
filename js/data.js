@@ -423,7 +423,7 @@ const MINEBIG = (() => {
   }
 
 
-  // Demo "taken" numbers per game (weekly reset, like the 6-number pool).
+  // Demo "taken" numbers per game (weekly reset, like the code pool).
   const SEED_TAKEN_BY_GAME = {
     d4: ["0000", "1111", "4821", "1930", "7745", "8888", "9999", "0218"],
     d6: ["482196", "193055", "774512", "111111", "000000", "021897", "888888"],

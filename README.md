@@ -37,7 +37,7 @@ Public website:
 
 | Page | Path | What it does |
 |---|---|---|
-| Home | `index.html` | 3-banner slider, next-draw countdown, ticker, carousel, how-the-draw-works |
+| Home | `index.html` | 3-banner slider, next-draw countdown, mascot strip with live stats, carousel, how-the-draw-works |
 | Next Draw | `upcoming.html` | Countdowns for MineBig 4D & 6D, game banners, how-draws-work accordion, prize accordions, demo walkthrough |
 | Results & Winners | `winning.html` | Latest 4D/6D results + browsable results timeline (winner city/country only) |
 | Star Numbers | `star-numbers.html` | Symbolic Dictionary (searchable) + Statistics (most/least drawn digits, date filters) |
