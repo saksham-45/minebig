@@ -160,9 +160,8 @@
   }
 
   function bannerSlider() {
-    const slider = document.querySelector(".banner-slider");
-    if (!slider) return;
     const track = slider.querySelector(".banner-track");
+    if (!track) return;
     const slides = Array.from(slider.querySelectorAll(".banner-slide"));
     const dots = Array.from(slider.querySelectorAll(".banner-dots button"));
     const prev = slider.querySelector(".banner-arrow.prev");

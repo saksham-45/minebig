@@ -113,7 +113,10 @@
     const date = byId("user-latest-date");
     const nums = byId("user-latest-nums");
     if (date) date.textContent = latest.date;
-    if (nums) nums.innerHTML = MINEBIG.digitCode(latest.nums).map((n) => `<span class="ball sm">${n}</span>`).join("");
+    if (nums) {
+      const codes = MINEBIG.codesForDate(latest.date);
+      nums.innerHTML = [codes.d6 ? `<span class="ball sm">${codes.d6}</span>` : "", codes.d4 ? `<span class="ball sm">${codes.d4}</span>` : ""].join("");
+    }
   }
 
   document.addEventListener("DOMContentLoaded", () => {

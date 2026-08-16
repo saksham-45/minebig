@@ -39,16 +39,20 @@
     if (t4) t4.innerHTML = MINEBIG.PRIZE_TIERS.map(prizeRow).join("");
     if (t6) t6.innerHTML = MINEBIG.PRIZE_TIERS.map(prizeRow).join("");
 
-    // ---- recent winners sample (single digits) ----
+    // ---- recent winners sample (full 4D/6D winning codes) ----
     const winsEl = byId("upcoming-winners");
     function renderWinnersSample() {
       if (!winsEl) return;
       const sample = MINEBIG.WINNERS.slice(0, 3);
       winsEl.innerHTML = sample.map((w) => {
-        const digits = MINEBIG.digitCode(w.nums).map((d) => `<span class="ball sm">${d}</span>`).join("");
+        const codes = MINEBIG.codesForDate(w.date);
+        const codeChips = [
+          codes.d6 ? `<span class="code-chip">6D&nbsp;${codes.d6}</span>` : "",
+          codes.d4 ? `<span class="code-chip">4D&nbsp;${codes.d4}</span>` : "",
+        ].join("");
         return `<div class="win-row">
           <div class="win-row__date">${MINEBIG.formatShortDate(w.date)}</div>
-          <div class="win-row__digits">${digits}</div>
+          <div class="win-row__digits">${codeChips}</div>
           <div class="win-row__tiers">1st — ${w.winners.first} · Special — ${w.winners.special}</div>
         </div>`;
       }).join("");

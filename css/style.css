@@ -2620,8 +2620,7 @@ tr:hover td { background: #fffdf4; }
 .dict-body { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
 .dict-meaning { font-size: 12.5px; color: var(--dim); line-height: 1.45; }
 
-/* ---- winners board: per-digit buttons ---- */
-.mb-num-group { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+/* ---- winners board: whole 4D/6D codes as single number buttons ---- */
 
 /* ---- login: small bottom switch ---- */
 .login-switch { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -2673,3 +2672,6 @@ tr:hover td { background: #fffdf4; }
 
 /* social link circles: sized everywhere, not just the footer */
 .f-social a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--line-2); color: var(--dim); background: #fff; font-weight: 800; }
+
+/* winner code chips (whole 4D/6D numbers) */
+.win-row__digits .code-chip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-weight: 700; font-size: 14px; background: #fff8e1; border: 1px solid var(--gold); color: var(--ink); border-radius: var(--radius-pill); padding: 6px 12px; }
