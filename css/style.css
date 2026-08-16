@@ -2505,6 +2505,13 @@ tr:hover td { background: #fffdf4; }
   100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 .prize-stage.burst .prize-box { animation: gift-wobble 1.15s ease-in-out; }
+.prize-stage.burst .gift-lid { animation: lid-fly 0.5s cubic-bezier(0.5, 0, 0.75, 0.5) 1.05s forwards; }
+.prize-stage.burst .gift-body { animation: body-pop 0.45s ease-in 1.12s forwards; }
+.prize-stage.burst .confetti-wrap i { animation: confetti-fly 1.6s ease-out 1.05s forwards; animation-delay: calc(1.05s + var(--delay)); }
+.prize-stage.burst .prize-card { animation: card-pop 0.55s var(--ease) forwards; }
+.prize-stage.burst .pc1 { animation-delay: 1.3s; }
+.prize-stage.burst .pc2 { animation-delay: 1.45s; }
+.prize-stage.burst .pc3 { animation-delay: 1.6s; }
 .banner-track { min-width: 0; }
 .banner-slide { min-width: 0; }
 .prize-scene { width: 100%; }
