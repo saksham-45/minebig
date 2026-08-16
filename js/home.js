@@ -61,9 +61,9 @@
       carResults.innerHTML =
         `<p class="muted">Draw of ${latest.date}</p>` +
         `<div class="mini-balls">${latest.nums.map((n, i) => `<span class="ball ${["", "teal", "mag"][i % 3]}">${n}</span>`).join("")}</div>` +
-        `<p style="margin-top:10px;line-height:1.7">` +
-        MINEBIG.TIERS.map((t) => `<span class="tier-chip ${t.cls}">${t.label}</span> ${latest.winners[t.key]}`).join("<br>") +
-        `</p>`;
+        `<div class="res-list">` +
+        MINEBIG.TIERS.map((t) => `<div class="res-line"><span class="tier-chip ${t.cls}">${t.label}</span><span class="res-name">${latest.winners[t.key]}</span></div>`).join("") +
+        `</div>`;
     }
 
     // ---- carousel: lucky numbers slide ----

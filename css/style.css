@@ -2389,3 +2389,59 @@ tr:hover td { background: #fffdf4; }
 .mb-cal__day.is-on { background: var(--gold); color: var(--ink); }
 .mb-edit-btn:hover { border-color: var(--gold); background: #fff8e1; color: var(--ink); }
 .mb-datepicker__btn:hover { border-color: var(--gold); }
+
+/* ---- carousel slide spacing (home) ---- */
+.car-slide h3 { margin-bottom: 16px; }
+.car-slide .quote { margin: 0 0 6px; }
+.car-slide .who {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.car-slide .tx-rule { margin: 14px 0 0; }
+.car-slide .tx-rule:last-child { display: none; }
+.car-slide .muted { margin: 0 0 14px; line-height: 1.6; }
+.car-slide .mini-balls { margin: 0 0 14px; }
+.car-slide .btn-row { margin-top: 16px; }
+.car-slide .btn-row .btn { flex: 0 1 auto; }
+.car-slide .btn { align-self: flex-start; margin-top: 16px; }
+.car-slide .note { margin-top: 14px; }
+.res-list { margin-top: 14px; }
+.res-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.res-line .res-name { font-weight: 600; color: var(--ink); }
+.how-list { margin-top: 2px; }
+.how-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+  line-height: 1.55;
+  color: var(--text);
+  font-size: 15px;
+}
+.how-item .n {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* carousel: breathing room */
+.car-slide { padding: 26px 26px 30px; }
+.car-slide h3 { margin-bottom: 20px; }
+.car-slide .quote { line-height: 1.7; }
