@@ -712,7 +712,7 @@ h1, h2, h3, h4 { color: var(--ink); font-weight: 800; line-height: 1.15; letter-
 /* ============================================================
    Countdown — gold numerals on dark panels
    ============================================================ */
-.countdown { display: flex; gap: 10px; flex-wrap: wrap; margin: 22px 0 6px; }
+.countdown { display: flex; gap: 10px; flex-wrap: wrap; margin: 22px 0 6px; justify-content: center; }
 .countdown .unit {
   flex: 1 1 100px;
   max-width: 150px;
