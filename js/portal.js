@@ -231,12 +231,14 @@
     const latest = MINEBIG.WINNERS[0];
     const tbody = byId("winners-body");
     const rows = MINEBIG.WINNERS.map((w) => {
-      const nums = MINEBIG.digitCode(w.nums).map((n) => `<span class="num-chip">${n}</span>`).join("");
+      const codes = MINEBIG.codesForDate(w.date);
+      const nums = [codes.d6 ? `6D ${codes.d6}` : "", codes.d4 ? `4D ${codes.d4}` : ""].filter(Boolean).map((c) => `<span class="num-chip">${c}</span>`).join("");
       const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "—").join(" · ");
-      return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning digits">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
+      return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning codes">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
     }).join("");
     tbody.innerHTML = rows;
-    const latestNums = MINEBIG.digitCode(latest.nums).map((n) => `<span class="ball sm mag">${n}</span>`).join("");
+    const latestCodes = MINEBIG.codesForDate(latest.date);
+    const latestNums = [latestCodes.d6 ? `<span class="ball sm mag">${latestCodes.d6}</span>` : "", latestCodes.d4 ? `<span class="ball sm">${latestCodes.d4}</span>` : ""].join("");
     byId("latest-nums").innerHTML = latestNums;
     byId("latest-date").textContent = latest.date;
   }

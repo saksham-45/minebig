@@ -124,6 +124,16 @@ const MINEBIG = (() => {
     return nums.map((n) => String(Number(n) % 10));
   }
 
+
+  // full 4D/6D winning codes for a draw date (winner numbers stay whole codes)
+  function codesForDate(dateStr) {
+    const out = { d4: null, d6: null };
+    for (const g of ["d4", "d6"]) {
+      const hit = (DRAWS[g] || []).find((d) => d.date === dateStr);
+      if (hit) out[g] = hit.num;
+    }
+    return out;
+  }
   // ---- lifetime frequency: how often each number has won ----
   function lifetimeCounts() {
     const counts = {};
@@ -484,7 +494,7 @@ const MINEBIG = (() => {
     { word: "Phoenix", nums: ["7788","4013"], symbol: "🦅", image: "" },
     { word: "Tiger", nums: ["0123","5555"], symbol: "🐯", image: "" },
     { word: "Elephant", nums: ["4000","8211"], symbol: "🐘", image: "" },
-  ];;
+  ];
 
   // ---- statistics helpers (star numbers) ----
   function digitFreq(gameId, days = 0) {
@@ -602,8 +612,7 @@ const MINEBIG = (() => {
   return {
     weekKey, isLiveWindow, nextSundayNoon,
     getTaken, setTaken, isTaken, suggestAlternatives,
-    getLogbook, addLogEntry,
-    TIERS, WINNERS, lifetimeCounts, digitCode,
+    TIERS, WINNERS, lifetimeCounts, digitCode, codesForDate,
     DEMO_WIN_CODE, lookupTicket,
     agentName, setAgent, clearAgent,
     GAMES, PRIZE_TIERS, DRAWS, BOARDS,

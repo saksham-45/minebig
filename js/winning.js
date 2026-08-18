@@ -12,9 +12,7 @@
   }
 
   function numBtn(n) {
-    const digits = String(n).split("").map((d) =>
-      `<button type="button" class="mb-num" data-num="${escapeHtml(n)}">${escapeHtml(d)}</button>`).join("");
-    return `<span class="mb-num-group">${digits}</span>`;
+    return `<button type="button" class="mb-num" data-num="${escapeHtml(n)}">${escapeHtml(n)}</button>`;
   }
 
   function renderBoard(el, board, game) {
@@ -257,6 +255,8 @@
         reloadBoards();
       });
     }
+    // live feed: re-render boards when a published sheet updates the draws
+    window.addEventListener("minebig:sheet-loaded", reloadBoards);
 
     paint();
   });

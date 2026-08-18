@@ -137,6 +137,26 @@
     btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
+  // ---- banner 2: 4-step SVG slideshow ----
+  function stepShow() {
+    const show = document.querySelector(".step-show");
+    if (!show) return;
+    const arts = Array.from(show.querySelectorAll(".step-art"));
+    const labels = Array.from(show.querySelectorAll(".step-show__labels span"));
+    const dots = Array.from(show.querySelectorAll(".step-show__dots i"));
+    if (!arts.length) return;
+    let i = 0;
+    function go(n) {
+      i = (n + arts.length) % arts.length;
+      arts.forEach((a, k) => a.classList.toggle("on", k === i));
+      labels.forEach((l, k) => l.classList.toggle("on", k === i));
+      dots.forEach((d, k) => d.classList.toggle("on", k === i));
+    }
+    const timer = setInterval(() => go(i + 1), 2600);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) clearInterval(timer);
+    go(0);
+  }
+
   // ---- banner slider (home): scroll-snap swipe + confetti price reveal ----
   function burstPrizes() {
     const stage = document.querySelector(".prize-stage");
@@ -200,7 +220,6 @@
     prev && prev.addEventListener("click", () => go(i - 1));
     next && next.addEventListener("click", () => go(i + 1));
     dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
-    slider.addEventListener("mouseenter", () => clearInterval(timer));
     slider.addEventListener("mouseleave", restart);
     slider.addEventListener("touchstart", () => clearInterval(timer), { passive: true });
     slider.addEventListener("touchend", restart, { passive: true });
@@ -215,6 +234,7 @@
     searchPanel();
     languageSelect();
     backToTop();
+    stepShow();
     bannerSlider();
   });
 })();
