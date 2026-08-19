@@ -42,7 +42,7 @@ Public website:
 | Results & Winners | `winning.html` | Latest 4D/6D results, browsable results timeline (winner city/country only), Help & Support buttons |
 | Star Numbers | `star-numbers.html` | Searchable Symbolic Dictionary with emojis/images, dynamic digit statistics |
 | Try Your Luck | `try-your-luck.html` | Pick numbers (4D/6D), live availability check, links to Symbolic Dictionary/Statistics, clipboard, agent hand-off |
-| Play Responsibly | `play-responsibly.html` | 21+ age banner, Milly beaver pose, know-your-limits, support resources, privacy & terms |
+| Play Responsibly | `play-responsibly.html` | 21+ age banner, lantern ghost mascot, know-your-limits, support resources, privacy & terms |
 | Biggest Sensation | `biggest-sensation.html` | Content pending (per content doc) |
 | Help — FAQs | `faq.html` | Categorized accordion: Getting Started, Buying, Draws, Prizes, Account |
 | Help — Contact | `contact.html` | Customer service info + contact form |

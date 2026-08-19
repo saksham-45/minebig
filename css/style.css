@@ -2462,6 +2462,22 @@ tr:hover td { background: #fffdf4; }
 .spot-quote .quote { margin-top: 14px; font-size: clamp(15px, 1.7vw, 18px); font-style: italic; color: #f4e6c0; line-height: 1.6; }
 .spot-quote .who { margin-top: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #ffc38a; }
 
+.banner-visual {
+  position: absolute;
+  right: clamp(20px, 6vw, 84px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(180px, 24vw, 260px);
+  z-index: 1;
+  pointer-events: none;
+}
+.banner-visual img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+}
+
 /* prize-box confetti reveal (banner 1) — SVG gift, mobile-safe layout */
 .prize-stage { position: absolute; right: clamp(16px, 6vw, 84px); top: 50%; transform: translateY(-50%); width: clamp(220px, 28vw, 320px); z-index: 0; }
 .prize-scene { position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; }
@@ -2523,7 +2539,7 @@ tr:hover td { background: #fffdf4; }
 
 /* mascot strip (replaces the scrolling ticker) */
 .mascot-strip { margin-top: 34px; display: flex; align-items: center; gap: 18px; background: linear-gradient(120deg, #fff8e1, #fff); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px 22px; box-shadow: var(--shadow-sm); }
-.mascot-strip__face { width: 84px; height: 84px; flex: none; }
+.mascot-strip__face { width: 112px; height: 112px; flex: none; object-fit: contain; }
 .mascot-strip__text { flex: 1; min-width: 0; }
 .mascot-strip__hi { margin: 0 0 10px; font-size: 16px; color: var(--text); }
 .mascot-strip__hi b { color: var(--gold-deep); }
@@ -2579,6 +2595,12 @@ tr:hover td { background: #fffdf4; }
   .banner-slide { flex-direction: column; align-items: center; text-align: center; }
   .banner-slide .b-content { width: 100%; text-align: left; }
   .prize-stage { position: static; transform: none; width: 100%; margin-top: 22px; }
+  .banner-visual {
+    position: static;
+    transform: none;
+    width: min(200px, 62%);
+    margin: 20px auto 0;
+  }
   .prize-scene { gap: 20px; }
 }
 @media (max-width: 640px) {
