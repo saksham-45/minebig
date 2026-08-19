@@ -1,5 +1,5 @@
 /* ============================================================
-   MineBig V2.0 — shared JS: header, search, menu, misc
+   MineBig V2.0 - shared JS: header, search, menu, misc
    ============================================================ */
 
 (function () {
@@ -42,7 +42,7 @@
         subs.push({ email, at: Date.now() });
         localStorage.setItem("minebig_newsletter", JSON.stringify(subs));
       } catch (e) { /* preview */ }
-      msg.textContent = "SUBSCRIBED — DRAW ALERTS ON THE WAY";
+      msg.textContent = "SUBSCRIBED - DRAW ALERTS ON THE WAY";
       msg.style.color = "var(--green)";
       input.value = "";
     });
@@ -137,26 +137,6 @@
     btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 
-  // ---- banner 2: 4-step SVG slideshow ----
-  function stepShow() {
-    const show = document.querySelector(".step-show");
-    if (!show) return;
-    const arts = Array.from(show.querySelectorAll(".step-art"));
-    const labels = Array.from(show.querySelectorAll(".step-show__labels span"));
-    const dots = Array.from(show.querySelectorAll(".step-show__dots i"));
-    if (!arts.length) return;
-    let i = 0;
-    function go(n) {
-      i = (n + arts.length) % arts.length;
-      arts.forEach((a, k) => a.classList.toggle("on", k === i));
-      labels.forEach((l, k) => l.classList.toggle("on", k === i));
-      dots.forEach((d, k) => d.classList.toggle("on", k === i));
-    }
-    const timer = setInterval(() => go(i + 1), 2600);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) clearInterval(timer);
-    go(0);
-  }
-
   // ---- banner slider (home): scroll-snap swipe + confetti price reveal ----
   function burstPrizes() {
     const stage = document.querySelector(".prize-stage");
@@ -234,7 +214,6 @@
     searchPanel();
     languageSelect();
     backToTop();
-    stepShow();
     bannerSlider();
   });
 })();

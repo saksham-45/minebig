@@ -1,5 +1,5 @@
 /* ============================================================
-   Connect to Agent — lead form (demo: stores leads in browser)
+   Connect to Agent - lead form (demo: stores leads in browser)
    ============================================================ */
 
 (function () {
@@ -43,7 +43,7 @@
       const ok = document.getElementById("lead-ok");
 
       if (!name || !phone || !area) {
-        err.textContent = "Please fill in your name, phone and area — the agent needs these to reach you.";
+        err.textContent = "Please fill in your name, phone and area - the agent needs these to reach you.";
         ok.style.display = "none";
         return;
       }

@@ -1,5 +1,5 @@
 /* ============================================================
-   Agent Portal — number picker, code locking, log book, winners
+   Agent Portal - number picker, code locking, log book, winners
    Demo logic; all data lives in the browser (localStorage).
    ============================================================ */
 
@@ -88,7 +88,7 @@
       }
       box.classList.add("show");
       box.innerHTML =
-        `<strong class="teal">Code ${code} is taken — available nearby:</strong><br>` +
+        `<strong class="teal">Code ${code} is taken - available nearby:</strong><br>` +
         alts.map((c) => `<span class="s-num" data-n="${c}">${c}</span>`).join("");
       box.querySelectorAll(".s-num").forEach((el) => {
         el.addEventListener("click", () => {
@@ -127,7 +127,7 @@
       if (empty) { showBuy(out, "missing", "Fill all 6 digit slots first."); return; }
       if (invalid) { showBuy(out, "taken", "Every slot must be a single digit (0-9)."); return; }
       const code = currentCode();
-      if (MINEBIG.isNumberTaken("d6", code)) { showBuy(out, "taken", "This code is already taken this week — use the suggested alternatives."); return; }
+      if (MINEBIG.isNumberTaken("d6", code)) { showBuy(out, "taken", "This code is already taken this week - use the suggested alternatives."); return; }
       const takenSet = MINEBIG.getTakenForGame("d6");
       takenSet.add(code);
       MINEBIG.setTakenForGame("d6", takenSet);
@@ -149,7 +149,7 @@
       renderLogbook();
       const out = byId("buy-result");
       out.className = "result show ok";
-      out.innerHTML = `<h3>Pool reset</h3><p>This week's codes are fresh again — all codes available.</p>`;
+      out.innerHTML = `<h3>Pool reset</h3><p>This week's codes are fresh again - all codes available.</p>`;
     });
   }
 
@@ -179,7 +179,7 @@
       <div class="card feature mt" style="margin-top:14px">
         <h3>🎟️ <span class="gold">${escapeHtml(t.code.replace(/-/g, " - "))}</span> ${escapeHtml(t.week)}</h3>
         ${recorded
-          ? `<p><span class="pill ok">Recorded — sold to ${escapeHtml(t.buyer)}</span></p>`
+          ? `<p><span class="pill ok">Recorded - sold to ${escapeHtml(t.buyer)}</span></p>`
           : `<p class="muted">Not yet recorded. Who did you sell this to?</p>
              <div class="logbook-actions" style="justify-content:flex-start">
                <input type="text" id="buyer-${t.code}" placeholder="Buyer name" style="width:160px">
@@ -197,9 +197,9 @@
         const tickets = getTickets();
         const t = tickets.find((x) => x.code === code);
         if (!t || t.buyer) return;
-        t.buyer = buyer; t.phone = phone || "—";
+        t.buyer = buyer; t.phone = phone || "-";
         localStorage.setItem("minebig_tickets", JSON.stringify(tickets));
-        MINEBIG.addLogEntry({ code, buyer, phone: phone || "—", agent: MINEBIG.agentName(), at: Date.now(), week });
+        MINEBIG.addLogEntry({ code, buyer, phone: phone || "-", agent: MINEBIG.agentName(), at: Date.now(), week });
         renderTickets();
         renderLogbook();
       });
@@ -210,7 +210,7 @@
     const tbody = byId("logbook-body");
     const book = MINEBIG.getLogbook().filter((e) => e.week === week);
     if (!book.length) {
-      tbody.innerHTML = `<tr><td colspan="5" class="center muted">No sales recorded yet — sold codes stay here permanently.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="center muted">No sales recorded yet - sold codes stay here permanently.</td></tr>`;
       return;
     }
     tbody.innerHTML = book.map((e) => {
@@ -233,7 +233,7 @@
     const rows = MINEBIG.WINNERS.map((w) => {
       const codes = MINEBIG.codesForDate(w.date);
       const nums = [codes.d6 ? `6D ${codes.d6}` : "", codes.d4 ? `4D ${codes.d4}` : ""].filter(Boolean).map((c) => `<span class="num-chip">${c}</span>`).join("");
-      const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "—").join(" · ");
+      const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "-").join(" · ");
       return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning codes">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
     }).join("");
     tbody.innerHTML = rows;

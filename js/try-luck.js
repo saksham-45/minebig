@@ -1,5 +1,5 @@
 /* ============================================================
-   Try Your Luck — game selector, availability check,
+   Try Your Luck - game selector, availability check,
    selection clipboard, agent hand-off (demo, browser-only)
    ============================================================ */
 
@@ -83,12 +83,12 @@
       const digits = digitsFor(game);
       if (!/^\d+$/.test(v)) {
         result.className = "result show taken";
-        result.innerHTML = `<h3>Digits only</h3><p>Enter a number made of digits — no letters or symbols.</p>`;
+        result.innerHTML = `<h3>Digits only</h3><p>Enter a number made of digits - no letters or symbols.</p>`;
         return;
       }
       if (v.length !== digits) {
         result.className = "result show taken";
-        result.innerHTML = `<h3>Wrong length</h3><p>${gameName(game)} needs exactly <strong>${digits} digits</strong> — you entered ${v.length}.</p>`;
+        result.innerHTML = `<h3>Wrong length</h3><p>${gameName(game)} needs exactly <strong>${digits} digits</strong> - you entered ${v.length}.</p>`;
         return;
       }
       if (MINEBIG.isNumberTaken(game, v)) {

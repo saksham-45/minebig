@@ -1,5 +1,5 @@
 /* ============================================================
-   Contact Us — message form (demo: stores in browser)
+   Contact Us - message form (demo: stores in browser)
    ============================================================ */
 
 (function () {
@@ -15,12 +15,12 @@
       const ok = document.getElementById("c-ok");
 
       if (!name || !email || !subject || !message) {
-        err.textContent = "Please fill in all fields — name, email, subject and message.";
+        err.textContent = "Please fill in all fields - name, email, subject and message.";
         ok.style.display = "none";
         return;
       }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-        err.textContent = "That email address doesn't look right — please check it.";
+        err.textContent = "That email address doesn't look right - please check it.";
         ok.style.display = "none";
         return;
       }

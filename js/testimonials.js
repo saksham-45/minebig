@@ -1,5 +1,5 @@
 /* ============================================================
-   Testimonials — past winners grouped by prize tier
+   Testimonials - past winners grouped by prize tier
    ============================================================ */
 
 (function () {
@@ -10,7 +10,7 @@
 
     let html = "";
     MINEBIG.TIERS.forEach((tier) => {
-      const name = latest.winners[tier.key] || "—";
+      const name = latest.winners[tier.key] || "-";
       const initials = name.split(" ").map((p) => p[0]).join("").slice(0, 2);
       html += `
         <div class="tier-head">
@@ -21,8 +21,8 @@
           <div class="winner-card">
             <div class="avatar ${tier.cls}">${initials}</div>
             <div class="name">${escapeHtml(name)}</div>
-            <div class="draw">Winner — draw of ${latest.date}</div>
-            <div class="quote">“Winning with MineBig felt personal — my agent walked me through everything, right up to the handover.”</div>
+            <div class="draw">Winner - draw of ${latest.date}</div>
+            <div class="quote">“Winning with MineBig felt personal - my agent walked me through everything, right up to the handover.”</div>
             <div class="nums">${(() => { const c = MINEBIG.codesForDate(latest.date); return [c.d6, c.d4].filter(Boolean).map((n) => `<span class="ball sm">${n}</span>`).join(""); })()}</div>
           </div>
         </div>`;

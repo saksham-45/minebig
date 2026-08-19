@@ -1,5 +1,5 @@
 /* ============================================================
-   Star Numbers — symbolic dictionary + draw statistics
+   Star Numbers - symbolic dictionary + draw statistics
    ============================================================ */
 
 (function () {
@@ -36,31 +36,30 @@
     if (empty) empty.style.display = rows.length ? "none" : "block";
   }
 
-  // ---- statistics: bars for most/least drawn digits ----
-  function statLines(entries, total) {
-    if (!entries.length) return `<p class="muted">No data for this range yet.</p>`;
-    const max = entries[0][1];
-    return entries.map(([digit, count]) => {
-      const pct = max ? Math.round((count / max) * 100) : 0;
-      return `<div class="stat-line">
-        <span class="num">${digit}</span>
-        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
-        <span class="count">${count}×</span>
-      </div>`;
+  function heatPad(freq) {
+    const counts = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => freq[String(d)] || 0);
+    const max = Math.max(...counts, 1);
+    const min = Math.min(...counts);
+    const keys = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, ""];
+    const cells = keys.map((d) => {
+      if (d === "") return `<span class="heat-key heat-key--ghost"></span>`;
+      const c = counts[d];
+      const t = (c - min) / (max - min || 1);
+      const tag = t >= 0.66 ? "Hot" : t <= 0.33 ? "Cool" : "Warm";
+      const cls = t >= 0.66 ? "is-hot" : t <= 0.33 ? "is-cool" : "is-warm";
+      return `<button type="button" class="heat-key ${cls}" data-digit="${d}" style="--heat:${t.toFixed(2)}">
+        <b>${d}</b><small>${c}× · ${tag}</small>
+      </button>`;
     }).join("");
+    return `<div class="heat-pad">${cells}</div>
+      <p class="heat-legend"><span class="is-hot">Hot</span> drawn more · <span class="is-warm">Warm</span> mid · <span class="is-cool">Cool</span> drawn less</p>`;
   }
 
   function renderStats(days) {
-    const els = {
-      "stats-most-d4": MINEBIG.mostFrequent("d4", days),
-      "stats-least-d4": MINEBIG.leastFrequent("d4", days),
-      "stats-most-d6": MINEBIG.mostFrequent("d6", days),
-      "stats-least-d6": MINEBIG.leastFrequent("d6", days),
-    };
-    for (const [id, entries] of Object.entries(els)) {
-      const el = byId(id);
-      if (el) el.innerHTML = statLines(entries);
-    }
+    const d4 = byId("stats-d4");
+    const d6 = byId("stats-d6");
+    if (d4) d4.innerHTML = heatPad(MINEBIG.digitFreq("d4", days));
+    if (d6) d6.innerHTML = heatPad(MINEBIG.digitFreq("d6", days));
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -71,13 +70,14 @@
       search.addEventListener("input", () => renderDict(search.value));
     }
 
-    // filter chips
-    document.querySelectorAll(".filter-chip").forEach((chip) => {
-      chip.addEventListener("click", () => {
-        document.querySelectorAll(".filter-chip").forEach((c) => c.classList.toggle("on", c === chip));
-        renderStats(Number(chip.dataset.days));
-      });
+    const selects = Array.from(document.querySelectorAll(".stat-period-select"));
+    function applyPeriod(days) {
+      selects.forEach((s) => { s.value = String(days); });
+      renderStats(days);
+    }
+    selects.forEach((sel) => {
+      sel.addEventListener("change", () => applyPeriod(Number(sel.value)));
     });
-    renderStats(0);
+    applyPeriod(0);
   });
 })();

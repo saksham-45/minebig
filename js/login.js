@@ -1,5 +1,5 @@
 /* ============================================================
-   Login (P500) — player login by default; agents use the small
+   Login (P500) - player login by default; agents use the small
    "Agent login" link at the bottom for the secure agent channel
    ============================================================ */
 
@@ -15,8 +15,8 @@
     const isAgent = role === "agent";
     if (label) label.textContent = isAgent ? "Agent login" : "Player login";
     if (hint) hint.textContent = isAgent
-      ? "Agent channel — selling & locking codes"
-      : "Player channel — tracking your codes";
+      ? "Agent channel - selling & locking codes"
+      : "Player channel - tracking your codes";
     if (agentLink) {
       agentLink.textContent = isAgent ? "Player login" : "Agent login";
       agentLink.href = isAgent ? "login.html" : "login.html?role=agent";

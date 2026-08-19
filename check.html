@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Check a Ticket — MineBig.com</title>
+<title>Check a Ticket - MineBig.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght..96,500..800&family=Archivo:wght;500;600;700&family=IBM+Plex+Mono:wght;500;600&display=swap" rel="stylesheet">
@@ -11,12 +11,12 @@
 </head>
 <body>
 <!--
-  MINEBIG V2.0 — JACKPOT LOUNGE (direction contract)
-  THESIS: A lottery that feels like a premium game night — gold, noir and a glowing countdown, refusing both the teletext terminal and the neon-casino cliche.
+  MINEBIG V2.0 - JACKPOT LOUNGE (direction contract)
+  THESIS: A lottery that feels like a premium game night - gold, noir and a glowing countdown, refusing both the teletext terminal and the neon-casino cliche.
   OWN-WORLD: White ground, gold #ffc000 primary with #ffd54f→#ffc000 pill CTAs, high-contrast noir heroes with gold-glow radial, glossy number balls, Rubik type, 16-20px radius cards, soft navy shadows, lift-on-hover motion.
   STORY: A visitor lands on the weekly jackpot broadcast: three rotating hero banners, a live countdown to Sunday 12 PM, past results, and a clear path to pick numbers and connect with an agent.
   FIRST VIEWPORT: Gold logo tile; nav with Next Draw · Results and Winners · MineBig Star Numbers · Try Your Luck · Play Responsibly · Biggest Sensation · Help; banner slider with the jackpot headline; countdown card with gold numerals.
-  FORM: Gameified lottery — results-first, transparency sections, prize tiers, responsible play, rich footer.
+  FORM: Gameified lottery - results-first, transparency sections, prize tiers, responsible play, rich footer.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
 -->
 <header class="site-header">
@@ -62,7 +62,7 @@
           <a href="testimonials.html">What our winners say</a>
           <a href="connect.html">Connect with an agent</a>
           <a href="biggest-sensation.html">Biggest sensation</a>
-          <a href="faq.html">FAQ — help</a>
+          <a href="faq.html">FAQ - help</a>
           <a href="contact.html">Contact us</a>
           <a href="play-responsibly.html">Play responsibly</a>
         </div>
@@ -116,19 +116,19 @@
 <main class="page">
   <section class="hero hero-page">
     <h1>Did your ticket <span class="gold">win?</span></h1>
-    <p class="sub">Check the status of a ticket — <em>in seconds.</em></p>
+    <p class="sub">Check the status of a ticket - <em>in seconds.</em></p>
   </section>
 
   <div class="grid2">
     <div class="card form-card" style="max-width:none">
       <h3 class="card-h">Ticket status</h3>
-      <p class="muted" style="font-size:14px">Enter your 4 number code or your six number code — we'll check either one.</p>
+      <p class="muted" style="font-size:14px">Enter your 4 number code or your six number code - we'll check either one.</p>
       <input type="text" id="ticket-code" placeholder="e.g. 4821 or 482196" inputmode="numeric">
       <div class="keypad" id="keypad">
         <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button>
         <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button>
         <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button>
-        <button type="button" class="clr" data-k="CLR">CLR</button><button type="button" data-k="0">0</button><button type="button" class="ent" data-k="ENT">GO</button>
+        <button type="button" data-k="0">0</button><button type="button" class="clr" data-k="CLR">Clear</button><button type="button" class="ent" data-k="ENT">GO</button>
       </div>
       <div class="center"><button class="btn btn-gold" id="check-ticket" style="margin-top:14px">Check code</button></div>
       <div class="result" id="ticket-result"></div>
@@ -136,7 +136,7 @@
 
     <div class="card form-card" style="max-width:none">
       <h3 class="card-h">Number availability</h3>
-      <p class="muted" style="font-size:14px">Check whether a code is still free this week — enter 4 or 6 digits. <em>Tip: for 4D/6D picks use the <a href="try-your-luck.html">Try Your Luck</a> page.</em></p>
+      <p class="muted" style="font-size:14px">Check whether a code is still free this week - enter 4 or 6 digits. <em>Tip: for 4D/6D picks use the <a href="try-your-luck.html">Try Your Luck</a> page.</em></p>
       <input type="text" id="avail-input" placeholder="e.g. 4821" inputmode="numeric">
       <div class="center"><button class="btn btn-teal" id="check-avail" style="margin-top:14px">Check</button></div>
       <div class="suggest-box" id="avail-suggest"></div>
@@ -153,11 +153,11 @@
         <div class="fbrand"><span class="ball-logo">M</span> MineBig.com <span class="v2" style="font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--orange),var(--red));border-radius:100px;padding:2px 9px;margin-left:4px;vertical-align:middle">V2.0</span></div>
         <p class="ftag">Same trust. Same dreams. Improved experience, better care. Every Sunday 12 PM · Live draw · Two games · Five prize tiers.</p>
         <div class="f-social" aria-label="Follow us">
-          <a href="#" aria-label="Facebook">f</a>
-          <a href="#" aria-label="TikTok">♪</a>
-          <a href="#" aria-label="Instagram">◎</a>
-          <a href="#" aria-label="Xiaohongshu / RED">R</a>
-          <a href="#" aria-label="YouTube">▶</a>
+          <a href="#" class="soc-fb" aria-label="Facebook">f</a>
+          <a href="#" class="soc-tt" aria-label="TikTok">♪</a>
+          <a href="#" class="soc-ig" aria-label="Instagram">◎</a>
+          <a href="#" class="soc-red" aria-label="Xiaohongshu / RED">R</a>
+          <a href="#" class="soc-yt" aria-label="YouTube">▶</a>
         </div>
         <span class="legal-18">21+ · Play Responsibly</span>
       </div>

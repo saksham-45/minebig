@@ -1,5 +1,5 @@
 /* ============================================================
-   Results — draw ticket board
+   Results - draw ticket board
    ============================================================ */
 
 (function () {
@@ -28,25 +28,25 @@
       </div>
       <div class="mb-ticket__top">
         <div class="mb-prize">
-          <div class="mb-prize__label"><span class="mb-sym" aria-hidden="true">🥇</span> 1st prize</div>
+          <div class="mb-prize__label">1st prize</div>
           ${numBtn(board.first)}
         </div>
         <div class="mb-prize">
-          <div class="mb-prize__label"><span class="mb-sym" aria-hidden="true">🥈</span> 2nd Prize</div>
+          <div class="mb-prize__label">2nd Prize</div>
           ${numBtn(board.second)}
         </div>
         <div class="mb-prize">
-          <div class="mb-prize__label"><span class="mb-sym" aria-hidden="true">🥉</span> 3rd Prize</div>
+          <div class="mb-prize__label">3rd Prize</div>
           ${numBtn(board.third)}
         </div>
       </div>
       <div class="mb-ticket__split">
         <div class="mb-col">
-          <div class="mb-col__label"><span class="mb-sym" aria-hidden="true">⭐</span> Special</div>
+          <div class="mb-col__label">Special</div>
           <div class="mb-grid">${board.special.map(numBtn).join("")}</div>
         </div>
         <div class="mb-col">
-          <div class="mb-col__label"><span class="mb-sym" aria-hidden="true">🎁</span> Consolation</div>
+          <div class="mb-col__label">Consolation</div>
           <div class="mb-grid">${board.consolation.map(numBtn).join("")}</div>
         </div>
       </div>
@@ -93,7 +93,7 @@
         tabs.querySelectorAll(".mb-tab").forEach((btn) => {
           const on = btn.dataset.date === selected;
           btn.classList.toggle("is-on", on);
-          if (on) btn.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+          if (on && window.innerWidth > 720) btn.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
         });
       }
 
@@ -192,7 +192,7 @@
         if (!btn || !meaning) return;
         const n = btn.dataset.num;
         meaning.hidden = false;
-        meaning.innerHTML = `<strong>${escapeHtml(n)}</strong> — ${escapeHtml(MINEBIG.meaningFor(n))} <a href="star-numbers.html#dictionary">Open dictionary →</a>`;
+        meaning.innerHTML = `<strong>${escapeHtml(n)}</strong> - ${escapeHtml(MINEBIG.meaningFor(n))} <a href="star-numbers.html#dictionary">Open dictionary →</a>`;
       });
     }
 
@@ -240,7 +240,7 @@
           return;
         }
         MINEBIG.saveBoardOverrides(ta4.value, ta6.value);
-        status.textContent = "Applied — the boards, tabs and calendar updated.";
+        status.textContent = "Applied - the boards, tabs and calendar updated.";
         status.className = "draw-editor__status is-ok";
         reloadBoards();
         editor.hidden = true;

@@ -1,5 +1,5 @@
 /* ============================================================
-   MineBig.com V2.0 — shared demo data + week logic
+   MineBig.com V2.0 - shared demo data + week logic
    Everything here is DEMO data persisted in the browser only.
    ============================================================ */
 
@@ -190,7 +190,7 @@ const MINEBIG = (() => {
       name: "MineBig 4D",
       digits: 4,
       tagline: "Pick your lucky 4 digits, win big.",
-      price: "Entry — confirm with client",
+      price: "Entry - confirm with client",
       accent: "gold",
     },
     {
@@ -198,7 +198,7 @@ const MINEBIG = (() => {
       name: "MineBig 6D",
       digits: 6,
       tagline: "Six digits, bigger shot at the jackpot.",
-      price: "Entry — confirm with client",
+      price: "Entry - confirm with client",
       accent: "blue",
     },
   ];
@@ -211,7 +211,7 @@ const MINEBIG = (() => {
     { key: "consolation", label: "Consolation" },
   ];
 
-  // Demo draw archive per game — most recent first.
+  // Demo draw archive per game - most recent first.
   // Winner identity is never shown (per our privacy commitment).
   const DRAWS = {
     d4: [
@@ -357,7 +357,7 @@ const MINEBIG = (() => {
     if (!parts.length || !parts[0]) return null;
     const date = parts[0];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-      return { error: `Bad date "${date}" — use YYYY-MM-DD.` };
+      return { error: `Bad date "${date}" - use YYYY-MM-DD.` };
     }
     const ok = (n) => new RegExp(`^\\d{${digits}}$`).test(n);
     const nums = (parts[1] || "").split(/\s+/).filter(Boolean);

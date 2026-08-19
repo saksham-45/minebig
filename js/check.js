@@ -1,5 +1,5 @@
 /* ============================================================
-   Check Status — ticket status lookup + number availability.
+   Check Status - ticket status lookup + number availability.
    Codes are single digits (0-9): 4 digits (4D) or 6 digits (6D).
    ============================================================ */
 
@@ -45,15 +45,15 @@
       if (r.status === "win") {
         res.classList.add("win");
         res.innerHTML =
-          `<h3>★ WINNER — This code won!</h3>` +
+          `<h3>★ WINNER - This code won!</h3>` +
           chips +
-          `<p>This code won in the latest Sunday draw. Collect your prize through your agent — <a class="teal" href="connect.html">connect with an agent</a> to arrange the handover.</p>`;
+          `<p>This code won in the latest Sunday draw. Collect your prize through your agent - <a class="teal" href="connect.html">connect with an agent</a> to arrange the handover.</p>`;
       } else if (r.status === "taken") {
         res.classList.add("taken");
         res.innerHTML =
           `<h3>Code already sold</h3>` +
           chips +
-          `<p>This code was sold this week. It did not win the latest draw. Winner announcements are published every Sunday — check again after the draw.</p>`;
+          `<p>This code was sold this week. It did not win the latest draw. Winner announcements are published every Sunday - check again after the draw.</p>`;
       } else if (r.status === "notfound") {
         res.classList.add("missing");
         res.innerHTML =
@@ -64,7 +64,7 @@
         res.classList.add("missing");
         res.innerHTML =
           `<h3>Invalid code</h3>` +
-          `<p>Codes are 4 or 6 single digits (0-9) — e.g. <strong>4821</strong> or <strong>482196</strong>. You can enter either.</p>`;
+          `<p>Codes are 4 or 6 single digits (0-9) - e.g. <strong>4821</strong> or <strong>482196</strong>. You can enter either.</p>`;
       } else {
         res.classList.add("missing");
         res.innerHTML = `<h3>Enter a code first</h3><p>Enter your 4 number code or your six number code and we'll check it.</p>`;
@@ -102,7 +102,7 @@
       const g = gameFor(clean);
       if (!g) {
         availOut.classList.add("missing");
-        availOut.innerHTML = `<h3>Invalid code</h3><p>Codes are 4 or 6 single digits (0-9) — e.g. 4821 or 482196.</p>`;
+        availOut.innerHTML = `<h3>Invalid code</h3><p>Codes are 4 or 6 single digits (0-9) - e.g. 4821 or 482196.</p>`;
         suggestEl.innerHTML = "";
         return;
       }
@@ -123,7 +123,7 @@
       } else {
         availOut.classList.add("win");
         availOut.innerHTML =
-          `<h3>Available — go for it!</h3>` +
+          `<h3>Available - go for it!</h3>` +
           `<div class="big-nums">${digitChips(g.code)}</div>` +
           `<p>This code is still free this week. <a class="teal" href="try-your-luck.html">Add it to your selection →</a></p>`;
         suggestEl.innerHTML = "";

@@ -1,5 +1,5 @@
 /* ============================================================
-   Player (user) login + portal — separate from the agent portal
+   Player (user) login + portal - separate from the agent portal
    Demo logic; data lives in the browser.
    ============================================================ */
 
@@ -49,14 +49,14 @@
     const box = byId("my-codes");
     const codes = myCodes();
     if (!codes.length) {
-      box.innerHTML = `<p class="muted center" style="padding:10px 0">No codes saved yet — add a code below to track it.</p>`;
+      box.innerHTML = `<p class="muted center" style="padding:10px 0">No codes saved yet - add a code below to track it.</p>`;
       return;
     }
     box.innerHTML = codes.map((c, idx) => {
       const r = MINEBIG.lookupTicket(c.code);
       let pill, cls;
       if (r.status === "win") { cls = "win"; pill = `<span class="pill warn">🏆 WINNER</span>`; }
-      else if (r.status === "taken") { cls = "taken"; pill = `<span class="pill bad">Sold — not a winner</span>`; }
+      else if (r.status === "taken") { cls = "taken"; pill = `<span class="pill bad">Sold - not a winner</span>`; }
       else if (r.status === "notfound") { cls = "missing"; pill = `<span class="pill">No record this week</span>`; }
       else { cls = "missing"; pill = `<span class="pill">Invalid code</span>`; }
       const d = new Date(c.at);
@@ -88,7 +88,7 @@
       const clean = String(raw || "").replace(/[\s,\-;]+/g, "");
       if (!clean) { byId("add-code-msg").textContent = "Enter your code first."; return; }
       if (!/^\d{4}$/.test(clean) && !/^\d{6}$/.test(clean)) {
-        byId("add-code-msg").textContent = "Codes are 4 or 6 single digits (0-9) — e.g. 4821 or 482196.";
+        byId("add-code-msg").textContent = "Codes are 4 or 6 single digits (0-9) - e.g. 4821 or 482196.";
         return;
       }
       const code = clean;
@@ -100,7 +100,7 @@
       list.push({ code, at: Date.now() });
       saveCodes(list);
       input.value = "";
-      byId("add-code-msg").textContent = "Code added — status checked below.";
+      byId("add-code-msg").textContent = "Code added - status checked below.";
       renderCodes();
     });
     const input = byId("new-code");

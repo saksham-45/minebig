@@ -1,5 +1,5 @@
 /* ============================================================
-   Home (P100) — hero countdown, mascot stats, carousel, lucky
+   Home (P100) - hero countdown, mascot stats, carousel, lucky
    single-digit numbers, and the interactive how-to-draw tutorial
    ============================================================ */
 
@@ -49,80 +49,14 @@
     const tk1 = byId("tk-winners");
     if (tk1) tk1.textContent = winners;
 
-    // ---- carousel: winners slide ----
-    const carWinners = byId("car-winners");
-    if (carWinners) {
-      const latest = MINEBIG.WINNERS[0];
-      const quotes = [
-        [latest.winners.first, "1ST", "Winning with MineBig felt personal — my agent walked me through everything, right up to the handover."],
-        [latest.winners.special, "SPECIAL PRIZE", "I checked my code on Sunday night and could not believe it. The agent came the next day."],
-        [latest.winners.c1, "CONSOLATION 1", "Even a consolation win felt like a celebration. Same trust, better than ever."],
-      ];
-      carWinners.innerHTML = quotes.map(([name, tier, q]) =>
-        `<p class="quote">“${q}”</p>` +
-        `<p class="who"><span class="tier-chip ${tier === "1ST" ? "" : tier === "SPECIAL PRIZE" ? "mag" : "teal"}">${tier}</span> ${name} — draw of ${latest.date}</p>` +
-        `<div class="tx-rule"></div>`
-      ).join("");
-    }
-
-    // ---- lucky numbers (single digits, home carousel + heritage banner) ----
-    const carLucky = byId("car-lucky");
+    // ---- lucky numbers on the heritage banner ----
     const heritageLucky = byId("heritage-lucky");
     function roll() {
       const code = randomCode("d6", 6);
-      if (carLucky) carLucky.innerHTML = digitChips(code);
       if (heritageLucky) heritageLucky.innerHTML = digitChips(code);
     }
-    const rb = byId("car-lucky-refresh");
-    if (rb) rb.addEventListener("click", roll);
-    if (carLucky || heritageLucky) roll();
+    if (heritageLucky) roll();
     window.addEventListener("minebig:sheet-loaded", roll);
-
-    // ---- carousel arrows + dots ----
-    const track = byId("car-track");
-    if (track) {
-      const slides = track.children.length;
-      const dotsWrap = byId("car-dots");
-      const dots = [];
-      for (let i = 0; i < slides; i++) {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.setAttribute("aria-label", "Slide " + (i + 1));
-        if (i === 0) b.classList.add("on");
-        b.addEventListener("click", () => {
-          track.scrollTo({ left: track.children[i].offsetLeft - track.offsetLeft, behavior: "smooth" });
-        });
-        dotsWrap.appendChild(b);
-        dots.push(b);
-      }
-      function sync() {
-        const at = track.scrollLeft;
-        let idx = 0;
-        for (let i = 0; i < slides; i++) {
-          if (track.children[i].offsetLeft - track.offsetLeft <= at + 20) idx = i;
-        }
-        dots.forEach((d, i) => d.classList.toggle("on", i === idx));
-      }
-      track.addEventListener("scroll", sync, { passive: true });
-      byId("car-prev").addEventListener("click", () => {
-        const at = track.scrollLeft;
-        let idx = 0;
-        for (let i = 0; i < slides; i++) {
-          if (track.children[i].offsetLeft - track.offsetLeft <= at + 20) idx = i;
-        }
-        const prev = Math.max(0, idx - 1);
-        track.scrollTo({ left: track.children[prev].offsetLeft - track.offsetLeft, behavior: "smooth" });
-      });
-      byId("car-next").addEventListener("click", () => {
-        const at = track.scrollLeft;
-        let idx = 0;
-        for (let i = 0; i < slides; i++) {
-          if (track.children[i].offsetLeft - track.offsetLeft <= at + 20) idx = i;
-        }
-        const next = Math.min(slides - 1, idx + 1);
-        track.scrollTo({ left: track.children[next].offsetLeft - track.offsetLeft, behavior: "smooth" });
-      });
-    }
 
     // ---- interactive how-to-draw tutorial ----
     const tut = byId("draw-tutorial");
@@ -144,25 +78,25 @@
         if (nextBtn) nextBtn.disabled = picked.length !== 6;
       }
       if (keypad) {
-        for (let d = 0; d <= 9; d++) {
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "Clear"].forEach((d) => {
           const b = document.createElement("button");
           b.type = "button";
-          b.textContent = d;
-          b.setAttribute("aria-label", "Digit " + d);
-          b.addEventListener("click", () => {
-            if (picked.length >= 6) return;
-            picked.push(d);
-            renderPick();
-          });
+          if (d === "Clear") {
+            b.className = "clr";
+            b.textContent = "Clear";
+            b.setAttribute("aria-label", "Clear picked digits");
+            b.addEventListener("click", () => { picked = []; renderPick(); });
+          } else {
+            b.textContent = d;
+            b.setAttribute("aria-label", "Digit " + d);
+            b.addEventListener("click", () => {
+              if (picked.length >= 6) return;
+              picked.push(d);
+              renderPick();
+            });
+          }
           keypad.appendChild(b);
-        }
-        const clr = document.createElement("button");
-        clr.type = "button";
-        clr.className = "clr";
-        clr.textContent = "CLR";
-        clr.setAttribute("aria-label", "Clear picked digits");
-        clr.addEventListener("click", () => { picked = []; renderPick(); });
-        keypad.appendChild(clr);
+        });
       }
       function go(step) {
         panes.forEach((p) => p.classList.toggle("on", p.dataset.step === String(step)));
@@ -181,7 +115,7 @@
         const got = String(win).split("").reduce((n, d, i) => n + (d === picked[i] ? 1 : 0), 0);
         if (verdict) {
           verdict.innerHTML = got === 6
-            ? `<b style="color:var(--gold-deep)">★ Perfect match — you would have won 1st prize!</b>`
+            ? `<b style="color:var(--gold-deep)">★ Perfect match - you would have won 1st prize!</b>`
             : `You matched <b>${got}</b> of 6 digits.${got >= 4 ? " That's a prize tier!" : " Better luck next Sunday."}`;
         }
         go(3);

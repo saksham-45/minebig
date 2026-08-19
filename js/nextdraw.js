@@ -1,5 +1,5 @@
 /* ============================================================
-   Next Draw — two countdowns (MineBig 4D + 6D), live window,
+   Next Draw - two countdowns (MineBig 4D + 6D), live window,
    prize tables. Every Sunday 12:00 PM local time, 15-minute
    live event, then back to countdown.
    ============================================================ */
@@ -53,7 +53,7 @@
         return `<div class="win-row">
           <div class="win-row__date">${MINEBIG.formatShortDate(w.date)}</div>
           <div class="win-row__digits">${codeChips}</div>
-          <div class="win-row__tiers">1st — ${w.winners.first} · Special — ${w.winners.special}</div>
+          <div class="win-row__tiers">1st - ${w.winners.first} · Special - ${w.winners.special}</div>
         </div>`;
       }).join("");
     }
