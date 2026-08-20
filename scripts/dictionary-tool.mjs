@@ -15,7 +15,7 @@
      nums     - one or more 4-digit numbers, joined with "|"
                 e.g. "0417|2914"
      symbol   - unused (icons live in img/dict/)
-     image    - path under img/dict/{slug}.svg; new words auto-resolve by slug
+     image    - path under img/dict/{slug}.jpg; new words auto-resolve by slug
      meaning  - optional free-text meaning shown under the word
    ============================================================ */
 
