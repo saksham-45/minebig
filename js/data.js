@@ -331,7 +331,11 @@ const MINEBIG = (() => {
   function meaningFor(num) {
     const n = String(num);
     const last4 = n.slice(-4);
-    const hits = DICTIONARY.filter((entry) => entry.nums.some((x) => x === last4 || n.endsWith(x)));
+    const hits = DICTIONARY.filter((entry) => {
+      const n4 = entry.nums || [];
+      const n6 = entry.nums6 || [];
+      return n4.some((x) => x === last4 || n.endsWith(x)) || n6.some((x) => x === n);
+    });
     if (hits.length) {
       return hits.map((h) => h.word).join(", ");
     }
@@ -463,36 +467,36 @@ const MINEBIG = (() => {
   // Photos live in img/dict/{slug}.jpg. New words pick up a matching file
   // automatically (or img/dict/_default.jpg). Optional `image` overrides the slug.
   const DICTIONARY = [
-    { word: "Rose", nums: ["0417","2914"], image: "img/dict/rose.jpg" },
-    { word: "Raven", nums: ["0713","8206"], image: "img/dict/raven.jpg" },
-    { word: "Flower (general)", nums: ["1834","6610"], image: "img/dict/flower.jpg" },
-    { word: "Cat", nums: ["2290","4551"], image: "img/dict/cat.jpg" },
-    { word: "Snake", nums: ["0318","7412"], image: "img/dict/snake.jpg" },
-    { word: "Fish", nums: ["5538","9027"], image: "img/dict/fish.jpg" },
-    { word: "Bird", nums: ["1297","3814"], image: "img/dict/bird.jpg" },
-    { word: "Lotus", nums: ["8812","2309"], image: "img/dict/lotus.jpg" },
-    { word: "Mango", nums: ["4206","7754"], image: "img/dict/mango.jpg" },
-    { word: "Durian", nums: ["1335","6980"], image: "img/dict/durian.jpg" },
-    { word: "Rain", nums: ["9004","2711"], image: "img/dict/rain.jpg" },
-    { word: "Lightning", nums: ["6680","1122"], image: "img/dict/lightning.jpg" },
-    { word: "Moon", nums: ["7015","4493"], image: "img/dict/moon.jpg" },
-    { word: "Sun", nums: ["2111","8880"], image: "img/dict/sun.jpg" },
-    { word: "Star", nums: ["7702","3158"], image: "img/dict/star.jpg" },
-    { word: "Boat", nums: ["5699","2045"], image: "img/dict/boat.jpg" },
-    { word: "Train", nums: ["4040","9582"], image: "img/dict/train.jpg" },
-    { word: "Car", nums: ["8123","6750"], image: "img/dict/car.jpg" },
-    { word: "House", nums: ["1414","9290"], image: "img/dict/house.jpg" },
-    { word: "Tree", nums: ["2304","7689"], image: "img/dict/tree.jpg" },
-    { word: "Baby", nums: ["6611","0330"], image: "img/dict/baby.jpg" },
-    { word: "Wedding", nums: ["8800","4627"], image: "img/dict/wedding.jpg" },
-    { word: "Funeral", nums: ["1413","7719"], image: "img/dict/funeral.jpg" },
-    { word: "Gold", nums: ["9990","0842"], image: "img/dict/gold.jpg" },
-    { word: "Water", nums: ["3021","6508"], image: "img/dict/water.jpg" },
-    { word: "Fire", nums: ["5566","1937"], image: "img/dict/fire.jpg" },
-    { word: "Dragon", nums: ["8888","2199"], image: "img/dict/dragon.jpg" },
-    { word: "Phoenix", nums: ["7788","4013"], image: "img/dict/phoenix.jpg" },
-    { word: "Tiger", nums: ["0123","5555"], image: "img/dict/tiger.jpg" },
-    { word: "Elephant", nums: ["4000","8211"], image: "img/dict/elephant.jpg" },
+    { word: "Rose", nums: ["0417","2914"], nums6: ["041729","291404"], image: "img/dict/rose.jpg" },
+    { word: "Raven", nums: ["0713","8206"], nums6: ["071382","820607"], image: "img/dict/raven.jpg" },
+    { word: "Flower (general)", nums: ["1834","6610"], nums6: ["183466","661018"], image: "img/dict/flower.jpg" },
+    { word: "Cat", nums: ["2290","4551"], nums6: ["229045","455122"], image: "img/dict/cat.jpg" },
+    { word: "Snake", nums: ["0318","7412"], nums6: ["031874","741203"], image: "img/dict/snake.jpg" },
+    { word: "Fish", nums: ["5538","9027"], nums6: ["553890","902755"], image: "img/dict/fish.jpg" },
+    { word: "Bird", nums: ["1297","3814"], nums6: ["129738","381412"], image: "img/dict/bird.jpg" },
+    { word: "Lotus", nums: ["8812","2309"], nums6: ["881223","230988"], image: "img/dict/lotus.jpg" },
+    { word: "Mango", nums: ["4206","7754"], nums6: ["420677","775442"], image: "img/dict/mango.jpg" },
+    { word: "Durian", nums: ["1335","6980"], nums6: ["133569","698013"], image: "img/dict/durian.jpg" },
+    { word: "Rain", nums: ["9004","2711"], nums6: ["900427","271190"], image: "img/dict/rain.jpg" },
+    { word: "Lightning", nums: ["6680","1122"], nums6: ["668011","112266"], image: "img/dict/lightning.jpg" },
+    { word: "Moon", nums: ["7015","4493"], nums6: ["701544","449370"], image: "img/dict/moon.jpg" },
+    { word: "Sun", nums: ["2111","8880"], nums6: ["211188","888021"], image: "img/dict/sun.jpg" },
+    { word: "Star", nums: ["7702","3158"], nums6: ["770231","315877"], image: "img/dict/star.jpg" },
+    { word: "Boat", nums: ["5699","2045"], nums6: ["569920","204556"], image: "img/dict/boat.jpg" },
+    { word: "Train", nums: ["4040","9582"], nums6: ["404095","958240"], image: "img/dict/train.jpg" },
+    { word: "Car", nums: ["8123","6750"], nums6: ["812367","675081"], image: "img/dict/car.jpg" },
+    { word: "House", nums: ["1414","9290"], nums6: ["141492","929014"], image: "img/dict/house.jpg" },
+    { word: "Tree", nums: ["2304","7689"], nums6: ["230476","768923"], image: "img/dict/tree.jpg" },
+    { word: "Baby", nums: ["6611","0330"], nums6: ["661103","033066"], image: "img/dict/baby.jpg" },
+    { word: "Wedding", nums: ["8800","4627"], nums6: ["880046","462788"], image: "img/dict/wedding.jpg" },
+    { word: "Funeral", nums: ["1413","7719"], nums6: ["141377","771914"], image: "img/dict/funeral.jpg" },
+    { word: "Gold", nums: ["9990","0842"], nums6: ["999008","084299"], image: "img/dict/gold.jpg" },
+    { word: "Water", nums: ["3021","6508"], nums6: ["302165","650830"], image: "img/dict/water.jpg" },
+    { word: "Fire", nums: ["5566","1937"], nums6: ["556619","193755"], image: "img/dict/fire.jpg" },
+    { word: "Dragon", nums: ["8888","2199"], nums6: ["888821","219988"], image: "img/dict/dragon.jpg" },
+    { word: "Phoenix", nums: ["7788","4013"], nums6: ["778840","401377"], image: "img/dict/phoenix.jpg" },
+    { word: "Tiger", nums: ["0123","5555"], nums6: ["012355","555501"], image: "img/dict/tiger.jpg" },
+    { word: "Elephant", nums: ["4000","8211"], nums6: ["400082","821140"], image: "img/dict/elephant.jpg" },
   ];
 
   // ---- statistics helpers (star numbers) ----

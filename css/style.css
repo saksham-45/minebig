@@ -1850,7 +1850,10 @@ body:has(.draw-page) { background: #F3F5F4; }
 .filter-chip.on { background: var(--gold); border-color: var(--gold); color: var(--ink); }
 
 /* dictionary grid (star numbers) */
+.dict-games { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 .dict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 18px; }
+.dict-grid.is-6d { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+.dict-grid.is-6d .nums span { font-size: 12px; letter-spacing: 0.02em; min-width: 0; padding: 0 8px; }
 .dict-item {
   background: #fff;
   border: 1px solid var(--line);

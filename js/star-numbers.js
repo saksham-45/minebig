@@ -9,26 +9,35 @@
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
-  // ---- dictionary: render + live search ----
+  let dictGame = "d4";
+
+  function dictNums(d) {
+    return dictGame === "d6" ? (d.nums6 || []) : (d.nums || []);
+  }
+
   function renderDict(filter) {
     const grid = byId("dict-grid");
     if (!grid) return;
     const q = (filter || "").trim().toLowerCase();
-    const rows = MINEBIG.DICTIONARY.filter((d) =>
-      !q || d.word.toLowerCase().includes(q) || d.nums.some((n) => n.includes(q))
-    );
+    const rows = MINEBIG.DICTIONARY.filter((d) => {
+      if (!q) return true;
+      const codes = [].concat(d.nums || [], d.nums6 || []);
+      return d.word.toLowerCase().includes(q) || codes.some((n) => n.includes(q));
+    });
+    grid.classList.toggle("is-6d", dictGame === "d6");
     grid.innerHTML = rows.map((d) => {
       const slug = String(d.word || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "default";
       const src = d.image || ("img/dict/" + slug + ".jpg");
       const art = `<span class="dict-art-wrap"><img class="dict-art" src="${escapeHtml(src)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='img/dict/_default.jpg'"></span>`;
       const meaning = d.meaning
         ? `<span class="dict-meaning">${escapeHtml(d.meaning)}</span>` : "";
+      const codes = dictNums(d);
       return `<div class="dict-item">
         ${art}
         <div class="dict-body">
           <span class="word">${escapeHtml(d.word)}</span>
           ${meaning}
-          <span class="nums">${d.nums.map((n) => `<span>${escapeHtml(n)}</span>`).join("")}</span>
+          <span class="nums">${codes.map((n) => `<span>${escapeHtml(n)}</span>`).join("")}</span>
         </div>
       </div>`;
     }).join("");
@@ -69,6 +78,13 @@
     if (search) {
       search.addEventListener("input", () => renderDict(search.value));
     }
+    document.querySelectorAll("[data-dict-game]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        dictGame = btn.dataset.dictGame;
+        document.querySelectorAll("[data-dict-game]").forEach((b) => b.classList.toggle("on", b === btn));
+        renderDict(search ? search.value : "");
+      });
+    });
 
     const selects = Array.from(document.querySelectorAll(".stat-period-select"));
     function applyPeriod(days) {
