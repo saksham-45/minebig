@@ -3092,13 +3092,15 @@ details.faq-item summary:hover { color: var(--gold-deep); }
 }
 
 .win-spin {
-  --r: 90px;
+  --r: 96px;
+  --s: 56px;
+  --step: 36deg;
   position: absolute;
   right: clamp(16px, 5vw, 72px);
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(220px, 28vw, 300px);
-  height: clamp(220px, 28vw, 300px);
+  width: clamp(260px, 30vw, 320px);
+  height: clamp(260px, 30vw, 320px);
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -3114,14 +3116,14 @@ details.faq-item summary:hover { color: var(--gold-deep); }
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 84px;
-  height: 84px;
+  width: var(--s);
+  height: var(--s);
   margin: 0;
   border-radius: 50%;
   object-fit: cover;
   background: transparent;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.38);
-  transform: translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateY(calc(-1 * var(--r)));
+  transform: translate(-50%, -50%) rotate(calc(var(--i) * var(--step))) translateY(calc(-1 * var(--r)));
 }
 .win-spin__pin {
   position: absolute;
@@ -3163,16 +3165,16 @@ details.faq-item summary:hover { color: var(--gold-deep); }
   }
   .banner-steps b { width: 16px; height: 16px; font-size: 10px; }
   .win-spin {
-    --r: 74px;
+    --r: 80px;
+    --s: 50px;
     position: relative;
     right: auto;
     top: auto;
     transform: none;
-    width: min(250px, 78%);
-    height: min(250px, 78vw);
+    width: min(270px, 82%);
+    height: min(270px, 82vw);
     margin: 12px auto 0;
   }
-  .win-spin__disk img { width: 72px; height: 72px; }
 }
 
 @media (max-width: 640px) {
