@@ -69,11 +69,10 @@ def main():
 
     steps = [
         chroma(SRC / "18.jpg"),
-        chroma(SRC / "16.jpg"),
         chroma(SRC / "17.jpg"),
         chroma(SRC / "15.jpg"),
     ]
-    save_gif(steps, OUT / "steps.gif", [1200, 1200, 1200, 1200])
+    save_gif(steps, OUT / "steps.gif", [1200, 1200, 1200])
 
     winners = [chroma(SRC / "13.jpg"), chroma(SRC / "22.jpg")]
     save_gif(winners, OUT / "winners.gif", [1400, 1400])
