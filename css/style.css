@@ -3104,7 +3104,6 @@ details.faq-item summary:hover { color: var(--gold-deep); }
 .win-spin {
   --r: 96px;
   --s: 56px;
-  --step: 36deg;
   position: absolute;
   right: clamp(16px, 5vw, 72px);
   top: 50%;
@@ -3113,7 +3112,7 @@ details.faq-item summary:hover { color: var(--gold-deep); }
   height: clamp(260px, 30vw, 320px);
   z-index: 1;
   pointer-events: none;
-  overflow: hidden;
+  overflow: visible;
 }
 .win-spin__disk {
   width: 100%;
@@ -3126,14 +3125,17 @@ details.faq-item summary:hover { color: var(--gold-deep); }
   position: absolute;
   left: 50%;
   top: 50%;
+  width: 56px;
+  height: 56px;
   width: var(--s);
   height: var(--s);
+  max-width: none;
   margin: 0;
   border-radius: 50%;
   object-fit: cover;
   background: transparent;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.38);
-  transform: translate(-50%, -50%) rotate(calc(var(--i) * var(--step))) translateY(calc(-1 * var(--r)));
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) translateY(calc(var(--r) * -1));
 }
 .win-spin__pin {
   position: absolute;
@@ -3184,6 +3186,7 @@ details.faq-item summary:hover { color: var(--gold-deep); }
     width: min(270px, 82%);
     height: min(270px, 82vw);
     margin: 12px auto 0;
+    overflow: visible;
   }
 }
 
