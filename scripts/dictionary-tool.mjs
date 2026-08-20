@@ -14,8 +14,8 @@
      word     - the symbol's name (string)
      nums     - one or more 4-digit numbers, joined with "|"
                 e.g. "0417|2914"
-     symbol   - an emoji shown when no image is set (may be empty)
-     image    - optional image URL; wins over `symbol` when set
+     symbol   - unused (icons live in img/dict/)
+     image    - path under img/dict/{slug}.svg; new words auto-resolve by slug
      meaning  - optional free-text meaning shown under the word
    ============================================================ */
 

@@ -2665,7 +2665,17 @@ tr:hover td { background: #fffdf4; }
 .mascot-guide h3 { color: var(--gold-deep); margin-bottom: 4px; }
 .dict-item { display: flex; align-items: center; gap: 12px; }
 .dict-sym { font-size: 26px; line-height: 1; flex: none; }
-.dict-art { width: 30px; height: 30px; object-fit: contain; flex: none; }
+.dict-art-wrap {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: 12px;
+  background: #fff8e1;
+  border: 1px solid rgba(255, 192, 0, 0.45);
+  display: grid;
+  place-items: center;
+}
+.dict-art { width: 32px; height: 32px; object-fit: contain; flex: none; }
 .dict-body { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
 .dict-meaning { font-size: 12.5px; color: var(--dim); line-height: 1.45; }
 

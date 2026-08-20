@@ -18,9 +18,9 @@
       !q || d.word.toLowerCase().includes(q) || d.nums.some((n) => n.includes(q))
     );
     grid.innerHTML = rows.map((d) => {
-      const art = d.image
-        ? `<img class="dict-art" src="${escapeHtml(d.image)}" alt="" loading="lazy">`
-        : `<span class="dict-sym" aria-hidden="true">${d.symbol || "⭐"}</span>`;
+      const slug = String(d.word || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "default";
+      const src = d.image || ("img/dict/" + slug + ".svg");
+      const art = `<span class="dict-art-wrap"><img class="dict-art" src="${escapeHtml(src)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='img/dict/_default.svg'"></span>`;
       const meaning = d.meaning
         ? `<span class="dict-meaning">${escapeHtml(d.meaning)}</span>` : "";
       return `<div class="dict-item">
