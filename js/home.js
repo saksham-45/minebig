@@ -18,7 +18,57 @@
       `<span class="ball${i % 2 ? " teal" : ""}">${d}</span>`).join("");
   }
 
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[c]));
+  }
+
+  function homeSlip(el, board, game) {
+    if (!el || !board || !game) return;
+    const is6 = game.id === "d6";
+    const chip = (n) => `<span class="home-slip__n">${escapeHtml(n)}</span>`;
+    el.classList.toggle("is-6d", is6);
+    el.innerHTML = `
+      <div class="home-slip__head ${is6 ? "is-6d" : "is-4d"}">
+        <img src="img/${is6 ? "dice-six.svg" : "dice-four.svg"}" alt="" aria-hidden="true">
+        <h3>${escapeHtml(game.name)}</h3>
+      </div>
+      <div class="home-slip__prizes">
+        <div><span>1st prize</span>${chip(board.first)}</div>
+        <div><span>2nd prize</span>${chip(board.second)}</div>
+        <div><span>3rd prize</span>${chip(board.third)}</div>
+      </div>
+      <div class="home-slip__cols">
+        <div>
+          <p>Special</p>
+          <div class="home-slip__grid">${board.special.map(chip).join("")}</div>
+        </div>
+        <div>
+          <p>Consolation</p>
+          <div class="home-slip__grid">${board.consolation.map(chip).join("")}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function paintLatest() {
+    const boards4 = MINEBIG.getBoards("d4") || [];
+    const boards6 = MINEBIG.getBoards("d6") || [];
+    const latest4 = boards4[0];
+    const latest6 = boards6[0];
+    const dateEl = byId("home-latest-date");
+    if (dateEl && latest4) {
+      dateEl.textContent = MINEBIG.formatDrawDate(latest4.date) + " · " + MINEBIG.drawCode(latest4.date);
+    }
+    homeSlip(byId("home-latest-d4"), latest4, MINEBIG.GAMES[0]);
+    homeSlip(byId("home-latest-d6"), latest6, MINEBIG.GAMES[1]);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    paintLatest();
+    window.addEventListener("minebig:sheet-loaded", paintLatest);
+
     // ---- next winner date + countdown ----
     const nwDate = byId("nw-date");
     const nwCd = byId("home-countdown");
