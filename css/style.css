@@ -464,12 +464,10 @@ h1, h2, h3, h4 { color: var(--ink); font-weight: 800; line-height: 1.15; letter-
   font-family: var(--mono);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--ink);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
-.home-slip.is-6d .home-slip__n { font-size: 14px; }
-.home-slip.is-6d .home-slip__prizes .home-slip__n { font-size: 15px; }
 .home-slip__cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -493,8 +491,7 @@ h1, h2, h3, h4 { color: var(--ink); font-weight: 800; line-height: 1.15; letter-
   gap: 6px 8px;
   justify-items: center;
 }
-.home-slip__grid .home-slip__n { font-size: 13.5px; }
-.home-slip.is-6d .home-slip__grid .home-slip__n { font-size: 12px; }
+.home-slip__grid .home-slip__n { font-size: 16px; }
 
 @media (max-width: 800px) {
   .home-latest__boards { grid-template-columns: 1fr; }
@@ -1619,7 +1616,7 @@ body:has(.draw-page) { background: #F3F5F4; }
   border: 0;
   background: transparent;
   color: #171B1F;
-  font: 500 21px/1 "IBM Plex Mono", monospace;
+  font: 500 16px/1 "IBM Plex Mono", monospace;
   font-variant-numeric: tabular-nums;
   text-align: center;
   position: relative;
@@ -1627,8 +1624,7 @@ body:has(.draw-page) { background: #F3F5F4; }
   white-space: nowrap;
   overflow: hidden;
 }
-.mb-ticket:has(.is-6d) .mb-num { font-size: 15px; }
-.mb-ticket:has(.is-6d) .mb-prize .mb-num { font-size: 17px; letter-spacing: -0.01em; }
+.mb-prize .mb-num { font-size: 16px; }
 .mb-sym { font-size: 13px; vertical-align: -1px; margin-right: 2px; }
 .mb-num::after {
   content: "";
@@ -1961,8 +1957,7 @@ body:has(.draw-page) { background: #F3F5F4; }
 /* dictionary grid (star numbers) */
 .dict-games { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 .dict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 18px; }
-.dict-grid.is-6d { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
-.dict-grid.is-6d .nums span { font-size: 12px; letter-spacing: 0.02em; min-width: 0; padding: 0 8px; }
+.dict-grid.is-6d { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .dict-item {
   background: #fff;
   border: 1px solid var(--line);
