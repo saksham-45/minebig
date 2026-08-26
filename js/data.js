@@ -6,7 +6,7 @@
 const MINEBIG = (() => {
   // ---- weekly key: taken numbers reset every Sunday 12:00 ----
   // ---- optional live results feed (published Google Sheet CSV) ----
-  // Columns: date,game,num  (date=YYYY-MM-DD, game=d4|d6, num=4- or 6-digit code).
+  // Columns: date,game,num  (date=YYYY-MM-DD, game=d4, num=4-digit code).
   // Empty URL = built-in demo data. Paste the published-to-web CSV link to go live.
   const RESULTS_SHEET_CSV_URL = "";
 
@@ -119,20 +119,16 @@ const MINEBIG = (() => {
     { date: "2026-05-17", nums: [4, 16, 25, 37, 52, 58], winners: { first: "Sharon V.", second: "Imran G.", third: "Kai L.", special: "Muthu R.", c1: "Ada T.", c2: "Nana W.", c3: "Roy D." } },
   ];
 
-  // digits of a legacy pool draw as a 6-digit single-digit code (display only)
+  // digits of a legacy pool draw as single-digit chips (display only)
   function digitCode(nums) {
     return nums.map((n) => String(Number(n) % 10));
   }
 
 
-  // full 4D/6D winning codes for a draw date (winner numbers stay whole codes)
+  // full 4D winning code for a draw date (winner numbers stay whole codes)
   function codesForDate(dateStr) {
-    const out = { d4: null, d6: null };
-    for (const g of ["d4", "d6"]) {
-      const hit = (DRAWS[g] || []).find((d) => d.date === dateStr);
-      if (hit) out[g] = hit.num;
-    }
-    return out;
+    const hit = (DRAWS.d4 || []).find((d) => d.date === dateStr);
+    return { d4: hit ? hit.num : null };
   }
   // ---- lifetime frequency: how often each number has won ----
   function lifetimeCounts() {
@@ -143,11 +139,10 @@ const MINEBIG = (() => {
     return Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0] - b[0]);
   }
 
-  // ---- ticket-status lookup (4-digit or 6-digit single-digit codes) ----
-  const DEMO_WIN_CODE = "482196"; // demo winning 6D code (compatibility)
+  // ---- ticket-status lookup (4-digit codes) ----
+  const DEMO_WIN_CODE = "4821";
 
   function demoWinCodes() {
-    // the newest first-prize code of each game is the demo winning code
     const wins = {};
     for (const g of GAMES) {
       const boards = getBoards(g.id);
@@ -159,9 +154,9 @@ const MINEBIG = (() => {
   function lookupTicket(codeStr) {
     const raw = String(codeStr || "").replace(/[\s,\-;]+/g, "").trim();
     if (!raw) return { status: "missing" };
-    if (!/^\d{4}$/.test(raw) && !/^\d{6}$/.test(raw)) return { status: "invalid", code: raw };
-    const game = raw.length === 4 ? "d4" : "d6";
-    const code = raw.split("").join("-"); // single digits, one per chip
+    if (!/^\d{4}$/.test(raw)) return { status: "invalid", code: raw };
+    const game = "d4";
+    const code = raw.split("").join("-");
     const wins = demoWinCodes();
     if (wins[game] === raw) return { status: "win", code, game };
     if (isNumberTaken(game, raw)) return { status: "taken", code, game };
@@ -181,7 +176,7 @@ const MINEBIG = (() => {
   }
 
   // ============================================================
-  // MineBig 4D / 6D games (content-document model)
+  // MineBig 4D (content-document model)
   // ============================================================
 
   const GAMES = [
@@ -192,14 +187,6 @@ const MINEBIG = (() => {
       tagline: "Pick your lucky 4 digits, win big.",
       price: "Entry - confirm with client",
       accent: "gold",
-    },
-    {
-      id: "d6",
-      name: "MineBig 6D",
-      digits: 6,
-      tagline: "Six digits, bigger shot at the jackpot.",
-      price: "Entry - confirm with client",
-      accent: "blue",
     },
   ];
 
@@ -230,23 +217,6 @@ const MINEBIG = (() => {
       { date: "2026-05-17", num: "8476" },
       { date: "2026-05-10", num: "6602" },
       { date: "2026-05-03", num: "3079" },
-    ],
-    d6: [
-      { date: "2026-08-09", num: "482196" },
-      { date: "2026-08-02", num: "193055" },
-      { date: "2026-07-26", num: "774512" },
-      { date: "2026-07-19", num: "021897" },
-      { date: "2026-07-12", num: "668930" },
-      { date: "2026-07-05", num: "341728" },
-      { date: "2026-06-28", num: "905261" },
-      { date: "2026-06-21", num: "183476" },
-      { date: "2026-06-14", num: "560198" },
-      { date: "2026-06-07", num: "227443" },
-      { date: "2026-05-31", num: "489075" },
-      { date: "2026-05-24", num: "115364" },
-      { date: "2026-05-17", num: "847625" },
-      { date: "2026-05-10", num: "660219" },
-      { date: "2026-05-03", num: "307948" },
     ],
   };
 
@@ -305,7 +275,6 @@ const MINEBIG = (() => {
 
   const BOARDS = {
     d4: boardsFor("d4"),
-    d6: boardsFor("d6"),
   };
 
   function drawCode(dateStr) {
@@ -333,8 +302,7 @@ const MINEBIG = (() => {
     const last4 = n.slice(-4);
     const hits = DICTIONARY.filter((entry) => {
       const n4 = entry.nums || [];
-      const n6 = entry.nums6 || [];
-      return n4.some((x) => x === last4 || n.endsWith(x)) || n6.some((x) => x === n);
+      return n4.some((x) => x === last4 || n.endsWith(x) || x === n);
     });
     if (hits.length) {
       return hits.map((h) => h.word).join(", ");
@@ -415,8 +383,8 @@ const MINEBIG = (() => {
     return getBoards(gameId).map(boardToLine).join("\n");
   }
 
-  function saveBoardOverrides(d4Text, d6Text) {
-    try { localStorage.setItem(OVERRIDE_KEY, JSON.stringify({ d4: d4Text, d6: d6Text })); }
+  function saveBoardOverrides(d4Text) {
+    try { localStorage.setItem(OVERRIDE_KEY, JSON.stringify({ d4: d4Text })); }
     catch (e) { /* storage unavailable */ }
   }
 
@@ -440,7 +408,6 @@ const MINEBIG = (() => {
   // Demo "taken" numbers per game (weekly reset, like the code pool).
   const SEED_TAKEN_BY_GAME = {
     d4: ["0000", "1111", "4821", "1930", "7745", "8888", "9999", "0218"],
-    d6: ["482196", "193055", "774512", "111111", "000000", "021897", "888888"],
   };
 
   function gameTakenKey(gameId) {
@@ -467,36 +434,36 @@ const MINEBIG = (() => {
   // Photos live in img/dict/{slug}.jpg. New words pick up a matching file
   // automatically (or img/dict/_default.jpg). Optional `image` overrides the slug.
   const DICTIONARY = [
-    { word: "Rose", nums: ["0417","2914"], nums6: ["041729","291404"], image: "img/dict/rose.jpg" },
-    { word: "Raven", nums: ["0713","8206"], nums6: ["071382","820607"], image: "img/dict/raven.jpg" },
-    { word: "Flower (general)", nums: ["1834","6610"], nums6: ["183466","661018"], image: "img/dict/flower.jpg" },
-    { word: "Cat", nums: ["2290","4551"], nums6: ["229045","455122"], image: "img/dict/cat.jpg" },
-    { word: "Snake", nums: ["0318","7412"], nums6: ["031874","741203"], image: "img/dict/snake.jpg" },
-    { word: "Fish", nums: ["5538","9027"], nums6: ["553890","902755"], image: "img/dict/fish.jpg" },
-    { word: "Bird", nums: ["1297","3814"], nums6: ["129738","381412"], image: "img/dict/bird.jpg" },
-    { word: "Lotus", nums: ["8812","2309"], nums6: ["881223","230988"], image: "img/dict/lotus.jpg" },
-    { word: "Mango", nums: ["4206","7754"], nums6: ["420677","775442"], image: "img/dict/mango.jpg" },
-    { word: "Durian", nums: ["1335","6980"], nums6: ["133569","698013"], image: "img/dict/durian.jpg" },
-    { word: "Rain", nums: ["9004","2711"], nums6: ["900427","271190"], image: "img/dict/rain.jpg" },
-    { word: "Lightning", nums: ["6680","1122"], nums6: ["668011","112266"], image: "img/dict/lightning.jpg" },
-    { word: "Moon", nums: ["7015","4493"], nums6: ["701544","449370"], image: "img/dict/moon.jpg" },
-    { word: "Sun", nums: ["2111","8880"], nums6: ["211188","888021"], image: "img/dict/sun.jpg" },
-    { word: "Star", nums: ["7702","3158"], nums6: ["770231","315877"], image: "img/dict/star.jpg" },
-    { word: "Boat", nums: ["5699","2045"], nums6: ["569920","204556"], image: "img/dict/boat.jpg" },
-    { word: "Train", nums: ["4040","9582"], nums6: ["404095","958240"], image: "img/dict/train.jpg" },
-    { word: "Car", nums: ["8123","6750"], nums6: ["812367","675081"], image: "img/dict/car.jpg" },
-    { word: "House", nums: ["1414","9290"], nums6: ["141492","929014"], image: "img/dict/house.jpg" },
-    { word: "Tree", nums: ["2304","7689"], nums6: ["230476","768923"], image: "img/dict/tree.jpg" },
-    { word: "Baby", nums: ["6611","0330"], nums6: ["661103","033066"], image: "img/dict/baby.jpg" },
-    { word: "Wedding", nums: ["8800","4627"], nums6: ["880046","462788"], image: "img/dict/wedding.jpg" },
-    { word: "Funeral", nums: ["1413","7719"], nums6: ["141377","771914"], image: "img/dict/funeral.jpg" },
-    { word: "Gold", nums: ["9990","0842"], nums6: ["999008","084299"], image: "img/dict/gold.jpg" },
-    { word: "Water", nums: ["3021","6508"], nums6: ["302165","650830"], image: "img/dict/water.jpg" },
-    { word: "Fire", nums: ["5566","1937"], nums6: ["556619","193755"], image: "img/dict/fire.jpg" },
-    { word: "Dragon", nums: ["8888","2199"], nums6: ["888821","219988"], image: "img/dict/dragon.jpg" },
-    { word: "Phoenix", nums: ["7788","4013"], nums6: ["778840","401377"], image: "img/dict/phoenix.jpg" },
-    { word: "Tiger", nums: ["0123","5555"], nums6: ["012355","555501"], image: "img/dict/tiger.jpg" },
-    { word: "Elephant", nums: ["4000","8211"], nums6: ["400082","821140"], image: "img/dict/elephant.jpg" },
+    { word: "Rose", nums: ["0417","2914"], image: "img/dict/rose.jpg" },
+    { word: "Raven", nums: ["0713","8206"], image: "img/dict/raven.jpg" },
+    { word: "Flower (general)", nums: ["1834","6610"], image: "img/dict/flower.jpg" },
+    { word: "Cat", nums: ["2290","4551"], image: "img/dict/cat.jpg" },
+    { word: "Snake", nums: ["0318","7412"], image: "img/dict/snake.jpg" },
+    { word: "Fish", nums: ["5538","9027"], image: "img/dict/fish.jpg" },
+    { word: "Bird", nums: ["1297","3814"], image: "img/dict/bird.jpg" },
+    { word: "Lotus", nums: ["8812","2309"], image: "img/dict/lotus.jpg" },
+    { word: "Mango", nums: ["4206","7754"], image: "img/dict/mango.jpg" },
+    { word: "Durian", nums: ["1335","6980"], image: "img/dict/durian.jpg" },
+    { word: "Rain", nums: ["9004","2711"], image: "img/dict/rain.jpg" },
+    { word: "Lightning", nums: ["6680","1122"], image: "img/dict/lightning.jpg" },
+    { word: "Moon", nums: ["7015","4493"], image: "img/dict/moon.jpg" },
+    { word: "Sun", nums: ["2111","8880"], image: "img/dict/sun.jpg" },
+    { word: "Star", nums: ["7702","3158"], image: "img/dict/star.jpg" },
+    { word: "Boat", nums: ["5699","2045"], image: "img/dict/boat.jpg" },
+    { word: "Train", nums: ["4040","9582"], image: "img/dict/train.jpg" },
+    { word: "Car", nums: ["8123","6750"], image: "img/dict/car.jpg" },
+    { word: "House", nums: ["1414","9290"], image: "img/dict/house.jpg" },
+    { word: "Tree", nums: ["2304","7689"], image: "img/dict/tree.jpg" },
+    { word: "Baby", nums: ["6611","0330"], image: "img/dict/baby.jpg" },
+    { word: "Wedding", nums: ["8800","4627"], image: "img/dict/wedding.jpg" },
+    { word: "Funeral", nums: ["1413","7719"], image: "img/dict/funeral.jpg" },
+    { word: "Gold", nums: ["9990","0842"], image: "img/dict/gold.jpg" },
+    { word: "Water", nums: ["3021","6508"], image: "img/dict/water.jpg" },
+    { word: "Fire", nums: ["5566","1937"], image: "img/dict/fire.jpg" },
+    { word: "Dragon", nums: ["8888","2199"], image: "img/dict/dragon.jpg" },
+    { word: "Phoenix", nums: ["7788","4013"], image: "img/dict/phoenix.jpg" },
+    { word: "Tiger", nums: ["0123","5555"], image: "img/dict/tiger.jpg" },
+    { word: "Elephant", nums: ["4000","8211"], image: "img/dict/elephant.jpg" },
   ];
 
   // ---- statistics helpers (star numbers) ----
@@ -583,18 +550,15 @@ const MINEBIG = (() => {
       const game = String(r[iGame] || "").trim().toLowerCase();
       const num = String(r[iNum] || "").trim();
       if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
-      if (game !== "d4" && game !== "d6") continue;
-      if (!new RegExp("^\\d{" + (game === "d4" ? 4 : 6) + "}$").test(num)) continue;
-      DRAWS[game].unshift({ date, num });
+      if (game !== "d4") continue;
+      if (!/^\d{4}$/.test(num)) continue;
+      DRAWS.d4.unshift({ date, num });
     }
-    // dedupe by date+num, newest first, rebuild boards
-    for (const g of ["d4", "d6"]) {
-      const seen = new Set();
-      DRAWS[g] = DRAWS[g]
-        .filter((d) => { const k = d.date + ":" + d.num; if (seen.has(k)) return false; seen.add(k); return true; })
-        .sort((a, b) => (a.date < b.date ? 1 : -1));
-      BOARDS[g] = boardsFor(g);
-    }
+    const seen = new Set();
+    DRAWS.d4 = DRAWS.d4
+      .filter((d) => { const k = d.date + ":" + d.num; if (seen.has(k)) return false; seen.add(k); return true; })
+      .sort((a, b) => (a.date < b.date ? 1 : -1));
+    BOARDS.d4 = boardsFor("d4");
     if (typeof window !== "undefined" && typeof CustomEvent === "function") {
       window.dispatchEvent(new CustomEvent("minebig:sheet-loaded"));
     }

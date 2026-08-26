@@ -9,10 +9,8 @@
     return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
-  let dictGame = "d4";
-
   function dictNums(d) {
-    return dictGame === "d6" ? (d.nums6 || []) : (d.nums || []);
+    return d.nums || [];
   }
 
   function renderDict(filter) {
@@ -21,10 +19,9 @@
     const q = (filter || "").trim().toLowerCase();
     const rows = MINEBIG.DICTIONARY.filter((d) => {
       if (!q) return true;
-      const codes = [].concat(d.nums || [], d.nums6 || []);
+      const codes = d.nums || [];
       return d.word.toLowerCase().includes(q) || codes.some((n) => n.includes(q));
     });
-    grid.classList.toggle("is-6d", dictGame === "d6");
     grid.innerHTML = rows.map((d) => {
       const slug = String(d.word || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "default";
       const src = d.image || ("img/dict/" + slug + ".jpg");
@@ -66,9 +63,7 @@
 
   function renderStats(days) {
     const d4 = byId("stats-d4");
-    const d6 = byId("stats-d6");
     if (d4) d4.innerHTML = heatPad(MINEBIG.digitFreq("d4", days));
-    if (d6) d6.innerHTML = heatPad(MINEBIG.digitFreq("d6", days));
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -78,13 +73,6 @@
     if (search) {
       search.addEventListener("input", () => renderDict(search.value));
     }
-    document.querySelectorAll("[data-dict-game]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        dictGame = btn.dataset.dictGame;
-        document.querySelectorAll("[data-dict-game]").forEach((b) => b.classList.toggle("on", b === btn));
-        renderDict(search ? search.value : "");
-      });
-    });
 
     const selects = Array.from(document.querySelectorAll(".stat-period-select"));
     function applyPeriod(days) {

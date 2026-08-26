@@ -87,8 +87,8 @@
       const raw = input.value;
       const clean = String(raw || "").replace(/[\s,\-;]+/g, "");
       if (!clean) { byId("add-code-msg").textContent = "Enter your code first."; return; }
-      if (!/^\d{4}$/.test(clean) && !/^\d{6}$/.test(clean)) {
-        byId("add-code-msg").textContent = "Codes are 4 or 6 single digits (0-9) - e.g. 4821 or 482196.";
+      if (!/^\d{4}$/.test(clean)) {
+        byId("add-code-msg").textContent = "Codes are 4 single digits (0-9) - e.g. 4821.";
         return;
       }
       const code = clean;
@@ -115,7 +115,7 @@
     if (date) date.textContent = latest.date;
     if (nums) {
       const codes = MINEBIG.codesForDate(latest.date);
-      nums.innerHTML = [codes.d6 ? `<span class="ball sm">${codes.d6}</span>` : "", codes.d4 ? `<span class="ball sm">${codes.d4}</span>` : ""].join("");
+      nums.innerHTML = codes.d4 ? `<span class="ball sm">${codes.d4}</span>` : "";
     }
   }
 

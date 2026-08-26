@@ -1,5 +1,5 @@
 /* ============================================================
-   Next Draw - two countdowns (MineBig 4D + 6D), live window,
+   Next Draw - MineBig 4D countdown, live window,
    prize tables. Every Sunday 12:00 PM local time, 15-minute
    live event, then back to countdown.
    ============================================================ */
@@ -24,7 +24,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     const cdD4 = byId("cd-d4");
-    const cdD6 = byId("cd-d6");
     const liveView = byId("live-view");
     const playLeft = byId("play-left");
     let forcedLive = false;
@@ -35,21 +34,16 @@
       `<tr><td style="border-top:none;padding:10px 16px 10px 0;font-weight:700;color:var(--ink)">${t.label}</td>` +
       `<td style="border-top:none;padding:10px 0;text-align:right;color:var(--gold-deep);font-weight:800">[amount pending]</td></tr>`;
     const t4 = byId("prizes-d4");
-    const t6 = byId("prizes-d6");
     if (t4) t4.innerHTML = MINEBIG.PRIZE_TIERS.map(prizeRow).join("");
-    if (t6) t6.innerHTML = MINEBIG.PRIZE_TIERS.map(prizeRow).join("");
 
-    // ---- recent winners sample (full 4D/6D winning codes) ----
+    // ---- recent winners sample (4D winning codes) ----
     const winsEl = byId("upcoming-winners");
     function renderWinnersSample() {
       if (!winsEl) return;
       const sample = MINEBIG.WINNERS.slice(0, 3);
       winsEl.innerHTML = sample.map((w) => {
         const codes = MINEBIG.codesForDate(w.date);
-        const codeChips = [
-          codes.d6 ? `<span class="code-chip">6D&nbsp;${codes.d6}</span>` : "",
-          codes.d4 ? `<span class="code-chip">4D&nbsp;${codes.d4}</span>` : "",
-        ].join("");
+        const codeChips = codes.d4 ? `<span class="code-chip">${codes.d4}</span>` : "";
         return `<div class="win-row">
           <div class="win-row__date">${MINEBIG.formatShortDate(w.date)}</div>
           <div class="win-row__digits">${codeChips}</div>
@@ -62,7 +56,6 @@
     function showLive(until) {
       if (liveView) liveView.style.display = "block";
       if (cdD4) cdD4.closest(".card").style.display = "none";
-      if (cdD6) cdD6.closest(".card").style.display = "none";
       const left = Math.max(0, until - Date.now());
       const m = Math.floor(left / 6e4);
       const s = Math.floor((left % 6e4) / 1e3);
@@ -72,7 +65,6 @@
     function showCountdown(target) {
       if (liveView) liveView.style.display = "none";
       if (cdD4) { cdD4.closest(".card").style.display = ""; renderCountdown(cdD4, target); }
-      if (cdD6) { cdD6.closest(".card").style.display = ""; renderCountdown(cdD6, target); }
     }
 
     function tick() {

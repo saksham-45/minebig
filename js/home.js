@@ -26,12 +26,10 @@
 
   function homeSlip(el, board, game) {
     if (!el || !board || !game) return;
-    const is6 = game.id === "d6";
     const chip = (n) => `<span class="home-slip__n">${escapeHtml(n)}</span>`;
-    el.classList.toggle("is-6d", is6);
     el.innerHTML = `
-      <div class="home-slip__head ${is6 ? "is-6d" : "is-4d"}">
-        <img src="img/${is6 ? "dice-six.svg" : "dice-four.svg"}" alt="" aria-hidden="true">
+      <div class="home-slip__head is-4d">
+        <img src="img/dice-four.svg" alt="" aria-hidden="true">
         <h3>${escapeHtml(game.name)}</h3>
       </div>
       <div class="home-slip__prizes">
@@ -54,15 +52,12 @@
 
   function paintLatest() {
     const boards4 = MINEBIG.getBoards("d4") || [];
-    const boards6 = MINEBIG.getBoards("d6") || [];
     const latest4 = boards4[0];
-    const latest6 = boards6[0];
     const dateEl = byId("home-latest-date");
     if (dateEl && latest4) {
       dateEl.textContent = MINEBIG.formatDrawDate(latest4.date) + " · " + MINEBIG.drawCode(latest4.date);
     }
     homeSlip(byId("home-latest-d4"), latest4, MINEBIG.GAMES[0]);
-    homeSlip(byId("home-latest-d6"), latest6, MINEBIG.GAMES[1]);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -102,7 +97,7 @@
     // ---- lucky numbers on the heritage banner ----
     const heritageLucky = byId("heritage-lucky");
     function roll() {
-      const code = randomCode("d6", 6);
+      const code = randomCode("d4", 4);
       if (heritageLucky) heritageLucky.innerHTML = digitChips(code);
     }
     if (heritageLucky) roll();
@@ -124,8 +119,8 @@
       function renderPick() {
         if (!pick) return;
         pick.innerHTML = picked.map((d) => `<span class="ball">${d}</span>`).join("") +
-          Array.from({ length: 6 - picked.length }).map(() => `<span class="ball ghost">·</span>`).join("");
-        if (nextBtn) nextBtn.disabled = picked.length !== 6;
+          Array.from({ length: 4 - picked.length }).map(() => `<span class="ball ghost">·</span>`).join("");
+        if (nextBtn) nextBtn.disabled = picked.length !== 4;
       }
       if (keypad) {
         [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "Clear"].forEach((d) => {
@@ -140,7 +135,7 @@
             b.textContent = d;
             b.setAttribute("aria-label", "Digit " + d);
             b.addEventListener("click", () => {
-              if (picked.length >= 6) return;
+              if (picked.length >= 4) return;
               picked.push(d);
               renderPick();
             });
@@ -159,14 +154,14 @@
       });
       const next2 = byId("tut-next2");
       if (next2) next2.addEventListener("click", () => {
-        const boards = MINEBIG.BOARDS && MINEBIG.BOARDS.d6;
-        const win = boards && boards.length ? String(boards[0].first) : "482196";
+        const boards = MINEBIG.BOARDS && MINEBIG.BOARDS.d4;
+        const win = boards && boards.length ? String(boards[0].first) : "4821";
         if (winning) winning.innerHTML = String(win).split("").map((d) => `<span class="ball mag">${d}</span>`).join("");
         const got = String(win).split("").reduce((n, d, i) => n + (d === picked[i] ? 1 : 0), 0);
         if (verdict) {
-          verdict.innerHTML = got === 6
+          verdict.innerHTML = got === 4
             ? `<b style="color:var(--gold-deep)">★ Perfect match - you would have won 1st prize!</b>`
-            : `You matched <b>${got}</b> of 6 digits.${got >= 4 ? " That's a prize tier!" : " Better luck next Sunday."}`;
+            : `You matched <b>${got}</b> of 4 digits.${got >= 3 ? " That's a prize tier!" : " Better luck next Sunday."}`;
         }
         go(3);
       });

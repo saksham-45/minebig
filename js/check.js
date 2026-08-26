@@ -1,6 +1,6 @@
 /* ============================================================
    Check Status - ticket status lookup + number availability.
-   Codes are single digits (0-9): 4 digits (4D) or 6 digits (6D).
+   Codes are 4 single digits (0-9).
    ============================================================ */
 
 (function () {
@@ -21,13 +21,14 @@
       if (!k) return;
       if (k === "CLR") { ticketInput.value = ""; ticketInput.focus(); return; }
       if (k === "ENT") { document.getElementById("check-ticket").click(); return; }
+      if (ticketInput.value.length >= 4) return;
       ticketInput.value += k;
       ticketInput.focus();
     });
     // physical digit keys work too when not typing in an input
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-      if (/^[0-9]$/.test(e.key)) ticketInput.value += e.key;
+      if (/^[0-9]$/.test(e.key) && ticketInput.value.length < 4) ticketInput.value += e.key;
       if (e.key === "Enter") document.getElementById("check-ticket").click();
     });
   }
@@ -64,15 +65,15 @@
         res.classList.add("missing");
         res.innerHTML =
           `<h3>Invalid code</h3>` +
-          `<p>Codes are 4 or 6 single digits (0-9) - e.g. <strong>4821</strong> or <strong>482196</strong>. You can enter either.</p>`;
+          `<p>Codes are 4 single digits (0-9) - e.g. <strong>4821</strong>.</p>`;
       } else {
         res.classList.add("missing");
-        res.innerHTML = `<h3>Enter a code first</h3><p>Enter your 4 number code or your six number code and we'll check it.</p>`;
+        res.innerHTML = `<h3>Enter a code first</h3><p>Enter your 4-digit MineBig 4D code and we'll check it.</p>`;
       }
     });
   }
 
-  // ---- number availability (4- or 6-digit codes) ----
+  // ---- number availability (4-digit codes) ----
   const availBtn = document.getElementById("check-avail");
   if (availBtn) {
     const availOut = document.getElementById("avail-result");
@@ -80,7 +81,6 @@
 
     function gameFor(raw) {
       if (/^\d{4}$/.test(raw)) return { game: "d4", code: raw };
-      if (/^\d{6}$/.test(raw)) return { game: "d6", code: raw };
       return null;
     }
 
@@ -95,18 +95,18 @@
       availOut.className = "result show";
       if (!clean) {
         availOut.classList.add("missing");
-        availOut.innerHTML = `<h3>Enter a code first</h3><p>Type 4 or 6 digits to check availability.</p>`;
+        availOut.innerHTML = `<h3>Enter a code first</h3><p>Type 4 digits to check availability.</p>`;
         suggestEl.innerHTML = "";
         return;
       }
       const g = gameFor(clean);
       if (!g) {
         availOut.classList.add("missing");
-        availOut.innerHTML = `<h3>Invalid code</h3><p>Codes are 4 or 6 single digits (0-9) - e.g. 4821 or 482196.</p>`;
+        availOut.innerHTML = `<h3>Invalid code</h3><p>Codes are 4 single digits (0-9) - e.g. 4821.</p>`;
         suggestEl.innerHTML = "";
         return;
       }
-      const digits = g.game === "d4" ? 4 : 6;
+      const digits = 4;
       if (MINEBIG.isNumberTaken(g.game, g.code)) {
         availOut.classList.add("taken");
         availOut.innerHTML =

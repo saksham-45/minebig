@@ -48,8 +48,8 @@
     });
   }
 
-  // ================= number picker (6 single digits) =================
-  const slots = [0, 1, 2, 3, 4, 5].map(() => ({ el: null, status: null }));
+  // ================= number picker (4 single digits) =================
+  const slots = [0, 1, 2, 3].map(() => ({ el: null, status: null }));
 
   function currentCode() {
     return slots.map((s) => s.el.value).join("");
@@ -72,15 +72,15 @@
 
   function randomFreeCode() {
     let c = "";
-    for (let i = 0; i < 6; i++) c += Math.floor(Math.random() * 10);
-    return MINEBIG.isNumberTaken("d6", c) ? randomFreeCode() : c;
+    for (let i = 0; i < 4; i++) c += Math.floor(Math.random() * 10);
+    return MINEBIG.isNumberTaken("d4", c) ? randomFreeCode() : c;
   }
 
   function renderCodeStatus() {
     const box = byId("suggest-box");
     const code = currentCode();
-    if (code.length !== 6) { box.classList.remove("show"); box.innerHTML = ""; return; }
-    if (MINEBIG.isNumberTaken("d6", code)) {
+    if (code.length !== 4) { box.classList.remove("show"); box.innerHTML = ""; return; }
+    if (MINEBIG.isNumberTaken("d4", code)) {
       const alts = [];
       while (alts.length < 3) {
         const c = randomFreeCode();
@@ -103,7 +103,7 @@
   }
 
   function initPicker() {
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
       const slot = {
         el: byId(`num-${i}`),
         status: byId(`num-${i}-status`),
@@ -112,7 +112,7 @@
       slot.el.addEventListener("input", () => { renderSlotStatus(i); renderCodeStatus(); });
       slot.el.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
-          const next = byId(`num-${Math.min(i + 1, 5)}`);
+          const next = byId(`num-${Math.min(i + 1, 3)}`);
           if (next && next !== e.target) next.focus();
         }
       });
@@ -124,13 +124,13 @@
       const states = slots.map((_, i) => renderSlotStatus(i));
       const invalid = states.some((s) => s.kind === "bad");
       const empty = states.some((s) => s.kind === "empty");
-      if (empty) { showBuy(out, "missing", "Fill all 6 digit slots first."); return; }
+      if (empty) { showBuy(out, "missing", "Fill all 4 digit slots first."); return; }
       if (invalid) { showBuy(out, "taken", "Every slot must be a single digit (0-9)."); return; }
       const code = currentCode();
-      if (MINEBIG.isNumberTaken("d6", code)) { showBuy(out, "taken", "This code is already taken this week - use the suggested alternatives."); return; }
-      const takenSet = MINEBIG.getTakenForGame("d6");
+      if (MINEBIG.isNumberTaken("d4", code)) { showBuy(out, "taken", "This code is already taken this week - use the suggested alternatives."); return; }
+      const takenSet = MINEBIG.getTakenForGame("d4");
       takenSet.add(code);
-      MINEBIG.setTakenForGame("d6", takenSet);
+      MINEBIG.setTakenForGame("d4", takenSet);
       const tickets = getTickets();
       tickets.push({ code, at: Date.now(), week, agent: MINEBIG.agentName(), buyer: null, phone: null });
       localStorage.setItem("minebig_tickets", JSON.stringify(tickets));
@@ -141,7 +141,7 @@
     });
 
     byId("demo-reset").addEventListener("click", () => {
-      MINEBIG.setTakenForGame("d6", new Set());
+      MINEBIG.setTakenForGame("d4", new Set());
       localStorage.removeItem("minebig_tickets");
       slots.forEach((_, i) => { slots[i].el.value = ""; renderSlotStatus(i); });
       byId("suggest-box").classList.remove("show");
@@ -232,13 +232,13 @@
     const tbody = byId("winners-body");
     const rows = MINEBIG.WINNERS.map((w) => {
       const codes = MINEBIG.codesForDate(w.date);
-      const nums = [codes.d6 ? `6D ${codes.d6}` : "", codes.d4 ? `4D ${codes.d4}` : ""].filter(Boolean).map((c) => `<span class="num-chip">${c}</span>`).join("");
+      const nums = codes.d4 ? `<span class="num-chip">${codes.d4}</span>` : "";
       const tiers = MINEBIG.TIERS.map((t) => w.winners[t.key] || "-").join(" · ");
       return `<tr><td data-label="Draw date">${w.date}</td><td data-label="Winning codes">${nums}</td><td data-label="Winners">${escapeHtml(tiers)}</td></tr>`;
     }).join("");
     tbody.innerHTML = rows;
     const latestCodes = MINEBIG.codesForDate(latest.date);
-    const latestNums = [latestCodes.d6 ? `<span class="ball sm mag">${latestCodes.d6}</span>` : "", latestCodes.d4 ? `<span class="ball sm">${latestCodes.d4}</span>` : ""].join("");
+    const latestNums = latestCodes.d4 ? `<span class="ball sm">${latestCodes.d4}</span>` : "";
     byId("latest-nums").innerHTML = latestNums;
     byId("latest-date").textContent = latest.date;
   }

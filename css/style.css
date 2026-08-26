@@ -417,8 +417,10 @@ h1, h2, h3, h4 { color: var(--ink); font-weight: 800; line-height: 1.15; letter-
 }
 .home-latest__boards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
 }
 .home-slip {
   background: #fff;
@@ -438,8 +440,6 @@ h1, h2, h3, h4 { color: var(--ink); font-weight: 800; line-height: 1.15; letter-
 .home-slip__head h3 { margin: 0; font-size: 18px; font-weight: 800; }
 .home-slip__head.is-4d { background: linear-gradient(180deg, #ffe27a, #ffc000); }
 .home-slip__head.is-4d h3 { color: #171B1F; }
-.home-slip__head.is-6d { background: linear-gradient(180deg, #7cd8ff, #00a3e3); }
-.home-slip__head.is-6d h3 { color: #fff; }
 .home-slip__prizes {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1521,10 +1521,10 @@ body:has(.draw-page) { background: #F3F5F4; }
 .draw-boards {
   margin-top: 26px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 430px));
+  grid-template-columns: minmax(0, 520px);
   gap: 22px;
   align-items: stretch;
-  justify-content: start;
+  justify-content: center;
 }
 
 .mb-ticket {
@@ -1928,7 +1928,7 @@ body:has(.draw-page) { background: #F3F5F4; }
 /* ============================================================
    Stats bars (star numbers)
    ============================================================ */
-.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+.stat-row { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 18px; max-width: 560px; }
 .bar-track { background: var(--paper-2); border-radius: var(--radius-pill); height: 14px; overflow: hidden; border: 1px solid var(--line); }
 .bar-fill {
   height: 100%;
@@ -1957,7 +1957,6 @@ body:has(.draw-page) { background: #F3F5F4; }
 /* dictionary grid (star numbers) */
 .dict-games { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 .dict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 18px; }
-.dict-grid.is-6d { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .dict-item {
   background: #fff;
   border: 1px solid var(--line);
@@ -2002,7 +2001,7 @@ body:has(.draw-page) { background: #F3F5F4; }
 /* ============================================================
    Game banners (next draw)
    ============================================================ */
-.game-banners { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+.game-banners { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 18px; max-width: 520px; }
 .game-banner {
   border-radius: var(--radius-lg);
   padding: 30px;
@@ -2746,7 +2745,7 @@ tr:hover td { background: #fffdf4; }
 }
 
 /* ---- next-draw page: price strip + winners sample ---- */
-.price-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.price-strip { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 18px; max-width: 480px; }
 .price-chip { border-radius: var(--radius); border: 1px solid var(--line); background: linear-gradient(120deg, #fff8e1, #fff); padding: 16px 20px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; box-shadow: var(--shadow-sm); }
 .price-chip b { color: var(--gold-deep); font-weight: 900; font-size: 15px; }
 .price-chip span { font-size: 14px; color: var(--text); }
@@ -2786,7 +2785,7 @@ tr:hover td { background: #fffdf4; }
 .dict-body { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
 .dict-meaning { font-size: 12.5px; color: var(--dim); line-height: 1.45; }
 
-/* ---- winners board: whole 4D/6D codes as single number buttons ---- */
+/* ---- winners board: whole 4D codes as single number buttons ---- */
 
 /* ---- login: small bottom switch ---- */
 .login-switch { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
@@ -2839,7 +2838,7 @@ tr:hover td { background: #fffdf4; }
 /* social link circles: sized everywhere, not just the footer */
 .f-social a { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--line-2); color: var(--dim); background: #fff; font-weight: 800; }
 
-/* winner code chips (whole 4D/6D numbers) */
+/* winner code chips (whole 4D numbers) */
 .win-row__digits .code-chip { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-weight: 700; font-size: 14px; background: #fff8e1; border: 1px solid var(--gold); color: var(--ink); border-radius: var(--radius-pill); padding: 6px 12px; }
 
 /* ---- banner 2: animated 4-step slideshow ---- */
@@ -3056,14 +3055,8 @@ details.faq-item summary:hover { color: var(--gold-deep); }
   background: linear-gradient(180deg, #ffe27a, #ffc000);
   border-bottom: none;
 }
-.mb-ticket__head.is-6d {
-  background: linear-gradient(180deg, #7cd8ff, #00a3e3);
-  border-bottom: none;
-}
 .mb-ticket__head.is-4d .mb-ticket__name,
 .mb-ticket__head.is-4d .mb-ticket__hint { color: #171B1F; }
-.mb-ticket__head.is-6d .mb-ticket__name { color: #fff; }
-.mb-ticket__head.is-6d .mb-ticket__hint { color: rgba(255, 255, 255, 0.9); }
 
 .mascot-guide { margin: 32px 0 48px; }
 .legal h2 { margin-top: 8px; }

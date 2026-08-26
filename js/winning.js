@@ -17,10 +17,9 @@
 
   function renderBoard(el, board, game) {
     if (!el || !board || !game) return;
-    const is6 = game.id === "d6";
     el.innerHTML = `
-      <div class="mb-ticket__head ${is6 ? "is-6d" : "is-4d"}">
-        <img class="mb-ticket__mark" src="img/${is6 ? "dice-six.svg" : "dice-four.svg"}" alt="" aria-hidden="true">
+      <div class="mb-ticket__head is-4d">
+        <img class="mb-ticket__mark" src="img/dice-four.svg" alt="" aria-hidden="true">
         <div class="mb-ticket__titles">
           <h2 class="mb-ticket__name">${escapeHtml(game.name)}</h2>
           <p class="mb-ticket__hint">Tap a number to see its meaning.</p>
@@ -59,7 +58,6 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     let boards4 = MINEBIG.getBoards("d4");
-    let boards6 = MINEBIG.getBoards("d6");
     let dates = boards4.map((b) => b.date);
     const tabs = byId("draw-tabs");
     const dateField = byId("draw-date-field");
@@ -68,7 +66,6 @@
     const calGrid = byId("draw-cal-grid");
     const meaning = byId("num-meaning");
     const ticket4 = byId("ticket-d4");
-    const ticket6 = byId("ticket-d6");
     let selected = dates[0];
     let calCursor = new Date(selected + "T12:00:00");
 
@@ -85,7 +82,6 @@
 
     function paint() {
       renderBoard(ticket4, boardOn(boards4, selected), MINEBIG.GAMES[0]);
-      renderBoard(ticket6, boardOn(boards6, selected), MINEBIG.GAMES[1]);
       if (dateField) dateField.textContent = MINEBIG.formatShortDate(selected);
       const stampCode = byId("stamp-code");
       if (stampCode) stampCode.textContent = MINEBIG.drawCode(selected);
@@ -203,13 +199,11 @@
     const applyBtn = byId("draw-editor-apply");
     const resetBtn = byId("draw-editor-reset");
     const ta4 = byId("draw-editor-d4");
-    const ta6 = byId("draw-editor-d6");
     const status = byId("draw-editor-status");
 
     function openEditor() {
       if (!editor) return;
       ta4.value = MINEBIG.serializeBoards("d4");
-      ta6.value = MINEBIG.serializeBoards("d6");
       if (status) { status.textContent = ""; status.className = "draw-editor__status"; }
       editor.hidden = false;
       editor.scrollIntoView({ block: "start", behavior: "smooth" });
@@ -217,7 +211,6 @@
 
     function reloadBoards() {
       boards4 = MINEBIG.getBoards("d4");
-      boards6 = MINEBIG.getBoards("d6");
       dates = boards4.map((b) => b.date);
       selected = dates[0] || null;
       calCursor = selected ? new Date(selected + "T12:00:00") : new Date();
@@ -231,15 +224,14 @@
     if (applyBtn) {
       applyBtn.addEventListener("click", () => {
         const r4 = MINEBIG.parseBoardText("d4", ta4.value);
-        const r6 = MINEBIG.parseBoardText("d6", ta6.value);
-        const errs = [...r4.errors, ...r6.errors];
+        const errs = [...r4.errors];
         if (!status) return;
         if (errs.length) {
           status.textContent = errs.slice(0, 4).join(" ");
           status.className = "draw-editor__status is-err";
           return;
         }
-        MINEBIG.saveBoardOverrides(ta4.value, ta6.value);
+        MINEBIG.saveBoardOverrides(ta4.value);
         status.textContent = "Applied - the boards, tabs and calendar updated.";
         status.className = "draw-editor__status is-ok";
         reloadBoards();
@@ -250,7 +242,6 @@
       resetBtn.addEventListener("click", () => {
         MINEBIG.clearBoardOverrides();
         ta4.value = MINEBIG.serializeBoards("d4");
-        ta6.value = MINEBIG.serializeBoards("d6");
         if (status) { status.textContent = "Default boards restored."; status.className = "draw-editor__status is-ok"; }
         reloadBoards();
       });
