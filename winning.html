@@ -127,10 +127,16 @@
       </button>
       <div class="mb-cal" id="draw-cal" hidden>
         <div class="mb-cal__nav">
+          <button type="button" id="draw-cal-prev-year" aria-label="Previous year">«</button>
           <button type="button" id="draw-cal-prev" aria-label="Previous month">‹</button>
           <div id="draw-cal-label"></div>
           <button type="button" id="draw-cal-next" aria-label="Next month">›</button>
+          <button type="button" id="draw-cal-next-year" aria-label="Next year">»</button>
         </div>
+        <label class="mb-cal__jump">
+          <span>Jump to year</span>
+          <select id="draw-cal-year" aria-label="Jump to year"></select>
+        </label>
         <div class="mb-cal__grid" id="draw-cal-grid"></div>
       </div>
     </div>

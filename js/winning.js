@@ -68,6 +68,15 @@
     const ticket4 = byId("ticket-d4");
     let selected = dates[0];
     let calCursor = new Date(selected + "T12:00:00");
+    const newestDate = dates[0];
+    const oldestDate = dates[dates.length - 1];
+    const minMonth = oldestDate ? new Date(oldestDate.slice(0, 7) + "-01T12:00:00") : calCursor;
+    const maxMonth = newestDate ? new Date(newestDate.slice(0, 7) + "-01T12:00:00") : calCursor;
+
+    function clampCursor() {
+      if (calCursor < minMonth) calCursor = new Date(minMonth);
+      if (calCursor > maxMonth) calCursor = new Date(maxMonth);
+    }
 
     function boardOn(list, date) {
       return list.find((b) => b.date === date) || list[0];
@@ -128,10 +137,37 @@
 
     function paintCal() {
       if (!calLabel || !calGrid) return;
+      clampCursor();
       const y = calCursor.getFullYear();
       const m = calCursor.getMonth();
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       calLabel.textContent = `${months[m]} ${y}`;
+      const prevY = byId("draw-cal-prev-year");
+      const nextY = byId("draw-cal-next-year");
+      const prevM = byId("draw-cal-prev");
+      const nextM = byId("draw-cal-next");
+      const atMin = calCursor.getFullYear() === minMonth.getFullYear() && calCursor.getMonth() === minMonth.getMonth();
+      const atMax = calCursor.getFullYear() === maxMonth.getFullYear() && calCursor.getMonth() === maxMonth.getMonth();
+      if (prevM) prevM.disabled = atMin;
+      if (nextM) nextM.disabled = atMax;
+      if (prevY) prevY.disabled = calCursor.getFullYear() <= minMonth.getFullYear();
+      if (nextY) nextY.disabled = calCursor.getFullYear() >= maxMonth.getFullYear();
+      const yearSel = byId("draw-cal-year");
+      if (yearSel && !yearSel.dataset.ready) {
+        const y0 = minMonth.getFullYear();
+        const y1 = maxMonth.getFullYear();
+        let opts = "";
+        for (let yr = y1; yr >= y0; yr -= 1) opts += `<option value="${yr}">${yr}</option>`;
+        yearSel.innerHTML = opts;
+        yearSel.dataset.ready = "1";
+        yearSel.addEventListener("change", () => {
+          const yr = Number(yearSel.value);
+          calCursor.setFullYear(yr);
+          clampCursor();
+          paintCal();
+        });
+      }
+      if (yearSel) yearSel.value = String(y);
       const first = new Date(y, m, 1);
       const start = (first.getDay() + 6) % 7;
       const days = new Date(y, m + 1, 0).getDate();
@@ -167,6 +203,12 @@
           paintCal();
         } else if (e.target.id === "draw-cal-next") {
           calCursor.setMonth(calCursor.getMonth() + 1);
+          paintCal();
+        } else if (e.target.id === "draw-cal-prev-year") {
+          calCursor.setFullYear(calCursor.getFullYear() - 1);
+          paintCal();
+        } else if (e.target.id === "draw-cal-next-year") {
+          calCursor.setFullYear(calCursor.getFullYear() + 1);
           paintCal();
         } else {
           const day = e.target.closest(".mb-cal__day");
