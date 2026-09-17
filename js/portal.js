@@ -32,8 +32,13 @@
     btn.addEventListener("click", () => {
       const name = (byId("login-name").value || "").trim();
       const pass = byId("login-pass").value;
-      if (!name) { byId("login-err").textContent = "Enter an agent name to continue."; return; }
-      if (!pass) { byId("login-err").textContent = "Enter the portal password."; return; }
+      const err = byId("login-err");
+      if (!name) { if (err) err.textContent = "Enter your name."; return; }
+      if (!pass) { if (err) err.textContent = "Enter your password."; return; }
+      if (!MINEBIG.verifyLogin("agent", name, pass)) {
+        if (err) err.textContent = "That name or password is not recognised.";
+        return;
+      }
       MINEBIG.setAgent(name);
       location.href = "agent-portal.html";
     });
@@ -88,7 +93,7 @@
       }
       box.classList.add("show");
       box.innerHTML =
-        `<strong class="teal">Code ${code} is taken - available nearby:</strong><br>` +
+        `<strong class="teal">Code ${code} is taken. Nearby options:</strong><br>` +
         alts.map((c) => `<span class="s-num" data-n="${c}">${c}</span>`).join("");
       box.querySelectorAll(".s-num").forEach((el) => {
         el.addEventListener("click", () => {
@@ -127,7 +132,7 @@
       if (empty) { showBuy(out, "missing", "Fill all 4 digit slots first."); return; }
       if (invalid) { showBuy(out, "taken", "Every slot must be a single digit (0-9)."); return; }
       const code = currentCode();
-      if (MINEBIG.isNumberTaken("d4", code)) { showBuy(out, "taken", "This code is already taken this week - use the suggested alternatives."); return; }
+      if (MINEBIG.isNumberTaken("d4", code)) { showBuy(out, "taken", "This code is already taken this week. Use one of the suggested alternatives."); return; }
       const takenSet = MINEBIG.getTakenForGame("d4");
       takenSet.add(code);
       MINEBIG.setTakenForGame("d4", takenSet);
@@ -149,7 +154,7 @@
       renderLogbook();
       const out = byId("buy-result");
       out.className = "result show ok";
-      out.innerHTML = `<h3>Pool reset</h3><p>This week's codes are fresh again - all codes available.</p>`;
+      out.innerHTML = `<h3>Pool reset</h3><p>This week's codes are fresh again. All codes are available.</p>`;
     });
   }
 
@@ -179,7 +184,7 @@
       <div class="card feature mt" style="margin-top:14px">
         <h3>🎟️ <span class="gold">${escapeHtml(t.code.replace(/-/g, " - "))}</span> ${escapeHtml(t.week)}</h3>
         ${recorded
-          ? `<p><span class="pill ok">Recorded - sold to ${escapeHtml(t.buyer)}</span></p>`
+          ? `<p><span class="pill ok">Recorded. Sold to ${escapeHtml(t.buyer)}</span></p>`
           : `<p class="muted">Not yet recorded. Who did you sell this to?</p>
              <div class="logbook-actions" style="justify-content:flex-start">
                <input type="text" id="buyer-${t.code}" placeholder="Buyer name" style="width:160px">
@@ -210,7 +215,7 @@
     const tbody = byId("logbook-body");
     const book = MINEBIG.getLogbook().filter((e) => e.week === week);
     if (!book.length) {
-      tbody.innerHTML = `<tr><td colspan="5" class="center muted">No sales recorded yet - sold codes stay here permanently.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="center muted">No sales recorded yet. Sold codes stay here permanently.</td></tr>`;
       return;
     }
     tbody.innerHTML = book.map((e) => {

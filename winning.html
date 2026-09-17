@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="results-page">
 <!--
   MINEBIG V2.0 - JACKPOT LOUNGE (direction contract)
   THESIS: A lottery that feels like a premium game night - gold, noir and a glowing countdown, refusing both the teletext terminal and the neon-casino cliche.
@@ -33,11 +33,10 @@
       <div class="drop">
         <button type="button" aria-haspopup="true">MineBig Star Numbers <span class="drop-arrow">▼</span></button>
         <div class="drop-menu">
-          <a href="star-numbers.html#dictionary">Symbolic Dictionary<small>What does your dream mean?</small></a>
+          <a href="star-numbers.html#dictionary">MineBig Dictionary<small>Look up a dream or number</small></a>
           <a href="star-numbers.html#statistics">Statistics<small>The numbers behind the numbers</small></a>
         </div>
       </div>
-      <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
       <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
       <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
       <div class="drop">
@@ -57,13 +56,12 @@
           <a href="upcoming.html">Next draw &amp; countdown</a>
           <a href="winning.html">Results &amp; winners</a>
           <a href="star-numbers.html">MineBig Star Numbers</a>
-          <a href="try-your-luck.html">Try your luck</a>
           <a href="check.html">Check a ticket</a>
           <a href="about.html">About us</a>
           <a href="testimonials.html">What our winners say</a>
           <a href="connect.html">Connect with an agent</a>
           <a href="biggest-sensation.html">Biggest sensation</a>
-          <a href="faq.html">FAQ - help</a>
+          <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact us</a>
           <a href="play-responsibly.html">Play responsibly</a>
         </div>
@@ -86,12 +84,11 @@
   <a href="index.html" data-page="index.html">Home</a>
   <a href="upcoming.html" data-page="upcoming.html">Next Draw</a>
   <a href="winning.html" data-page="winning.html">Results &amp; Winners</a>
-  <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
   <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
   <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
   <div class="m-label">MineBig Star Numbers</div>
   <div class="m-sub">
-    <a href="star-numbers.html#dictionary">Symbolic Dictionary</a>
+    <a href="star-numbers.html#dictionary">MineBig Dictionary</a>
     <a href="star-numbers.html#statistics">Statistics</a>
   </div>
   <div class="m-label">Help</div>
@@ -140,7 +137,7 @@
         <div class="mb-cal__grid" id="draw-cal-grid"></div>
       </div>
     </div>
-    <button type="button" class="mb-edit-btn" id="draw-edit-btn" aria-label="Edit draw results">✎ Edit results</button>
+    <button type="button" class="mb-edit-btn" id="draw-edit-btn" hidden aria-label="Edit draw results">Edit results</button>
     <span class="mb-stamp" id="draw-stamp" aria-hidden="true">
       <svg viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2.5"/>
@@ -172,7 +169,7 @@
   <p class="mb-meaning" id="num-meaning" hidden></p>
 
   <div class="draw-boards" id="draw-boards">
-    <article class="mb-ticket" id="ticket-d4"></article>
+    <article class="draw-sheet-wrap" id="ticket-d4"></article>
     <a class="mb-guide" href="index.html#how-to-play">
       <span class="mb-guide__title">How draws work?</span>
       <span class="mb-guide__plus" aria-hidden="true">+</span>
@@ -186,14 +183,14 @@
   <p class="note">Winner names are never shown, per our privacy commitment.</p>
 
   <div class="center mt">
-    <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
+    <a class="btn btn-gold" href="connect.html">Connect with an agent →</a>
     <a class="btn btn-ghost dark" href="contact.html">Help &amp; Support</a>
 
   </div>
 
   <a class="howto-card" href="index.html#how-to-play">
     <img src="img/mascot.gif" alt="" aria-hidden="true">
-    <span class="howto-card__body"><b>See how the draw works</b><small>Try the interactive walkthrough - pick digits, buy, watch the draw, claim your prize.</small></span>
+    <span class="howto-card__body"><b>See how the draw works</b><small>Try the walkthrough. Pick digits, buy from an agent, watch the Sunday draw, then claim.</small></span>
     <span class="howto-card__go">Try it →</span>
   </a>
 
@@ -204,7 +201,7 @@
     <div class="footer-grid">
       <div>
         <div class="fbrand"><span class="ball-logo">M</span> MineBig.com <span class="v2" style="font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--orange),var(--red));border-radius:100px;padding:2px 9px;margin-left:4px;vertical-align:middle">V2.0</span></div>
-        <p class="ftag">Same trust. Same dreams. Improved experience, better care. Every Sunday 12 PM · Live draw · MineBig 4D · Five prize tiers.</p>
+        <p class="ftag">Same trust. Same dreams. Improved experience, better care. Every Sunday 12 PM · MineBig 4D · Five prize tiers.</p>
         <div class="f-social" aria-label="Follow us">
           <a href="#" class="soc-fb" aria-label="Facebook">f</a>
           <a href="#" class="soc-tt" aria-label="TikTok">♪</a>
@@ -228,7 +225,7 @@
         <h4>Customer Service</h4>
         <div class="f-contact">
           Phone: [confirm number]<br>
-          Hours: 9:00 AM – 7:00 PM<br>
+          Hours: 9:00 AM to 7:00 PM<br>
           Email: <a href="mailto:hello@minebig.com">hello@minebig.com</a>
         </div>
       </div>

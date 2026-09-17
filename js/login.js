@@ -15,8 +15,8 @@
     const isAgent = role === "agent";
     if (label) label.textContent = isAgent ? "Agent login" : "Player login";
     if (hint) hint.textContent = isAgent
-      ? "Agent channel - selling & locking codes"
-      : "Player channel - tracking your codes";
+      ? "Verified agents only. Sign-in is checked before the portal opens."
+      : "Sign in to save codes you already bought from an agent.";
     if (agentLink) {
       agentLink.textContent = isAgent ? "Player login" : "Agent login";
       agentLink.href = isAgent ? "login.html" : "login.html?role=agent";
@@ -30,7 +30,12 @@
     const pass = byId("login-pass").value;
     const err = byId("login-err");
     if (!name) { err.textContent = "Enter your name."; return; }
-    if (!pass) { err.textContent = "Enter a password."; return; }
+    if (!pass) { err.textContent = "Enter your password."; return; }
+
+    if (!MINEBIG.verifyLogin(role, name, pass)) {
+      err.textContent = "That name or password is not recognised.";
+      return;
+    }
 
     if (role === "agent") {
       sessionStorage.setItem("minebig_agent", name);

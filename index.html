@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght..96,500..800&family=Archivo:wght;500;600;700&family=IBM+Plex+Mono:wght;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="home-page">
 <!--
   MINEBIG V2.0 - JACKPOT LOUNGE (direction contract)
   THESIS: A lottery that feels like a premium game night - gold, noir and a glowing countdown, refusing both the teletext terminal and the neon-casino cliche.
@@ -33,11 +33,10 @@
       <div class="drop">
         <button type="button" aria-haspopup="true">MineBig Star Numbers <span class="drop-arrow">▼</span></button>
         <div class="drop-menu">
-          <a href="star-numbers.html#dictionary">Symbolic Dictionary<small>What does your dream mean?</small></a>
+          <a href="star-numbers.html#dictionary">MineBig Dictionary<small>Look up a dream or number</small></a>
           <a href="star-numbers.html#statistics">Statistics<small>The numbers behind the numbers</small></a>
         </div>
       </div>
-      <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
       <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
       <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
       <div class="drop">
@@ -57,13 +56,12 @@
           <a href="upcoming.html">Next draw &amp; countdown</a>
           <a href="winning.html">Results &amp; winners</a>
           <a href="star-numbers.html">MineBig Star Numbers</a>
-          <a href="try-your-luck.html">Try your luck</a>
           <a href="check.html">Check a ticket</a>
           <a href="about.html">About us</a>
           <a href="testimonials.html">What our winners say</a>
           <a href="connect.html">Connect with an agent</a>
           <a href="biggest-sensation.html">Biggest sensation</a>
-          <a href="faq.html">FAQ - help</a>
+          <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact us</a>
           <a href="play-responsibly.html">Play responsibly</a>
         </div>
@@ -86,12 +84,11 @@
   <a href="index.html" data-page="index.html">Home</a>
   <a href="upcoming.html" data-page="upcoming.html">Next Draw</a>
   <a href="winning.html" data-page="winning.html">Results &amp; Winners</a>
-  <a href="try-your-luck.html" data-page="try-your-luck.html">Try Your Luck</a>
   <a href="play-responsibly.html" data-page="play-responsibly.html">Play Responsibly</a>
   <a href="biggest-sensation.html" data-page="biggest-sensation.html">Biggest Sensation</a>
   <div class="m-label">MineBig Star Numbers</div>
   <div class="m-sub">
-    <a href="star-numbers.html#dictionary">Symbolic Dictionary</a>
+    <a href="star-numbers.html#dictionary">MineBig Dictionary</a>
     <a href="star-numbers.html#statistics">Statistics</a>
   </div>
   <div class="m-label">Help</div>
@@ -114,157 +111,182 @@
   </div>
 </nav>
 
-<main class="page">
-  <section class="home-latest" aria-label="Latest draw results">
-    <div class="home-latest__bar">
-      <div>
-        <h2 class="home-latest__title">Latest draw</h2>
-        <p class="home-latest__date" id="home-latest-date"></p>
+<main>
+  <section class="campaign-hero" aria-label="Sunday draw campaign">
+    <div class="campaign-hero__burst" aria-hidden="true"></div>
+    <img class="float-coin c1" src="img/coin-tilt.png" alt="" aria-hidden="true">
+    <img class="float-coin c2" src="img/coin-face.png" alt="" aria-hidden="true">
+    <img class="float-coin c3" src="img/coin-tilt.png" alt="" aria-hidden="true">
+    <img class="float-coin c4" src="img/coin-face.png" alt="" aria-hidden="true">
+    <img class="float-coin c5" src="img/coin-tilt.png" alt="" aria-hidden="true">
+    <img class="float-coin c6" src="img/coin-face.png" alt="" aria-hidden="true">
+    <img class="float-bag" src="img/money-bag.png" alt="" aria-hidden="true">
+    <img class="float-gift" src="img/gift-box.png" alt="" aria-hidden="true">
+    <span class="confetti r1" aria-hidden="true"></span>
+    <span class="confetti r2" aria-hidden="true"></span>
+    <span class="confetti b1" aria-hidden="true"></span>
+    <span class="confetti b2" aria-hidden="true"></span>
+
+    <div class="campaign-hero__copy">
+      <h1 class="campaign-title">
+        <span class="t-gold">SUNDAY</span>
+        <span class="t-gold">DRAW</span>
+      </h1>
+      <div class="prize-board">
+        <p class="prize-board__tag">WIN AMAZING PRIZES!</p>
+        <div class="prize-board__row">
+          <article class="prize">
+            <img class="prize-ico" src="img/crown-gold.png" alt="" width="64" height="64">
+            <strong>1st Prize</strong>
+            <span class="ribbon">1 winner</span>
+          </article>
+          <article class="prize">
+            <img class="prize-ico" src="img/crown-silver.png" alt="" width="64" height="64">
+            <strong>2nd Prize</strong>
+            <span class="ribbon">1 winner</span>
+          </article>
+          <article class="prize">
+            <img class="prize-ico" src="img/crown-bronze.png" alt="" width="64" height="64">
+            <strong>3rd Prize</strong>
+            <span class="ribbon">1 winner</span>
+          </article>
+          <article class="prize">
+            <img class="prize-ico" src="img/crown-special.png" alt="" width="64" height="64">
+            <strong>Special</strong>
+            <span class="ribbon">10 winners</span>
+          </article>
+          <article class="prize">
+            <img class="prize-ico" src="img/crown-consolation.png" alt="" width="64" height="64">
+            <strong>Consolation</strong>
+            <span class="ribbon">10 winners</span>
+          </article>
+        </div>
       </div>
-      <a class="btn btn-gold" href="winning.html">Full results →</a>
-    </div>
-    <div class="home-latest__boards">
-      <article class="home-slip" id="home-latest-d4"></article>
+      <div class="nd-wrap">
+        <button type="button" class="nd-toggle" id="nd-toggle" aria-expanded="false" aria-controls="nd-panel">
+          <span class="nd-toggle__label">Next draw</span>
+          <span class="nd-when"><span id="nd-day">-</span> <span id="nd-dow"></span></span>
+          <span class="nd-chevron" aria-hidden="true"></span>
+        </button>
+        <div class="nd-panel" id="nd-panel" hidden>
+          <div class="nd-count" id="home-countdown"></div>
+          <a class="nd-more" href="upcoming.html">View more</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- BANNER SLIDER (swipeable) -->
-  <div class="banner-slider" id="home-slider">
-    <div class="banner-track">
-      <div class="banner-slide on">
-        <div class="b-content">
-          <h2>Your Lucky Numbers <span class="yl">Are Waiting</span></h2>
-          <p>Check the upcoming jackpot and see how close you are to a life-changing win.</p>
-          <div class="cta-row">
-            <a class="btn btn-gold" href="upcoming.html">View Next Draw →</a>
+  <section class="promo-strip" aria-label="MineBig Dictionary">
+    <a class="promo-card pc-gold" href="star-numbers.html#dictionary">
+      <img class="promo-card__art" src="img/coin-face.png" alt="" width="88" height="88">
+      <span class="promo-card__body">
+        <strong>MineBig Dictionary</strong>
+        <small>Look up a dream, a symbol, or a number</small>
+        <span class="promo-card__chips">
+          <span>Rose</span>
+          <span>Dragon</span>
+          <span>4821</span>
+        </span>
+      </span>
+      <span class="promo-card__go">Look up</span>
+    </a>
+  </section>
+
+  <section class="home-band" aria-label="Latest draw results">
+    <div class="home-band__inner results-row">
+      <article class="mg-ticket" id="home-latest-d4"></article>
+      <div class="mg-side">
+        <a class="mg-plus" href="#how-to-play">
+          <span>How draws work?</span>
+          <b>+</b>
+        </a>
+        <a class="mg-plus" href="faq.html">
+          <span>Where to claim?</span>
+          <b>+</b>
+        </a>
+        <p class="mg-date" id="home-latest-date"></p>
+        <a class="btn btn-gold" href="winning.html">Explore more →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-band home-band--white" id="our-game">
+    <div class="home-band__inner">
+      <h2 class="mg-h">MineBig 4D</h2>
+      <p class="mg-sub">The weekly 4-digit draw. Results every Sunday at 12 PM.</p>
+      <div class="our-game">
+        <div class="our-game__info">
+          <h3>Four digits. One weekly draw.</h3>
+          <p>Pick a 4-digit code with a verified local agent. This site publishes the draw. It does not sell tickets.</p>
+        </div>
+        <div class="lucky-card">
+          <div class="lucky-card__bar">
+            <button type="button" id="lucky-refresh">Your lucky number ↻</button>
+            <button type="button" id="lucky-copy">Copy number</button>
           </div>
-        </div>
-        <div class="banner-visual" aria-hidden="true">
-          <img src="img/gift.gif" width="260" height="260" alt="">
+          <div class="lucky-digits" id="lucky-digits" aria-label="Lucky 4-digit number"></div>
+          <a class="btn btn-gold" href="#how-to-play">How the draw works →</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="banner-slide s-blue">
-        <div class="b-content">
-          <h2>New Here? <span class="yl">Get Started in Minutes</span></h2>
-          <p>Just a few simple steps to place your first ticket.</p>
-          <div class="cta-row">
-            <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
-            <a class="btn btn-ghost light" href="#how-to-play">How to Play</a>
+  <section class="home-band" id="minebig-dictionary">
+    <div class="home-band__inner">
+      <h2 class="mg-h">MineBig Dictionary</h2>
+      <div class="dict-banner">
+        <div class="dict-banner__copy">
+          <h3>Look up a lucky number</h3>
+          <div class="search-box">
+            <input type="search" id="home-decoder-q" placeholder="Search a word or 4-digit number" aria-label="Search MineBig Dictionary">
           </div>
+          <div class="dict-grid" id="home-decoder-out"></div>
+          <p class="note" id="home-decoder-empty">Type a dream, a symbol, or a number.</p>
+          <a class="btn btn-gold" href="star-numbers.html#dictionary">Open full dictionary →</a>
         </div>
-        <div class="banner-visual" aria-hidden="true">
-          <img src="img/steps.gif" width="260" height="260" alt="">
-        </div>
-        <ol class="banner-steps">
-          <li><b>1</b> Pick your digits</li>
-          <li><b>2</b> Buy your ticket</li>
-          <li><b>3</b> Wait for the draw</li>
-        </ol>
-      </div>
-      <div class="banner-slide s-orange">
-        <div class="b-content">
-          <h2>Winners <span class="yl">Spotlight</span></h2>
-          <div class="spot-quote">
-            <p class="quote">“I checked my code on Sunday night and could not believe it. My agent came the very next day.”</p>
-            <p class="who">Kumar V. - Special Prize, draw of 2026-08-09</p>
-          </div>
-          <div class="cta-row">
-            <a class="btn btn-gold" href="winning.html">See Past Results →</a>
-          </div>
-        </div>
-        <div class="win-collage" aria-hidden="true">
-          <img src="img/win-1.png" alt="">
-          <img src="img/win-2.png" alt="">
-          <img src="img/win-5.png" alt="">
-          <img src="img/win-4.png" alt="">
-          <img src="img/win-6.png" alt="">
-          <img src="img/win-8.png" alt="">
-        </div>
+        <img class="dict-banner__mascot" src="img/mascot.gif" alt="" aria-hidden="true">
       </div>
     </div>
-    <button class="banner-arrow prev" type="button" aria-label="Previous banner">‹</button>
-    <button class="banner-arrow next" type="button" aria-label="Next banner">›</button>
-    <div class="banner-dots">
-      <button type="button" aria-label="Banner 1"></button>
-      <button type="button" aria-label="Banner 2"></button>
-      <button type="button" aria-label="Banner 3"></button>
-    </div>
-  </div>
+  </section>
 
-  <!-- NEXT DRAW + COUNTDOWN -->
-  <div class="card next-winner">
-    <div class="nw-line">
-      <span class="nw-lbl">Next winner on</span> <strong id="nw-date">SUNDAY ··</strong> · 12:00 PM
-    </div>
-    <div class="countdown" id="home-countdown"></div>
-  </div>
-
-  <!-- MASCOT STRIP (replaces the scrolling ticker) -->
-  <div class="mascot-strip">
-    <img class="mascot-strip__face" src="img/mascot.gif" alt="MineBig lantern ghost mascot">
-    <div class="mascot-strip__text">
-      <p class="mascot-strip__hi">The lantern ghost is back - here's what's happening:</p>
-      <div class="mascot-strip__stats">
-        <span class="ms-chip"><b id="tk-winners">91</b> winners so far</span>
-        <span class="ms-chip">Next draw <b class="tk-val">Sunday 12 PM</b></span>
-        <span class="ms-chip">Weekly <b>MineBig 4D</b></span>
-        <span class="ms-chip"><b>5</b> prize tiers every draw</span>
+  <section class="home-band home-band--white">
+    <div class="home-band__inner happenings-head">
+      <div>
+        <h2 class="mg-h">Happenings</h2>
+        <p class="mg-sub">What's on this week, and how we look after players.</p>
       </div>
+      <a class="btn btn-gold" href="biggest-sensation.html">Explore more →</a>
     </div>
-  </div>
+    <div class="home-band__inner happenings-grid">
+      <a class="happening" href="biggest-sensation.html">
+        <img src="img/win-1.png" alt="">
+        <h3>Make this Sunday one to remember</h3>
+        <time>Sunday 12 PM</time>
+      </a>
+      <a class="happening" href="play-responsibly.html">
+        <img src="img/mascot.gif" alt="">
+        <h3>Play responsibly. Same trust, better care.</h3>
+        <time>21+</time>
+      </a>
+      <a class="happening" href="star-numbers.html#dictionary">
+        <img src="img/coin-face.jpg" alt="">
+        <h3>What your dream number might mean</h3>
+        <time>Star Numbers</time>
+      </a>
+    </div>
+  </section>
 
-  <!-- 25 YEARS - premium heritage banner -->
-  <div class="heritage-banner">
-    <p class="heritage-p">
-      <strong>For 25 years, MineBig has been a name people trusted</strong> - passed along by word of mouth, community to community. Now it has been reborn, more refined, in a fresh new attire - and this is only the beginning.
-    </p>
-    <div class="heritage-foot">
-      <div class="heritage-brand">
-        <span class="ball-logo">M</span>
-        <h2>Mine<span>Big</span></h2>
-        <p class="heritage-quote">“Same trust, same dreams - now better than ever.” <span class="heritage-who">- A winner from the very first draw</span></p>
-      </div>
-      <div class="heritage-lucky">
-        <span class="hl-label">Lucky numbers</span>
-        <div class="mini-balls" id="heritage-lucky" aria-label="Lucky numbers"></div>
-      </div>
+  <section class="home-band">
+    <div class="home-band__inner about-minebig">
+      <h2 class="mg-h">What is MineBig</h2>
+      <p>For 25 years, people passed the MineBig name along by word of mouth. It's back now as MineBig 4D. Results go out every Sunday at 12 PM, here for anyone to check. Tickets are sold only through verified local agents. This website shows the draw, the results, and how to reach an agent.</p>
     </div>
-  </div>
+  </section>
 
-
-  <h2 class="section-title">What is MineBig.com?</h2>
-  <div class="tx-rule"></div>
-  <div class="grid3">
-    <div class="card feature">
-      <h3><span class="ico">►</span> Watch the draw live</h3>
-      <p>Every Sunday at 12 PM, a live 15-minute draw. Simple, open, and everyone can watch. Outside the live window, a countdown ticks down to the next draw.</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">#</span> MineBig 4D</h3>
-      <p>Pick your lucky 4 digits and check availability live before you buy.</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">↔</span> Everything through your agent</h3>
-      <p>Buy your ticket, receive your receipt, and collect your prize - all face to face with a verified local agent. No payments happen on this website.</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">★</span> 5 prize tiers weekly</h3>
-      <p>1st, 2nd, 3rd, Special and Consolation prizes - every single Sunday.</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">▤</span> Transparent results archive</h3>
-      <p>Every winning number published - a browsable timeline of past draws with winner locations.</p>
-    </div>
-    <div class="card feature">
-      <h3><span class="ico">?</span> Check any number</h3>
-      <p>Check whether a number is still available before you buy, and check your ticket status. No login needed.</p>
-    </div>
-  </div>
-
-  <h2 class="section-title" id="how-to-play">How the draw works</h2>
-  <div class="tx-rule"></div>
-  <p class="blurb" style="margin-top:0">Try it yourself - walk through a draw in four quick steps.</p>
+  <section class="home-band home-band--white" id="how-to-play">
+  <div class="home-band__inner">
+  <h2 class="mg-h">How the draw works</h2>
+  <p class="mg-sub">Walk through a draw in four short steps.</p>
 
   <div class="tutorial" id="draw-tutorial">
     <div class="tut-tabs" role="tablist" aria-label="How the draw works">
@@ -288,7 +310,7 @@
       <h3>Hand it to your agent</h3>
       <p>Your agent confirms the code is available and completes the purchase face to face. No payment happens on this website.</p>
       <div class="tut-ticket" aria-label="Your ticket">
-        <span class="tt-head">MINEBIG 4D - SUNDAY DRAW</span>
+        <span class="tt-head">MINEBIG 4D · SUNDAY DRAW</span>
         <span class="tt-code" id="tut-ticket-code">------</span>
         <span class="tt-foot">Sold by your verified local agent</span>
       </div>
@@ -299,7 +321,7 @@
 
     <div class="tut-pane" data-step="3">
       <h3>Watch the Sunday draw</h3>
-      <p>Every Sunday at 12 PM the draw is live for 15 minutes. Your code is matched against the winning digits.</p>
+      <p>Every Sunday at 12 PM the winning numbers are published. Your code is matched against those digits.</p>
       <div class="tut-draw" aria-label="Winning digits">
         <div class="mini-balls" id="tut-winning"></div>
       </div>
@@ -311,15 +333,14 @@
 
     <div class="tut-pane" data-step="4">
       <h3>Claim your prize face to face</h3>
-      <p>Winners are published on this site. Your agent contacts you and hands over your prize in person - winner names stay private, only the city and country are shown.</p>
+      <p>Winners go up on this site. Your agent gets in touch and hands over the prize in person. We publish the city and country, not the winner's name.</p>
       <div class="btn-row">
-        <a class="btn btn-gold" href="try-your-luck.html">Try Your Luck →</a>
+        <a class="btn btn-gold" href="connect.html">Connect with an agent →</a>
       </div>
     </div>
   </div>
 
-  <h2 class="section-title">Where to claim</h2>
-  <div class="tx-rule"></div>
+  <h2 class="mg-h" style="margin-top:48px">Where to claim</h2>
   <div class="grid3">
     <div class="card feature">
       <h3><span class="ico">↔</span> Through your agent</h3>
@@ -327,17 +348,20 @@
     </div>
     <div class="card feature">
       <h3><span class="ico">★</span> Winner privacy</h3>
-      <p>Results show the winning number and the winner's city and country - never their name. Identity stays between the winner and their agent.</p>
+      <p>Results show the winning number plus the winner's city and country, never their name. Identity stays between the winner and their agent.</p>
     </div>
     <div class="card feature">
       <h3><span class="ico">?</span> Need help?</h3>
-      <p>Questions about draws, tickets or prizes? Visit our <a href="faq.html">FAQs</a> or <a href="contact.html">contact us</a> - we're here to help.</p>
+      <p>Questions about draws, tickets or prizes? Visit our <a href="faq.html">FAQs</a> or <a href="contact.html">contact us</a>. We are happy to help.</p>
     </div>
   </div>
 
   <div class="center mt">
     <a class="btn btn-gold" href="upcoming.html">Next draw →</a>
+    <a class="btn btn-ghost dark" href="connect.html">Connect with an agent</a>
   </div>
+  </div>
+  </section>
 
   </main>
 
@@ -346,7 +370,7 @@
     <div class="footer-grid">
       <div>
         <div class="fbrand"><span class="ball-logo">M</span> MineBig.com <span class="v2" style="font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--orange),var(--red));border-radius:100px;padding:2px 9px;margin-left:4px;vertical-align:middle">V2.0</span></div>
-        <p class="ftag">Same trust. Same dreams. Improved experience, better care. Every Sunday 12 PM · Live draw · MineBig 4D · Five prize tiers.</p>
+        <p class="ftag">Same trust. Same dreams. Improved experience, better care. Every Sunday 12 PM · MineBig 4D · Five prize tiers.</p>
         <div class="f-social" aria-label="Follow us">
           <a href="#" class="soc-fb" aria-label="Facebook">f</a>
           <a href="#" class="soc-tt" aria-label="TikTok">♪</a>
@@ -370,7 +394,7 @@
         <h4>Customer Service</h4>
         <div class="f-contact">
           Phone: [confirm number]<br>
-          Hours: 9:00 AM – 7:00 PM<br>
+          Hours: 9:00 AM to 7:00 PM<br>
           Email: <a href="mailto:hello@minebig.com">hello@minebig.com</a>
         </div>
       </div>

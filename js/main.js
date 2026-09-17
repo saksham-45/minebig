@@ -36,13 +36,13 @@
     if (!btn || !input || !msg) return;
     btn.addEventListener("click", () => {
       const email = input.value.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = "INVALID EMAIL"; msg.style.color = "var(--red)"; return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = "Please enter a valid email address."; msg.style.color = "var(--red)"; return; }
       try {
         const subs = JSON.parse(localStorage.getItem("minebig_newsletter")) || [];
         subs.push({ email, at: Date.now() });
         localStorage.setItem("minebig_newsletter", JSON.stringify(subs));
       } catch (e) { /* preview */ }
-      msg.textContent = "SUBSCRIBED - DRAW ALERTS ON THE WAY";
+      msg.textContent = "You're on the list. We'll send draw alerts here.";
       msg.style.color = "var(--green)";
       input.value = "";
     });

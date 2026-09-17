@@ -11,49 +11,9 @@
     }[c]));
   }
 
-  function numBtn(n) {
-    return `<button type="button" class="mb-num" data-num="${escapeHtml(n)}">${escapeHtml(n)}</button>`;
-  }
-
   function renderBoard(el, board, game) {
     if (!el || !board || !game) return;
-    el.innerHTML = `
-      <div class="mb-ticket__head is-4d">
-        <img class="mb-ticket__mark" src="img/dice-four.svg" alt="" aria-hidden="true">
-        <div class="mb-ticket__titles">
-          <h2 class="mb-ticket__name">${escapeHtml(game.name)}</h2>
-          <p class="mb-ticket__hint">Tap a number to see its meaning.</p>
-        </div>
-      </div>
-      <div class="mb-ticket__top">
-        <div class="mb-prize">
-          <div class="mb-prize__label">1st prize</div>
-          ${numBtn(board.first)}
-        </div>
-        <div class="mb-prize">
-          <div class="mb-prize__label">2nd Prize</div>
-          ${numBtn(board.second)}
-        </div>
-        <div class="mb-prize">
-          <div class="mb-prize__label">3rd Prize</div>
-          ${numBtn(board.third)}
-        </div>
-      </div>
-      <div class="mb-ticket__split">
-        <div class="mb-col">
-          <div class="mb-col__label">Special</div>
-          <div class="mb-grid">${board.special.map(numBtn).join("")}</div>
-        </div>
-        <div class="mb-col">
-          <div class="mb-col__label">Consolation</div>
-          <div class="mb-grid">${board.consolation.map(numBtn).join("")}</div>
-        </div>
-      </div>
-      <p class="mb-ticket__foot">
-        <span>Draw slip · ${escapeHtml(MINEBIG.drawCode(board.date))}</span>
-        <span>Official · Sunday 12 PM</span>
-      </p>
-    `;
+    el.innerHTML = MINEBIG.drawSheetHTML(board, game, { tappable: true });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -230,7 +190,7 @@
         if (!btn || !meaning) return;
         const n = btn.dataset.num;
         meaning.hidden = false;
-        meaning.innerHTML = `<strong>${escapeHtml(n)}</strong> - ${escapeHtml(MINEBIG.meaningFor(n))} <a href="star-numbers.html#dictionary">Open dictionary →</a>`;
+        meaning.innerHTML = `<strong>${escapeHtml(n)}</strong>: ${escapeHtml(MINEBIG.meaningFor(n))} <a href="star-numbers.html#dictionary">Open dictionary →</a>`;
       });
     }
 
@@ -261,10 +221,19 @@
       paint();
     }
 
-    if (editBtn) editBtn.addEventListener("click", openEditor);
+    if (editBtn) {
+      if (MINEBIG.agentName()) {
+        editBtn.hidden = false;
+        editBtn.addEventListener("click", openEditor);
+      } else {
+        editBtn.hidden = true;
+        if (editor) editor.hidden = true;
+      }
+    }
     if (closeBtn) closeBtn.addEventListener("click", () => { editor.hidden = true; });
     if (applyBtn) {
       applyBtn.addEventListener("click", () => {
+        if (!MINEBIG.agentName()) return;
         const r4 = MINEBIG.parseBoardText("d4", ta4.value);
         const errs = [...r4.errors];
         if (!status) return;
@@ -274,7 +243,7 @@
           return;
         }
         MINEBIG.saveBoardOverrides(ta4.value);
-        status.textContent = "Applied - the boards, tabs and calendar updated.";
+        status.textContent = "Applied. The boards, tabs and calendar updated.";
         status.className = "draw-editor__status is-ok";
         reloadBoards();
         editor.hidden = true;
@@ -282,6 +251,7 @@
     }
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
+        if (!MINEBIG.agentName()) return;
         MINEBIG.clearBoardOverrides();
         ta4.value = MINEBIG.serializeBoards("d4");
         if (status) { status.textContent = "Default boards restored."; status.className = "draw-editor__status is-ok"; }

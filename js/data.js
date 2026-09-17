@@ -175,6 +175,70 @@ const MINEBIG = (() => {
     sessionStorage.removeItem("minebig_agent");
   }
 
+  // Interim client-side gate until a real auth database is connected.
+  // Do not print these values in the UI. Production must verify on the server.
+  const DEMO_AUTH = {
+    agent: "MineBigAgent26",
+    player: "MineBigPlayer26",
+  };
+
+  function verifyLogin(role, name, pass) {
+    const n = String(name || "").trim();
+    const p = String(pass || "");
+    if (n.length < 2 || p.length < 8) return false;
+    if (role === "agent") return p === DEMO_AUTH.agent;
+    if (role === "player") return p === DEMO_AUTH.player;
+    return false;
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[c]));
+  }
+
+  function drawSheetHTML(board, game, opts) {
+    opts = opts || {};
+    if (!board) return "";
+    const tap = !!opts.tappable;
+    function n(num) {
+      if (num == null || num === "") return "";
+      const v = escapeHtml(num);
+      return tap
+        ? `<button type="button" class="draw-n mb-num" data-num="${v}">${v}</button>`
+        : `<span class="draw-n">${v}</span>`;
+    }
+    const special = board.special || [];
+    const consolation = board.consolation || [];
+    const rows = Math.max(special.length, consolation.length, 1);
+    let extra = "";
+    for (let i = 0; i < rows; i += 1) {
+      extra += `<tr><td>${n(special[i])}</td><td>${n(consolation[i])}</td></tr>`;
+    }
+    const name = escapeHtml((game && game.name) || "MineBig 4D");
+    const date = escapeHtml(formatDrawDate(board.date));
+    const code = escapeHtml(drawCode(board.date));
+    return `<table class="draw-sheet">
+      <thead>
+        <tr>
+          <th colspan="2">
+            <span class="draw-sheet__game">${name}</span>
+            <span class="draw-sheet__meta">${date} · ${code}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="draw-sheet__prizes">
+        <tr class="is-1st"><th scope="row">1st Prize</th><td>${n(board.first)}</td></tr>
+        <tr><th scope="row">2nd Prize</th><td>${n(board.second)}</td></tr>
+        <tr><th scope="row">3rd Prize</th><td>${n(board.third)}</td></tr>
+      </tbody>
+      <tbody class="draw-sheet__extras">
+        <tr><th scope="col">Special</th><th scope="col">Consolation</th></tr>
+        ${extra}
+      </tbody>
+    </table>`;
+  }
+
   // ============================================================
   // MineBig 4D (content-document model)
   // ============================================================
@@ -185,7 +249,7 @@ const MINEBIG = (() => {
       name: "MineBig 4D",
       digits: 4,
       tagline: "Pick your lucky 4 digits, win big.",
-      price: "Entry - confirm with client",
+      price: "Entry price still to confirm with the client",
       accent: "gold",
     },
   ];
@@ -837,7 +901,7 @@ const MINEBIG = (() => {
     if (!parts.length || !parts[0]) return null;
     const date = parts[0];
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-      return { error: `Bad date "${date}" - use YYYY-MM-DD.` };
+      return { error: `Bad date "${date}". Use YYYY-MM-DD.` };
     }
     const ok = (n) => new RegExp(`^\\d{${digits}}$`).test(n);
     const nums = (parts[1] || "").split(/\s+/).filter(Boolean);
@@ -892,23 +956,29 @@ const MINEBIG = (() => {
   }
 
   function saveBoardOverrides(d4Text) {
+    if (!agentName()) return;
     try { localStorage.setItem(OVERRIDE_KEY, JSON.stringify({ d4: d4Text })); }
     catch (e) { /* storage unavailable */ }
   }
 
   function clearBoardOverrides() {
+    if (!agentName()) return;
     try { localStorage.removeItem(OVERRIDE_KEY); } catch (e) { /* noop */ }
   }
 
   function getBoards(gameId) {
-    try {
-      const raw = localStorage.getItem(OVERRIDE_KEY);
-      if (raw) {
-        const store = JSON.parse(raw);
-        const parsed = parseBoardText(gameId, store[gameId] || "");
-        if (parsed.boards.length) return parsed.boards;
-      }
-    } catch (e) { /* fall back to demo */ }
+    // Public visitors always see the published boards. Overrides are an
+    // agent-only preview in this browser, never a public edit.
+    if (agentName()) {
+      try {
+        const raw = localStorage.getItem(OVERRIDE_KEY);
+        if (raw) {
+          const store = JSON.parse(raw);
+          const parsed = parseBoardText(gameId, store[gameId] || "");
+          if (parsed.boards.length) return parsed.boards;
+        }
+      } catch (e) { /* fall back to published boards */ }
+    }
     return BOARDS[gameId];
   }
 
@@ -938,7 +1008,7 @@ const MINEBIG = (() => {
     localStorage.setItem(gameTakenKey(gameId), JSON.stringify([...set]));
   }
 
-  // ---- Symbolic Dictionary (star numbers) ----
+  // ---- MineBig Dictionary (star numbers) ----
   // Photos live in img/dict/{slug}.jpg. New words pick up a matching file
   // automatically (or img/dict/_default.jpg). Optional `image` overrides the slug.
   const DICTIONARY = [
@@ -1087,9 +1157,11 @@ const MINEBIG = (() => {
   return {
     weekKey, isLiveWindow, nextSundayNoon,
     getTaken, setTaken, isTaken, suggestAlternatives,
+    getLogbook, addLogEntry,
     TIERS, WINNERS, lifetimeCounts, digitCode, codesForDate,
     DEMO_WIN_CODE, lookupTicket,
-    agentName, setAgent, clearAgent,
+    agentName, setAgent, clearAgent, verifyLogin,
+    drawSheetHTML,
     GAMES, PRIZE_TIERS, DRAWS, BOARDS,
     drawCode, formatDrawDate, formatShortDate, meaningFor,
     parseBoardText, serializeBoards, saveBoardOverrides, clearBoardOverrides, getBoards,

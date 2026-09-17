@@ -46,15 +46,15 @@
       if (r.status === "win") {
         res.classList.add("win");
         res.innerHTML =
-          `<h3>★ WINNER - This code won!</h3>` +
+          `<h3>★ Winner. This code won.</h3>` +
           chips +
-          `<p>This code won in the latest Sunday draw. Collect your prize through your agent - <a class="teal" href="connect.html">connect with an agent</a> to arrange the handover.</p>`;
+          `<p>This code won in the latest Sunday draw. Collect your prize through your agent. <a class="teal" href="connect.html">Connect with an agent</a> to arrange the handover.</p>`;
       } else if (r.status === "taken") {
         res.classList.add("taken");
         res.innerHTML =
           `<h3>Code already sold</h3>` +
           chips +
-          `<p>This code was sold this week. It did not win the latest draw. Winner announcements are published every Sunday - check again after the draw.</p>`;
+          `<p>This code was sold this week. It did not win the latest draw. Winner announcements go up every Sunday, so check again after the draw.</p>`;
       } else if (r.status === "notfound") {
         res.classList.add("missing");
         res.innerHTML =
@@ -65,7 +65,7 @@
         res.classList.add("missing");
         res.innerHTML =
           `<h3>Invalid code</h3>` +
-          `<p>Codes are 4 single digits (0-9) - e.g. <strong>4821</strong>.</p>`;
+          `<p>Codes are 4 single digits (0-9), for example <strong>4821</strong>.</p>`;
       } else {
         res.classList.add("missing");
         res.innerHTML = `<h3>Enter a code first</h3><p>Enter your 4-digit MineBig 4D code and we'll check it.</p>`;
@@ -102,7 +102,7 @@
       const g = gameFor(clean);
       if (!g) {
         availOut.classList.add("missing");
-        availOut.innerHTML = `<h3>Invalid code</h3><p>Codes are 4 single digits (0-9) - e.g. 4821.</p>`;
+        availOut.innerHTML = `<h3>Invalid code</h3><p>Codes are 4 single digits (0-9), for example 4821.</p>`;
         suggestEl.innerHTML = "";
         return;
       }
@@ -123,9 +123,9 @@
       } else {
         availOut.classList.add("win");
         availOut.innerHTML =
-          `<h3>Available - go for it!</h3>` +
+          `<h3>Available. Go for it.</h3>` +
           `<div class="big-nums">${digitChips(g.code)}</div>` +
-          `<p>This code is still free this week. <a class="teal" href="try-your-luck.html">Add it to your selection →</a></p>`;
+          `<p>This code is still free this week. <a class="teal" href="connect.html">Ask an agent to lock it →</a></p>`;
         suggestEl.innerHTML = "";
       }
     }

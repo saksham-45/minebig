@@ -47,7 +47,7 @@
         return `<div class="win-row">
           <div class="win-row__date">${MINEBIG.formatShortDate(w.date)}</div>
           <div class="win-row__digits">${codeChips}</div>
-          <div class="win-row__tiers">1st - ${w.winners.first} · Special - ${w.winners.special}</div>
+          <div class="win-row__tiers">1st: ${w.winners.first} · Special: ${w.winners.special}</div>
         </div>`;
       }).join("");
     }

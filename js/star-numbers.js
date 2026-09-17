@@ -1,5 +1,5 @@
 /* ============================================================
-   Star Numbers - symbolic dictionary + draw statistics
+   Star Numbers - MineBig Dictionary + draw statistics
    ============================================================ */
 
 (function () {
