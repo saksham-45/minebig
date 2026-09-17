@@ -27,15 +27,17 @@
   function magnumTicket(el, board) {
     if (!el || !board) return;
     const n = (num) => `<button type="button" class="mg-n mb-num" data-num="${escapeHtml(num)}">${escapeHtml(num)}</button>`;
+    const dateLabel = MINEBIG.formatDrawDate(board.date) + " · " + MINEBIG.drawCode(board.date);
     el.innerHTML = `
       <div class="mg-ticket__head">
-        <img src="img/dice-four.svg" alt="">
-        <span>Tap a number to see its meaning.</span>
+        <span class="mg-ticket__kicker">Latest draw</span>
+        <span class="mg-ticket__date">${escapeHtml(dateLabel)}</span>
       </div>
+      <p class="mg-ticket__hint">Tap a number to see its meaning</p>
       <div class="mg-ticket__top">
-        <div><span>1st prize</span>${n(board.first)}</div>
-        <div><span>2nd Prize</span>${n(board.second)}</div>
-        <div><span>3rd Prize</span>${n(board.third)}</div>
+        <div class="is-1st"><span>1st prize</span>${n(board.first)}</div>
+        <div><span>2nd prize</span>${n(board.second)}</div>
+        <div><span>3rd prize</span>${n(board.third)}</div>
       </div>
       <div class="mg-ticket__split">
         <div>
@@ -66,12 +68,7 @@
 
   function paintLatest() {
     const boards4 = MINEBIG.getBoards("d4") || [];
-    const latest4 = boards4[0];
-    const dateEl = byId("home-latest-date");
-    if (dateEl && latest4) {
-      dateEl.textContent = MINEBIG.formatDrawDate(latest4.date) + " · " + MINEBIG.drawCode(latest4.date);
-    }
-    magnumTicket(byId("home-latest-d4"), latest4);
+    magnumTicket(byId("home-latest-d4"), boards4[0]);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
