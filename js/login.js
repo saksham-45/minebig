@@ -16,7 +16,7 @@
     if (label) label.textContent = isAgent ? "Agent login" : "Player login";
     if (hint) hint.textContent = isAgent
       ? "Verified agents only. Sign-in is checked before the portal opens."
-      : "Sign in to save codes you already bought from an agent.";
+      : "Sign in to save the codes you play.";
     if (agentLink) {
       agentLink.textContent = isAgent ? "Player login" : "Agent login";
       agentLink.href = isAgent ? "login.html" : "login.html?role=agent";

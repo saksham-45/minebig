@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Connect with an Agent - MineBig.com</title>
+<title>Get a number - MineBig.com</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght..96,500..800&family=Archivo:wght;500;600;700&family=IBM+Plex+Mono:wght;500;600&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
   MINEBIG V2.0 - JACKPOT LOUNGE (direction contract)
   THESIS: A lottery that feels like a premium game night - gold, noir and a glowing countdown, refusing both the teletext terminal and the neon-casino cliche.
   OWN-WORLD: White ground, gold #ffc000 primary with #ffd54f→#ffc000 pill CTAs, high-contrast noir heroes with gold-glow radial, glossy number balls, Rubik type, 16-20px radius cards, soft navy shadows, lift-on-hover motion.
-  STORY: A visitor lands on the weekly jackpot broadcast: three rotating hero banners, a live countdown to Sunday 12 PM, past results, and a clear path to pick numbers and connect with an agent.
+  STORY: A visitor lands on the weekly jackpot broadcast: three rotating hero banners, a live countdown to Sunday 12 PM, past results, and a clear path to pick a number and check the Sunday draw.
   FIRST VIEWPORT: Gold logo tile; nav with Next Draw · Results and Winners · MineBig Star Numbers · Try Your Luck · Play Responsibly · Biggest Sensation · Help; banner slider with the jackpot headline; countdown card with gold numerals.
   FORM: Gameified lottery - results-first, transparency sections, prize tiers, responsible play, rich footer.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
@@ -58,7 +58,6 @@
           <a href="check.html">Check a ticket</a>
           <a href="about.html">About us</a>
           <a href="testimonials.html">What our winners say</a>
-          <a href="connect.html">Connect with an agent</a>
           <a href="biggest-sensation.html">Biggest sensation</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact us</a>
@@ -105,60 +104,35 @@
     <a href="check.html">Check a ticket</a>
     <a href="about.html">About us</a>
     <a href="testimonials.html">Testimonials</a>
-    <a href="connect.html">Connect with an agent</a>
     <a href="login.html">Log In</a>
   </div>
 </nav>
 
 <main class="page">
   <section class="hero hero-page">
-    <h1>Your agent is <span class="gold">one step away.</span></h1>
-    <p class="sub">Tell us a bit about you. A verified agent will get in touch to sell your ticket, hand you the receipt, and bring you the prize.</p>
+    <h1>Pick a number. <span class="gold">Check on Sunday.</span></h1>
+    <p class="sub">Get a 4-digit code, then look up the draw every Sunday at 12 PM. If you win, you win.</p>
     <img class="hero-mini" src="img/mascot.gif" alt="" aria-hidden="true">
 </section>
 
-  <div class="card form-card">
-    <div class="clipboard" id="handoff-clip" style="position:static;margin-bottom:22px">
-      <div class="cb-head">
-        <h3>Your selection</h3>
-        <span class="cb-count" id="cb-count">0 numbers</span>
-      </div>
-      <div class="cb-items" id="cb-items"></div>
-      <p class="cb-empty" id="cb-empty">No numbers in your selection yet. Tell the agent the 4-digit code you want.</p>
+  <div class="grid3">
+    <div class="card feature">
+      <h3><span class="ico">1</span> Pick a number</h3>
+      <p>Choose a 4-digit code. Check if it is still free this week.</p>
     </div>
-
-    <form id="lead-form" onsubmit="return false">
-      <label for="lead-name">Your name</label>
-      <input type="text" id="lead-name" placeholder="Full name">
-
-      <label for="lead-phone">Phone number</label>
-      <input type="tel" id="lead-phone" placeholder="e.g. 012-345 6789">
-
-      <label for="lead-area">Area / city</label>
-      <input type="text" id="lead-area" placeholder="e.g. Kuala Lumpur">
-
-      <label for="lead-time">Preferred contact time</label>
-      <select id="lead-time">
-        <option value="anytime">Anytime</option>
-        <option value="morning">Morning (9am to 12pm)</option>
-        <option value="afternoon">Afternoon (12pm to 6pm)</option>
-        <option value="evening">Evening (6pm to 10pm)</option>
-      </select>
-
-      <label for="lead-note">Anything else? (optional)</label>
-      <textarea id="lead-note" rows="3" placeholder="e.g. I want to buy my numbers for this Sunday"></textarea>
-
-      <p id="lead-err" style="color:var(--red-deep);font-size:14px;margin-top:10px"></p>
-      <button class="btn btn-gold" id="lead-submit" type="submit">Send request</button>
-    </form>
-    <div class="result ok" id="lead-ok">
-      <h3>✓ Request received!</h3>
-      <p>A verified MineBig agent will contact you shortly. Keep an eye on your phone, and good luck on Sunday.</p>
+    <div class="card feature">
+      <h3><span class="ico">2</span> Sunday 12 PM</h3>
+      <p>Results go up on this site every Sunday. Look up your number after the draw.</p>
+    </div>
+    <div class="card feature">
+      <h3><span class="ico">3</span> If you match, you won</h3>
+      <p>That is it. Check the results, and if your number is there, you won.</p>
     </div>
   </div>
 
-  <div class="center mt muted" style="font-size:14px">
-    Prefer email? Write to us at <a class="teal" href="mailto:hello@minebig.com">hello@minebig.com</a>
+  <div class="btn-row">
+    <a class="btn btn-gold" href="check.html">Check a ticket</a>
+    <a class="btn btn-ghost dark" href="winning.html">See results</a>
   </div>
 
   </main>
@@ -219,7 +193,6 @@
 <button class="to-top" id="to-top" type="button" aria-label="Back to top">↑</button>
 
 <script src="js/data.js"></script>
-<script src="js/connect.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

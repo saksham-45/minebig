@@ -48,7 +48,7 @@
         res.innerHTML =
           `<h3>★ Winner. This code won.</h3>` +
           chips +
-          `<p>This code won in the latest Sunday draw. Collect your prize through your agent. <a class="teal" href="connect.html">Connect with an agent</a> to arrange the handover.</p>`;
+          `<p>This code won in the latest Sunday draw. Check the Results page for the full board.</p>`;
       } else if (r.status === "taken") {
         res.classList.add("taken");
         res.innerHTML =
@@ -125,7 +125,7 @@
         availOut.innerHTML =
           `<h3>Available. Go for it.</h3>` +
           `<div class="big-nums">${digitChips(g.code)}</div>` +
-          `<p>This code is still free this week. <a class="teal" href="connect.html">Ask an agent to lock it →</a></p>`;
+          `<p>This code is still free this week. Check it again after the Sunday draw.</p>`;
         suggestEl.innerHTML = "";
       }
     }
